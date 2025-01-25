@@ -1,0 +1,98 @@
+/* Page Wrapper */
+.courses-page {
+  margin-top: 40px;
+  padding: 20px;
+  padding-bottom: 60px;
+  background-color: #ffffff;
+}
+
+/* Title Styling */
+.page-title {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  color: #1a73e8;
+  margin-bottom: 30px;
+}
+
+/* Page Content Layout */
+.page-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+/* Filter Section */
+.filter-section {
+  flex: 1; /* Chiếm 1/7 màn hình */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 20px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.filter-button:hover {
+  background-color: #dce9ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.filter-button.active {
+  background-color: #1a73e8;
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Courses Container */
+.courses-container {
+  flex: 6; /* Chiếm 6/7 màn hình */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  position: relative; /* Để định vị các nút */
+}
+
+.courses-container > * {
+  flex: 1 1 calc(25% - 20px); /* Mỗi hàng 4 thẻ khóa học */
+  max-width: calc(25% - 20px);
+}
+
+/* Pagination Buttons */
+.pagination-buttons {
+  position: absolute;
+  bottom: -50px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #1a73e8;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #135ba1;
+}

@@ -1,0 +1,121 @@
+/* General Container Styling */
+.change-password-dashboard {
+    display: flex;
+    flex-direction: row;
+    background: #f0f8ff;
+}
+
+.logout-container {
+    flex-grow: 1;
+    height: 100vh;
+    position: relative;
+    background: #f0f8ff;
+    box-sizing: border-box;
+
+}
+
+.change-password-form {
+    background: #ffffff;
+    padding: 2rem;
+    margin: 80px auto;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    max-width: 420px;
+}
+
+.change-password-form .h2 {
+    text-align: center;
+    margin-bottom: 1.6rem;
+    color: #003366;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.logout-link {
+    position: absolute;
+    top: 10px; /* Căn chỉnh từ trên xuống */
+    right: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    background-color: #003366;
+    /* Dark blue for the button */
+    padding: 10px 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+
+.logout-link:hover {
+    background-color: #0057a8;
+    /* Lighter blue on hover */
+    transform: scale(1.05);
+    /* Slight scaling effect */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Groups */
+.form-group-change-pass {
+    margin-bottom: 19px;
+}
+
+.form-group-change-pass label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+    color: #003366;
+}
+
+.form-group-change-pass input {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid #d9e2ef;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Submit Button */
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 0.9rem;
+    background: #007bff;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+}
+
+/* Message Styling */
+.message {
+    text-align: left;
+    /* margin-bottom: 1rem; */
+    margin-top: -10px;
+    /* font-weight: bold; */
+    font-size: 14px;
+}
+
+.message.error {
+    color: #d9534f;
+}
+
+.message.success {
+    color: #5cb85c;
+}

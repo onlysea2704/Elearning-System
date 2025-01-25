@@ -1,0 +1,90 @@
+.course-card {
+    width: 250px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    /* Màu xanh nhạt */
+    transition: transform 0.3s ease;
+}
+
+.course-card:hover {
+    transform: scale(1.05);
+}
+
+.course-card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+.course-card-details {
+    padding: 10px;
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0px;
+    margin-top: 0;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.course-card-price {
+    font-size: 16px;
+    color: #28a745;
+    /* Màu xanh lá cho giá */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.course-card-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #777;
+}
+
+.course-card-info i {
+    margin-right: 5px;
+}
+
+.course-card-lessons,
+.course-card-students {
+    display: flex;
+    align-items: center;
+}
+
+
+.explore-button {
+    background: #2b77a9;
+    width: 100%;
+    margin-top: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.5s ease-in, transform 0.2s ease;
+}
+
+.explore-button a {
+    color: white;
+    text-decoration: none;
+}
+
+.explore-button:hover {
+    background: #300694;
+}

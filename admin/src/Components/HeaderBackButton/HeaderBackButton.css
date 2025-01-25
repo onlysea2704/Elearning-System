@@ -1,0 +1,36 @@
+.header-back-button {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.btn-back {
+    padding: 10px 15px;
+    background-color: #1e3a8a;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.btn-back:hover {
+    background-color: #315ca7;
+}
+
+.divider {
+    width: 2px;
+    margin: 10px;
+    height: 94%;
+    background-color: #ddd;
+    /* background-color: red; */
+    box-sizing: border-box;
+}
+
+.header-title {
+    color: #1e3a8a;
+    font-size: 20px;
+    margin: 0;
+}

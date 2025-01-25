@@ -1,0 +1,54 @@
+.answer-feedback {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.feedback-score,
+.feedback-comments {
+    display: flex;
+    flex-direction: column;
+}
+
+.feedback-score label,
+.feedback-comments label {
+    font-weight: bold;
+    color: #1d3557;
+}
+
+.feedback-score input,
+.feedback-comments textarea {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+    width: 100%;
+    
+}
+
+.feedback-score input{
+    width: 10%;
+}
+.feedback-comments textarea{
+    resize: vertical;
+    box-sizing: border-box;
+    min-height: 180px;
+}
+
+.feedback-score input:focus,
+.feedback-comments textarea:focus {
+    border-color: #1d3557;
+    outline: none;
+    box-shadow: 0 0 5px rgba(29, 53, 87, 0.5);
+}
+
+.score-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.score-input-wrapper span {
+    font-size: 14px;
+    color: #1d3557;
+}

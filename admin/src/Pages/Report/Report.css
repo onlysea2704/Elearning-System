@@ -1,0 +1,87 @@
+.page-report{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.dashboard {
+    padding: 15px;
+    background-color: #f8fafc;
+    height: 100vh;
+    flex-grow: 1;
+    box-sizing: border-box;
+  }
+  
+  .dashboard-title {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+    margin-top: 0;
+  }
+  
+  .stats-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 17px;
+  }
+  
+  .stat-card {
+    width: 20%;
+    background-color: white;
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .stat-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .stat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .stat-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .charts-container {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .chart-card {
+    width: 50%;
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding-bottom: 0;
+  }
+  
+  .chart-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    margin-top: 0;
+  }
+  

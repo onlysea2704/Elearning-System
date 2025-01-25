@@ -1,0 +1,101 @@
+.sidebar {
+  margin-top: 60px;
+  /* dịch xuống bên dưới để không bị navbar che mất*/
+  width: 250px;
+  height: 88vh;
+  background-color: #e6f7ff;
+  /* Xanh nhạt */
+  background-color: white;
+  padding: 8px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  /* Cho phép cuộn dọc */
+  scrollbar-width: thin;
+  /* Thanh cuộn mỏng (chỉ Firefox) */
+  position: fixed;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+  /* Độ rộng của thanh cuộn (Webkit) */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #0077b6;
+  /* Màu thanh cuộn */
+  border-radius: 4px;
+}
+
+.sidebar h2 {
+  color: #0077b6;
+  /* Xanh nước biển đậm */
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-align: left;
+  /* Căn lề trái */
+}
+
+.course-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  border: 2px solid #0077b6;
+  /* Viền xanh nước biển */
+  border-radius: 8px;
+  font-size: 14px;
+  color: #0077b6;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  /* Loại bỏ gạch chân nếu có */
+}
+
+.course-item:hover {
+  background-color: #0077b6;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Lớp cho bài học đang được chọn */
+.course-item.active-lesson {
+  background-color: #0077b6;
+  /* Xanh đậm hơn */
+  color: white;
+  /* Chữ màu trắng */
+  border-color: #005f99;
+  /* Đổi màu viền */
+}
+
+/* Hover vẫn giữ màu khác nếu đang active */
+.course-item.active-lesson:hover {
+  background-color: #005f99;
+  transform: scale(1.05);
+}
+
+.course-item .link-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* Đảm bảo link bao phủ toàn bộ nội dung */
+  text-decoration: none;
+  /* Loại bỏ gạch chân cho Link */
+  color: inherit;
+  /* Giữ nguyên màu từ parent */
+}
+
+.course-item .icon {
+  margin-right: 10px;
+  /* Khoảng cách giữa icon và tên khóa học */
+  font-size: 1.2rem;
+}
+
+.course-item .arrow {
+  margin-left: auto;
+  /* Đẩy icon mũi tên sang phải */
+  font-size: 1.2rem;
+}

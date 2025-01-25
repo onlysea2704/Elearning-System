@@ -1,0 +1,109 @@
+/* Container Styles */
+.container-edit-profile {
+    max-width: 800px;
+    margin: 30px auto;
+    margin-top: 75px;
+    padding: 20px;
+    border: 1px solid #d1e7ff;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 20px;
+  }
+  
+  /* Left Section (Avatar) */
+  .avatar-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-right: 1px solid #d1e7ff;
+  }
+  
+  .avatar-preview-edit {
+    display: flex;
+    margin: 0px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px; /* Làm viền bo tròn mềm mại hơn */
+    border: 1px solid #e0e0e0; /* Thêm viền màu xám nhạt */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng tinh tế */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng mượt */
+}
+
+  .avatar-preview-edit img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 3px solid #a3d8ff;
+    object-fit: cover;
+    /* margin-bottom: 10px; */
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .avatar-preview-edit img:hover {
+    transform: scale(1.1); /* Zoom effect when hovering */
+  }
+  
+  /* Hide file input */
+  .avatar-preview-edit input[type="file"] {
+    display: none;
+  }
+  
+  /* Right Section (Form) */
+  .form-section {
+    flex: 2;
+  }
+  
+  .form-section h2 {
+    text-align: left;
+    color: #0066cc;
+    font-family: 'Arial', sans-serif;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .form-group-edit {
+    margin-bottom: 15px;
+  }
+  
+  .form-group-edit label {
+    display: block;
+    font-weight: bold;
+    color: #0056a3;
+    margin-bottom: 5px;
+  }
+  
+  .form-group-edit input,
+  .form-group-edit select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #b8daff;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  /* Submit Button */
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #0056b3;
+  }
+  

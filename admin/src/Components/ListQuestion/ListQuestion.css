@@ -1,0 +1,74 @@
+.title-list-question {
+  color: #1e3a8a;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  text-align: center;
+}
+
+.question-list {
+  height: 250px;
+  /* Giới hạn chiều cao của danh sách câu hỏi */
+  overflow-y: auto;
+  /* Hiển thị thanh cuộn dọc khi cần */
+  padding-right: 0px;
+  /* Đảm bảo nội dung không bị trùng với thanh cuộn */
+  scrollbar-width: none;
+  /* Tùy chỉnh độ dày của thanh cuộn cho Firefox */
+}
+
+.question-list::-webkit-scrollbar {
+  display: none;
+}
+
+.question-list .question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.question-list .question:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.question-list .question span {
+  font-size: 14px;
+  color: #333;
+}
+
+.question-list .icons i {
+  font-size: 16px;
+  cursor: pointer;
+  color: #1e3a8a;
+  margin-left: 10px;
+}
+
+.question-list .icons i:hover {
+  color: #162c65;
+}
+
+.create-button {
+  display: block;
+  margin: 10px auto 0;
+  background-color: #1e3a8a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s, box-shadow 0.2s;
+  font-size: 16px;
+}
+
+.create-button:hover {
+  background-color: #162c65;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

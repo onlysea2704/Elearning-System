@@ -1,0 +1,45 @@
+/* Features Section */
+.features {
+    padding: 60px 20px;
+    background-color: #f0f8ff;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Features Section - Add Hover Effect */
+.feature-item {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-10px);
+    /* Dịch chuyển nhẹ lên trên */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    /* Đổ bóng mạnh hơn */
+}
+
+.feature-item h3 {
+    color: #0077b6;
+    margin-bottom: 15px;
+}
+
+.feature-item p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+}

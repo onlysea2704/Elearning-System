@@ -1,0 +1,70 @@
+/* Toàn bộ phần danh sách */
+.submission-list-container {
+  display: flex;
+  flex-direction: row;
+  background: #f0f8ff;
+}
+
+.submission-list {
+  flex-grow: 1;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.header-submission-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-submission-list h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Phần các items hiển thị dạng lưới */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+/* Style cho nút tạo khóa học */
+.create-course-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.create-course-btn i {
+  margin-right: 8px;
+  font-size: 14px;
+  color: white;
+}
+
+.create-course-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Style cho thanh tìm kiếm */
+.search-bar {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.search-bar:focus {
+  border-color: #007bff;
+  outline: none;
+}

@@ -1,0 +1,98 @@
+
+    /* Nhãn trước các ô nhập */
+  .input-label-login {
+    display: block; /* Đảm bảo nhãn nằm trên một dòng riêng */
+    margin-bottom: 10px; /* Tạo khoảng cách giữa nhãn và ô nhập */
+    font-size: 14px; /* Kích thước chữ nhỏ hơn */
+    font-weight: normal; /* Không quá đậm */
+    color: #666; /* Màu nhạt hơn */
+    text-align: left; /* Canh trái */
+  }
+
+  /* Căn chỉnh ô nhập */
+  .login-input {
+    width: 100%; /* Đảm bảo ô nhập giãn hết chiều rộng */
+    padding: 10px 15px; /* Tạo khoảng cách nội dung */
+    margin-bottom: 20px; /* Cách xa nhãn phía trên */
+    border: 1px solid #ccc; /* Viền nhẹ */
+    border-radius: 10px; /* Bo góc */
+    font-size: 16px; /* Kích thước chữ lớn hơn nhãn */
+    box-sizing: border-box; /* Đảm bảo padding không làm thay đổi kích thước */
+  }
+
+  /* Container chứa form */
+  .login-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+  }
+  
+  /* Form đăng nhập */
+  .login-form {
+    background: #fff;
+    padding: 30px 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+  }
+  
+  /* Tiêu đề form */
+  .login-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Các ô input */
+  .login-input {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  /* Nút submit */
+  .submit-button-login {
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    /* background: linear-gradient(135deg, #0077b6, #00b4d8); */
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  /* Dòng chữ đăng ký */
+  .register-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .register-text a {
+    color: #4facfe;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .register-text a:hover {
+    text-decoration: underline;
+  }
+  

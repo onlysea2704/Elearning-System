@@ -1,0 +1,50 @@
+.listening-question-container {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .listening-question {
+    font-size: 18px;
+    /* font-weight: bold; */
+    margin-bottom: 20px;
+    text-align: left;
+    color: #333;
+  }
+  
+  .audio-player {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+  }
+  
+  .listening-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .listening-option {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  
+  .listening-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #4caf50; /* Màu xanh lá khi chọn */
+    accent-color: black; /* Màu xanh lá khi chọn */
+  }
+  
+  .listening-option:hover {
+    color: #4caf50;
+  }
+  

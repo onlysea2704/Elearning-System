@@ -1,0 +1,116 @@
+  .page-manage-quiz {
+      display: flex;
+      flex-direction: row;
+      background: #f0f8ff;
+  }
+
+  .container-manage-quiz {
+      flex: 1;
+      width: 90%;
+      margin: auto;
+      padding: 15px;
+      height: 100vh;
+      box-sizing: border-box;
+
+
+      overflow-y: auto;
+      display: flex;
+      gap: 10px;
+  }
+
+  /* .main-content-manage-quiz {
+      display: flex;
+      gap: 10px;
+  } */
+
+
+  /* Left Panel */
+
+  .left-panel-manage-quiz {
+      flex: 1;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+
+      position: sticky;
+      top: 0px;
+      height: 579px;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .left-panel-manage-quiz .info {
+      background-color: #e0e7ff;
+      background-color: #ffffff;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgb(203, 203, 203);
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .left-panel-manage-quiz .info p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #1e3a8a;
+      font-weight: 500;
+  }
+
+  /* Right Panel */
+  .right-panel-manage-quiz {
+      flex: 4;
+      background-color: #f8f9fa;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      display: flex;
+      gap: 0px;
+
+
+      flex-direction: column;
+      padding: 20px;
+      
+      height: 900px;
+      height: 1225px;
+      flex: 2;
+      box-sizing: border-box;
+  }
+
+
+  .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+  }
+
+  .input-group {
+      margin: 5px 0;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .input-group label {
+      font-size: 14px;
+      color: #1e3a8a;
+      margin-bottom: 5px;
+      font-weight: 600;
+  }
+
+  .input-group input,
+  .input-group select {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      outline: none;
+      transition: border-color 0.2s;
+      box-sizing: border-box;
+  }
+
+  .input-group input:focus,
+  .input-group select:focus {
+      border-color: #1e3a8a;
+      box-shadow: 0 0 4px rgba(30, 58, 138, 0.5);
+  }

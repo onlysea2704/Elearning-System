@@ -1,0 +1,168 @@
+/* Tổng thể container */
+.course-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 80px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Bố cục 2 phần: Thông tin và danh sách bài học */
+.course-content {
+  display: flex;
+  gap: 20px;
+}
+
+/* Phần bên trái: Thông tin khóa học */
+.course-info {
+  flex: 3; /* Increased from flex: 1 to flex: 2 to make it wider */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-header {
+  display: flex;
+  gap: 20px;
+  /* margin-bottom: 20px; */
+}
+
+.course-thumbnail {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.course-metadata {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.course-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Phần thông tin chi tiết khóa học */
+.course-details {
+  width: 100%;
+  text-align: left;
+  margin-top: 15px;
+}
+
+.course-detail-item {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+.course-icon {
+  margin-right: 10px;
+  color: #0056b3;
+  font-size: 18px;
+}
+
+.course-description h2{
+  margin-top: 0;
+}
+
+.course-description {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.buy-button {
+  align-self: flex-start;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #055dba;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration:none;
+  width: 100%; /* Make button full width */
+  box-sizing: border-box;
+}
+
+.buy-button:hover {
+  background-color: #064588;
+}
+
+/* Phần bên phải: Danh sách bài học */
+.lesson-list {
+  flex: 2;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.lesson-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.lessons {
+  list-style: none;
+  padding: 0;
+  max-height: 300px; /* Giới hạn chiều cao */
+  overflow-y: auto; /* Thêm thanh cuộn nếu quá nhiều bài học */
+}
+
+.lesson-item {
+  display: flex;
+  justify-content: space-between; /* Căn chỉnh khoảng cách giữa tiêu đề và icon */
+  align-items: center;
+  padding: 5px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.lesson-item:hover {
+  background-color: #f0f0f0;
+}
+
+.lesson-icon {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #bbb;
+  transition: color 0.3s;
+}
+
+.lesson-item:hover .lesson-icon {
+  color: #555;
+}
+
+.lesson-link {
+  display: flex;
+  justify-content: space-between; /* Đảm bảo căn chỉnh giống như cũ */
+  align-items: center;
+  text-decoration: none;
+  color: inherit; /* Giữ nguyên màu sắc */
+  width: 100%; /* Đảm bảo toàn bộ item là clickable */
+  padding: 15px;
+}
+

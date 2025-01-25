@@ -1,0 +1,126 @@
+/* Màu chủ đạo xanh nước biển */
+:root {
+  --secondary-color: #E0E0E0;
+  /* --primary-color: #20B2AA; */
+  --primary-color: #2067b2;
+  --text-color: #333;
+}
+
+.learning-progress-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(32, 178, 170, 0.1);
+  display: flex;
+  position: relative;
+  gap: 30px;
+}
+
+.left-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vertical-divider {
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-color), transparent);
+  opacity: 0.5;
+}
+
+.right-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-name {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.progress-pie-chart {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.progress-pie-chart .recharts-legend-wrapper {
+  right: -20px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lessons-title {
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.lessons-list-container {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 10px;
+}
+
+.lessons-list-progress {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lesson-item-progress {
+  padding: 0px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+  border-left: 4px solid transparent;
+}
+
+.lesson-item-progress.completed {
+  background-color: rgba(32, 178, 170, 0.1);
+  background-color: rgba(32, 90, 178, 0.1);
+  border-left-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+.lesson-item-progress:hover {
+  transform: translateX(10px);
+  box-shadow: 0 5px 15px rgba(32, 178, 170, 0.1);
+}
+
+
+
+
+/* Scrollbar Styling */
+.lessons-list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lessons-list-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.lessons-list-container::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+.lessons-list-container::-webkit-scrollbar-thumb:hover {
+  background: #20A0A0;
+}

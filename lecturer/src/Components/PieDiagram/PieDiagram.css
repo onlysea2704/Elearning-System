@@ -1,0 +1,18 @@
+
+  .progress-pie-chart {
+    width: 100%;
+    position: relative;
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* .progress-pie-chart .recharts-legend-wrapper {
+    right: -20px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  } */

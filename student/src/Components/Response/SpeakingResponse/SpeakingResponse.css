@@ -1,0 +1,65 @@
+/* Container chính cho SpeakingResponse */
+.speaking-response-container {
+    margin: 10px 0;
+  }
+
+  /* Block riêng cho từng câu hỏi */
+  .speaking-response-block {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #fafafa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Phần nội dung câu hỏi */
+  .speaking-question-content {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .speaking-question-content p {
+    text-align: justify;
+    margin: 0;
+  }
+  
+  /* Trình phát Audio */
+  .speaking-audio-player {
+    margin-top: 10px;
+  }
+  
+  .speaking-audio-player h4 {
+    font-size: 1rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+  }
+  
+  .speaking-audio-player audio {
+    width: 100%;
+    border-radius: 5px;
+  }
+  
+  /* Phần feedback của giáo viên */
+  .teacher-feedback {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #cfe5e7;
+    border-left: 4px solid #4c5baf;
+    border-radius: 10px;
+  }
+  
+  .teacher-feedback h4 {
+    font-size: 1rem;
+    color: #383e8e;
+    margin: 5px 0;
+  }
+  
+  .teacher-feedback p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
+    text-align: justify;
+  }
+  

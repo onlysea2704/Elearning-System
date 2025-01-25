@@ -1,0 +1,128 @@
+/* Tổng thể */
+
+/* Container chứa form */
+.register-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+/* Form đăng ký */
+.register-form {
+  background: #fff;
+  padding: 10px 25px;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  width: 700px;
+  /* Kéo dài form */
+  text-align: center;
+}
+
+/* Tiêu đề form */
+.register-form h2 {
+  margin-top: 5px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Grid 2 cột */
+.form-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Cột form */
+.form-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Nhóm form */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+/* Nhãn trước các ô nhập */
+.input-label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+/* Các ô input */
+.register-input {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* Input lớn hơn cho ảnh */
+.large-input {
+  padding: 8px;
+  font-size: 15px;
+}
+
+/* Nút submit */
+.submit-button {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Ảnh đại diện (avatar) */
+
+
+.avatar-preview {
+  margin-top: 10px;
+  width: 154px;
+  /* Đảm bảo kích thước vuông */
+  height: 154px;
+  /* Đảm bảo kích thước vuông */
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Dòng chữ dưới nút Đăng ký */
+.login-link {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.login-link .login-anchor {
+  color: #4facfe;
+  /* Màu xanh gradient */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.login-link .login-anchor:hover {
+  color: #00aaff;
+  /* Đổi màu khi hover */
+}

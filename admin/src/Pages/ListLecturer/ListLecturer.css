@@ -1,0 +1,56 @@
+.student-progress-list-container{
+  display: flex;
+  flex-direction: row;
+  background: #f0f8ff;
+}
+
+.student-list {
+  flex-grow: 1;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  height: 100vh; /* Đảm bảo nội dung chiếm chiều cao toàn trang */
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 28px;
+  margin-bottom: 30px;
+  margin-top: 0px;
+  color: darkblue;
+  text-align: left;
+}
+
+.student-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.pagination {
+  position: absolute;
+  bottom: 20px; /* Giữ vị trí cố định cách đáy 20px */
+  right: 20px; /* Căn bên phải */
+  display: flex;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  background-color: darkblue;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination button:hover {
+  background-color: navy;
+}
+
+.pagination button:disabled {
+  background-color: lightgray;
+  cursor: not-allowed;
+}

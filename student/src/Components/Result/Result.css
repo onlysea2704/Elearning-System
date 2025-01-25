@@ -1,0 +1,48 @@
+/* Result Page Container */
+.result-page-container {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .result-title {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .result-score {
+    font-size: 1.5rem;
+    color: #005cbe; /* Màu xanh để nổi bật điểm số */
+    font-weight: bold;
+  }
+  
+  .result-back-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+    color: white;
+    text-align: center;
+    background-color: #2196f3;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }
+  
+  .result-back-button:hover {
+    background-color: #1976d2;
+  }
+  

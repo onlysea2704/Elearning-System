@@ -1,0 +1,55 @@
+.quiz-page-container {
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    padding-top: 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fdfdfd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 0;
+  }
+  
+  .quiz-header {
+    display: flex;
+    justify-content: space-between; /* Đẩy 2 phần tử về 2 đầu */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    margin-top: 20px;
+  }
+  
+  .quiz-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+  
+  .quiz-score {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4caf50;
+  }
+  
+  .quiz-question-block {
+    border-bottom: 1px solid #ddd;
+    display: flex;
+  }
+  
+  .quiz-submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quiz-submit-button:hover {
+    background-color: #45a049;
+  }
+  
