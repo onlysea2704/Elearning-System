@@ -1,10 +1,38 @@
 import React, { useState } from 'react';
 import './RegisterForm.css';
 import { Link } from "react-router-dom";
+import { auth } from '../../services/firebase-config';
 import Footer from "../../Components/Footer/Footer"
+import {
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+
+const register = async (email, password) => {
+  try {
+    console.log(email, password)
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    // await fetch("http://localhost:5000/api/register", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ uid: userCredential.user.uid, email, role: "user" }),
+    // });
+    alert("Đăng ký thành công:", userCredential);
+  } catch (error) {
+    console.log(email, password)
+    alert("Lỗi đăng ký:", error.message);
+  }
+};
 
 const RegisterForm = () => {
   const [avatar, setAvatar] = useState(null);
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await register(email, password);
+  };
 
   const handleAvatarChange = (event) => {
     const file = event.target.files[0];
@@ -18,7 +46,7 @@ const RegisterForm = () => {
       <div className="register-container">
         <div className="register-form">
           <h2>Đăng ký</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-grid">
               {/* Cột bên trái */}
               <div className="form-column">
@@ -44,7 +72,11 @@ const RegisterForm = () => {
                 </div>
                 <div className="form-group">
                   <label className="input-label">Email</label>
-                  <input type="email" placeholder="Nhập email" className="register-input" />
+                  <input type="email"
+                    placeholder="Nhập email"
+                    className="register-input"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} />
                 </div>
               </div>
 
@@ -52,11 +84,15 @@ const RegisterForm = () => {
               <div className="form-column">
                 <div className="form-group">
                   <label className="input-label">Tên đăng nhập</label>
-                  <input type="text" placeholder="Nhập tên đăng nhập" className="register-input" />
+                  <input type="text" placeholder="Nhập tên đăng nhập" className="register-input"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)} />
                 </div>
                 <div className="form-group">
                   <label className="input-label">Mật khẩu</label>
-                  <input type="password" placeholder="Nhập mật khẩu" className="register-input" />
+                  <input type="password" placeholder="Nhập mật khẩu" className="register-input"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className="form-group">
                   <label className="input-label avatar-label">Avatar</label>
@@ -72,7 +108,7 @@ const RegisterForm = () => {
           </form>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 };
