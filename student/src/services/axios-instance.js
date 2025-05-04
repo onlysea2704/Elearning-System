@@ -1,20 +1,15 @@
-// axios-instance.js
 import axios from 'axios';
 
-// Tạo một instance riêng của Axios
-const api = axios.create({
-  baseURL: 'https://localhost:3000', // đổi thành API của bạn
-});
+const authAxios = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
 
-// Dùng interceptor để thêm token vào mỗi request
-api.interceptors.request.use((config) => {
-  const token = sessionStorage.getItem('authToken');
+authAxios.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-}, (error) => {
-  return Promise.reject(error);
 });
 
-export default api;
+const publicAxios = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
+
+export { authAxios, publicAxios };
