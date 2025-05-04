@@ -1,6 +1,6 @@
 import React from 'react';
 import './LoginForm.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -8,7 +8,7 @@ import { auth } from '../../services/firebase-config';
 import Footer from "../../Components/Footer/Footer"
 import { useState } from 'react';
 
-const login = async (email, password) => {
+const login = async (email, password, navigate) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const token = await userCredential.user.getIdToken();
@@ -17,6 +17,7 @@ const login = async (email, password) => {
      sessionStorage.setItem('authToken', token);
      
     alert("đăng nhập thành công")
+    navigate("/");
   } catch (error) {
     alert("Lỗi đăng nhập:", error.message);
   }
@@ -26,11 +27,12 @@ const LoginForm = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password);
+    await login(email, password, navigate);
   };
-
+  
   return (
     <>
     <div className="login-container">
