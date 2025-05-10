@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './LoginForm.css';
 import { Link, useNavigate  } from "react-router-dom";
 import {
@@ -7,15 +7,28 @@ import {
 import { auth } from '../../services/firebase-config';
 import Footer from "../../Components/Footer/Footer"
 import { useState } from 'react';
+import { authAxios } from '../../services/axios-instance';
+import { StudentContext } from '../../Context/Context';
 
-const login = async (email, password, navigate) => {
+const LoginForm = () => {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const { setNameStudent } = useContext(StudentContext)
+
+  const login = async (email, password) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const token = await userCredential.user.getIdToken();
     
-     // Lưu vào sessionStorage
-     sessionStorage.setItem('authToken', token);
-     
+    // Lưu vào sessionStorage
+    sessionStorage.setItem('authToken', token);
+    const userInfo = await authAxios.get('/student/info')
+    setNameStudent(userInfo.data.name)
+    console.log(userInfo.data)
+
     alert("đăng nhập thành công")
     navigate("/");
   } catch (error) {
@@ -23,14 +36,9 @@ const login = async (email, password, navigate) => {
   }
 };
 
-const LoginForm = () => {
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(email, password, navigate);
+    await login(email, password);
   };
   
   return (

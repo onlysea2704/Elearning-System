@@ -88,6 +88,10 @@
   /* Gạch chân trải dài */
 }
 
+.name-user {
+  margin-right: 10px;
+}
+
 /* Avatar container */
 .avatar-container {
   position: relative;

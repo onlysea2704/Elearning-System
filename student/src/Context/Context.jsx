@@ -54,26 +54,26 @@ const lecturers = [
 
 // Bảng Course
 const courses = [
-    { "id_course": 1, "name_course": "English for Everyday Conversations", "description": "Enhance your English speaking skills for daily conversations.", "price": 200000, "number_session": 10, "number_student": 5, "id_lecturer": 1, "type_course": "Speaking","image":thumbnail1 },
-    { "id_course": 2, "name_course": "Mastering Advanced English Grammar Skills", "description": "Improve your grammar to write and speak with confidence.", "price": 150000, "number_session": 8, "number_student": 3, "id_lecturer": 2, "type_course": "Reading","image":thumbnail2 },
-    { "id_course": 3, "name_course": "Creative Writing Techniques in English", "description": "Learn to express your ideas clearly and creatively in English.", "price": 180000, "number_session": 9, "number_student": 4, "id_lecturer": 1, "type_course": "Writing","image":thumbnail3 },
-    { "id_course": 4, "name_course": "English for Effective Communication", "description": "Develop your English skills to communicate effectively in all situations.", "price": 250000, "number_session": 12, "number_student": 6, "id_lecturer": 3, "type_course": "All Skill","image":thumbnail4 },
-    { "id_course": 5, "name_course": "Beginner's Conversational English", "description": "Build a strong foundation for basic English conversations.", "price": 220000, "number_session": 11, "number_student": 5, "id_lecturer": 4, "type_course": "Listening + Reading","image":thumbnail5 },
-    { "id_course": 6, "name_course": "Professional English Speaking Skills", "description": "Boost your speaking skills for professional and business settings.", "price": 300000, "number_session": 14, "number_student": 7, "id_lecturer": 5, "type_course": "Speaking + Writing","image":thumbnail6 },
-    { "id_course": 7, "name_course": "Listening Practice for Fluent English", "description": "Sharpen your listening skills to understand native speakers with ease.", "price": 400000, "number_session": 16, "number_student": 8, "id_lecturer": 6, "type_course": "Listening","image":thumbnail7 },
-    { "id_course": 8, "name_course": "Conversational English for Travel", "description": "Learn essential English phrases to travel confidently around the world.", "price": 180000, "number_session": 10, "number_student": 5, "id_lecturer": 7, "type_course": "Speaking","image":thumbnail8 },
-    { "id_course": 9, "name_course": "English Reading Comprehension", "description": "Strengthen your reading skills to understand English texts easily.", "price": 220000, "number_session": 12, "number_student": 6, "id_lecturer": 8, "type_course": "Reading","image":thumbnail1 },
-    { "id_course": 10, "name_course": "Comprehensive Full English Skills Course", "description": "A comprehensive course to improve all English skills: speaking, listening, reading, and writing.", "price": 350000, "number_session": 18, "number_student": 10, "id_lecturer": 9, "type_course": "Speaking + Writing","image":thumbnail2 },
-    { "id_course": 11, "name_course": "English Pronunciation Mastery", "description": "Perfect your English pronunciation to sound more natural and confident.", "price": 210000, "number_session": 9, "number_student": 4, "id_lecturer": 1, "type_course": "Speaking","image":thumbnail3 },
-    { "id_course": 12, "name_course": "English Vocabulary for Beginners", "description": "Expand your vocabulary for better understanding and communication.", "price": 160000, "number_session": 8, "number_student": 3, "id_lecturer": 2, "type_course": "Reading","image":thumbnail4 },
-    { "id_course": 13, "name_course": "Advanced Business English Communication Course", "description": "Enhance your English for professional and business environments.", "price": 300000, "number_session": 15, "number_student": 7, "id_lecturer": 5, "type_course": "Speaking + Writing","image":thumbnail5 },
-    { "id_course": 14, "name_course": "English Listening for Beginners", "description": "Improve your listening skills with clear and simple English dialogues.", "price": 180000, "number_session": 10, "number_student": 4, "id_lecturer": 3, "type_course": "Listening","image":thumbnail6 },
-    { "id_course": 15, "name_course": "English Writing for Professionals", "description": "Learn how to write clear, concise, and professional English documents.", "price": 280000, "number_session": 14, "number_student": 6, "id_lecturer": 4, "type_course": "Writing","image":thumbnail7 },
-    { "id_course": 16, "name_course": "English for Customer Service", "description": "Learn key phrases and skills for customer service interactions in English.", "price": 230000, "number_session": 11, "number_student": 5, "id_lecturer": 6, "type_course": "Speaking","image":thumbnail8 },
-    { "id_course": 17, "name_course": "Essential English Phrases for Confident Travel", "description": "Learn essential English phrases for traveling confidently.", "price": 170000, "number_session": 8, "number_student": 3, "id_lecturer": 7, "type_course": "Listening + Reading","image":thumbnail1 },
-    { "id_course": 18, "name_course": "English Preparation for Job Interviews", "description": "Practice and master your English skills to ace job interviews.", "price": 260000, "number_session": 13, "number_student": 6, "id_lecturer": 8, "type_course": "Speaking","image":thumbnail2 },
-    { "id_course": 19, "name_course": "Academic English for Students", "description": "Prepare your English skills for academic writing and discussions.", "price": 290000, "number_session": 15, "number_student": 8, "id_lecturer": 9, "type_course": "Speaking + Writing","image":thumbnail3 },
-    { "id_course": 20, "name_course": "English Conversation Practice", "description": "Engage in real-world conversations to practice fluent English speaking.", "price": 190000, "number_session": 9, "number_student": 5, "id_lecturer": 1, "type_course": "Speaking","image":thumbnail4 },
+    { "id_course": 1, "name_course": "English for Everyday Conversations", "description": "Enhance your English speaking skills for daily conversations.", "price": 200000, "number_session": 10, "number_student": 5, "id_lecturer": 1, "type_course": "Speaking", "image": thumbnail1 },
+    { "id_course": 2, "name_course": "Mastering Advanced English Grammar Skills", "description": "Improve your grammar to write and speak with confidence.", "price": 150000, "number_session": 8, "number_student": 3, "id_lecturer": 2, "type_course": "Reading", "image": thumbnail2 },
+    { "id_course": 3, "name_course": "Creative Writing Techniques in English", "description": "Learn to express your ideas clearly and creatively in English.", "price": 180000, "number_session": 9, "number_student": 4, "id_lecturer": 1, "type_course": "Writing", "image": thumbnail3 },
+    { "id_course": 4, "name_course": "English for Effective Communication", "description": "Develop your English skills to communicate effectively in all situations.", "price": 250000, "number_session": 12, "number_student": 6, "id_lecturer": 3, "type_course": "All Skill", "image": thumbnail4 },
+    { "id_course": 5, "name_course": "Beginner's Conversational English", "description": "Build a strong foundation for basic English conversations.", "price": 220000, "number_session": 11, "number_student": 5, "id_lecturer": 4, "type_course": "Listening + Reading", "image": thumbnail5 },
+    { "id_course": 6, "name_course": "Professional English Speaking Skills", "description": "Boost your speaking skills for professional and business settings.", "price": 300000, "number_session": 14, "number_student": 7, "id_lecturer": 5, "type_course": "Speaking + Writing", "image": thumbnail6 },
+    { "id_course": 7, "name_course": "Listening Practice for Fluent English", "description": "Sharpen your listening skills to understand native speakers with ease.", "price": 400000, "number_session": 16, "number_student": 8, "id_lecturer": 6, "type_course": "Listening", "image": thumbnail7 },
+    { "id_course": 8, "name_course": "Conversational English for Travel", "description": "Learn essential English phrases to travel confidently around the world.", "price": 180000, "number_session": 10, "number_student": 5, "id_lecturer": 7, "type_course": "Speaking", "image": thumbnail8 },
+    { "id_course": 9, "name_course": "English Reading Comprehension", "description": "Strengthen your reading skills to understand English texts easily.", "price": 220000, "number_session": 12, "number_student": 6, "id_lecturer": 8, "type_course": "Reading", "image": thumbnail1 },
+    { "id_course": 10, "name_course": "Comprehensive Full English Skills Course", "description": "A comprehensive course to improve all English skills: speaking, listening, reading, and writing.", "price": 350000, "number_session": 18, "number_student": 10, "id_lecturer": 9, "type_course": "Speaking + Writing", "image": thumbnail2 },
+    { "id_course": 11, "name_course": "English Pronunciation Mastery", "description": "Perfect your English pronunciation to sound more natural and confident.", "price": 210000, "number_session": 9, "number_student": 4, "id_lecturer": 1, "type_course": "Speaking", "image": thumbnail3 },
+    { "id_course": 12, "name_course": "English Vocabulary for Beginners", "description": "Expand your vocabulary for better understanding and communication.", "price": 160000, "number_session": 8, "number_student": 3, "id_lecturer": 2, "type_course": "Reading", "image": thumbnail4 },
+    { "id_course": 13, "name_course": "Advanced Business English Communication Course", "description": "Enhance your English for professional and business environments.", "price": 300000, "number_session": 15, "number_student": 7, "id_lecturer": 5, "type_course": "Speaking + Writing", "image": thumbnail5 },
+    { "id_course": 14, "name_course": "English Listening for Beginners", "description": "Improve your listening skills with clear and simple English dialogues.", "price": 180000, "number_session": 10, "number_student": 4, "id_lecturer": 3, "type_course": "Listening", "image": thumbnail6 },
+    { "id_course": 15, "name_course": "English Writing for Professionals", "description": "Learn how to write clear, concise, and professional English documents.", "price": 280000, "number_session": 14, "number_student": 6, "id_lecturer": 4, "type_course": "Writing", "image": thumbnail7 },
+    { "id_course": 16, "name_course": "English for Customer Service", "description": "Learn key phrases and skills for customer service interactions in English.", "price": 230000, "number_session": 11, "number_student": 5, "id_lecturer": 6, "type_course": "Speaking", "image": thumbnail8 },
+    { "id_course": 17, "name_course": "Essential English Phrases for Confident Travel", "description": "Learn essential English phrases for traveling confidently.", "price": 170000, "number_session": 8, "number_student": 3, "id_lecturer": 7, "type_course": "Listening + Reading", "image": thumbnail1 },
+    { "id_course": 18, "name_course": "English Preparation for Job Interviews", "description": "Practice and master your English skills to ace job interviews.", "price": 260000, "number_session": 13, "number_student": 6, "id_lecturer": 8, "type_course": "Speaking", "image": thumbnail2 },
+    { "id_course": 19, "name_course": "Academic English for Students", "description": "Prepare your English skills for academic writing and discussions.", "price": 290000, "number_session": 15, "number_student": 8, "id_lecturer": 9, "type_course": "Speaking + Writing", "image": thumbnail3 },
+    { "id_course": 20, "name_course": "English Conversation Practice", "description": "Engage in real-world conversations to practice fluent English speaking.", "price": 190000, "number_session": 9, "number_student": 5, "id_lecturer": 1, "type_course": "Speaking", "image": thumbnail4 },
 
     { id_course: 0, name_course: "Entry Test", description: "Entry Test", price: 0, number_session: 0, number_student: 0, id_lecturer: 0, type_course: "entry test" },
 ];
@@ -236,7 +236,7 @@ const results = [
     { id_result: 8, id_student: 1, id_quiz: 8, score: 89 },
     { id_result: 9, id_student: 1, id_quiz: 9, score: 77 },
     { id_result: 10, id_student: 1, id_quiz: 10, score: 91 }
-  ];
+];
 
 const responses = [
     { id_response: 1, id_student: 1, id_question: 1, link_mp3: null, link_image: null, response: "Paris", score: 5, comment: "Correct answer" },
@@ -261,11 +261,11 @@ const responses = [
     { id_response: 20, id_student: 1, id_question: 20, link_mp3: null, link_image: null, response: "text", score: 4, comment: "Almost correct" }
 ];
 
-
 const StudentContextProvider = (props) => {
+    const [nameStudent, setNameStudent] = useState(null);
 
     const contextValue = {
-        users, students, lecturers, courses, myCourses,
+        nameStudent, setNameStudent, users, students, lecturers, courses, myCourses,
         comments, progress, lessons, quizzes, questions, responses,
         results
     };
