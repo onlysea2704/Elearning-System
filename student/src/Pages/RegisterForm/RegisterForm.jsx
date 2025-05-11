@@ -1,30 +1,15 @@
 import React, { useState } from 'react';
 import './RegisterForm.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from '../../services/firebase-config';
 import Footer from "../../Components/Footer/Footer"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { publicAxios } from '../../services/axios-instance';
-
-const register = async (user) => {
-  try {
-    const { email, password } = user;
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-    const uid = userCredential.user.uid;
-    await publicAxios.post('/user/register', {
-      ...user,
-      firebase_user_id: uid, // gán thêm uid từ Firebase
-    });
-
-    alert("Đăng ký thành công!");
-  } catch (error) {
-    alert("Lỗi đăng ký: " + error.message);
-  }
-};
+import axios from 'axios';
 
 const RegisterForm = () => {
   const [avatar, setAvatar] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [user, setUser] = useState({
     name: '',
     age: '',
@@ -34,6 +19,35 @@ const RegisterForm = () => {
     username: '',
     password: '',
   });
+  const navigate = useNavigate();
+
+
+  const register = async (user) => {
+    try {
+      const { email, password } = user;
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const uid = userCredential.user.uid;
+      const userInform = { ...user, firebase_user_id: uid }
+
+      // Tạo FormData để gửi cả file và JSON
+      const formData = new FormData();
+      formData.append('userInform', JSON.stringify(userInform));
+      if (avatar) {
+        formData.append('avatar', avatar);
+      }
+
+      await axios.post('http://localhost:5000/user/register', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      alert("Đăng ký thành công!");
+      navigate("/login");
+    } catch (error) {
+      alert("Lỗi đăng ký: " + error.message);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -43,8 +57,8 @@ const RegisterForm = () => {
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setAvatar(URL.createObjectURL(file));
-      setUser((prev) => ({ ...prev, avatar: file }));
+      setAvatarUrl(URL.createObjectURL(file));
+      setAvatar(file);
     }
   };
 
@@ -101,7 +115,7 @@ const RegisterForm = () => {
                 <div className="form-group">
                   <label className="input-label avatar-label">Avatar</label>
                   <input type="file" accept="image/*" onChange={handleAvatarChange} className="register-input large-input" />
-                  {avatar && <img src={avatar} alt="Avatar" className="avatar-preview" />}
+                  {avatar && <img src={avatarUrl} alt="Avatar" className="avatar-preview" />}
                 </div>
               </div>
             </div>

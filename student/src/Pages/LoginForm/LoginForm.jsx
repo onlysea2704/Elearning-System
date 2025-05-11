@@ -27,8 +27,6 @@ const LoginForm = () => {
     sessionStorage.setItem('authToken', token);
     const userInfo = await authAxios.get('/student/info')
     setNameStudent(userInfo.data.name)
-    console.log(userInfo.data)
-
     alert("đăng nhập thành công")
     navigate("/");
   } catch (error) {
