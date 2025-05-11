@@ -16,7 +16,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const { setNameStudent } = useContext(StudentContext)
+  const { setNameStudent, setAvatarStudent } = useContext(StudentContext)
 
   const login = async (email, password) => {
   try {
@@ -25,11 +25,15 @@ const LoginForm = () => {
     
     // Lưu vào sessionStorage
     sessionStorage.setItem('authToken', token);
-    const userInfo = await authAxios.get('/student/info')
-    setNameStudent(userInfo.data.name)
-    alert("đăng nhập thành công")
+    const userInfo = await authAxios.get('/student/info');
+    setNameStudent(userInfo.data.name);
+    setAvatarStudent(userInfo.data.link_image);
+    console.log(userInfo.data);
+    console.log(userInfo.data.link_image);
+    alert("đăng nhập thành công");
     navigate("/");
   } catch (error) {
+    console.log(error.message);
     alert("Lỗi đăng nhập:", error.message);
   }
 };

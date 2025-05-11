@@ -21,17 +21,16 @@ const RegisterForm = () => {
   });
   const navigate = useNavigate();
 
-
   const register = async (user) => {
     try {
       const { email, password } = user;
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const uid = userCredential.user.uid;
-      const userInform = { ...user, firebase_user_id: uid }
+      const studentInfo = { ...user, firebase_user_id: uid }
 
       // Tạo FormData để gửi cả file và JSON
       const formData = new FormData();
-      formData.append('userInform', JSON.stringify(userInform));
+      formData.append('studentInfo', JSON.stringify(studentInfo));
       if (avatar) {
         formData.append('avatar', avatar);
       }

@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
-import avatar from '../../Assets/Image/avatar.jpg'
+import avatar from '../../Assets/Image/user-default-image.jpg'
 import { StudentContext } from "../../Context/Context";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-  const { nameStudent } = useContext(StudentContext)
-  console.log(nameStudent)
+  const { nameStudent } = useContext(StudentContext);
+  const { avatarStudent } = useContext(StudentContext);
+  console.log(nameStudent);
+  console.log(avatarStudent);
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setShowDropdown(false);
@@ -50,7 +52,7 @@ const Navbar = () => {
         <div className="name-user">{nameStudent}</div>
         <div className="avatar-container" onClick={handleAvatarClick}>
           {/* <div className="avatar"></div> */}
-          <img src={avatar} alt="Avatar" className="avatar" />
+          <img src={avatarStudent || avatar} alt="Avatar" className="avatar" />
           {showDropdown && (
             <div className="dropdown-menu" ref={dropdownRef}>
               <ul>

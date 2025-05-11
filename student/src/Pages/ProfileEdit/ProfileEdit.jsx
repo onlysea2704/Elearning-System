@@ -1,17 +1,37 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import "./ProfileEdit.css";
 import Footer from "../../Components/Footer/Footer";
+import { authAxios } from "../../services/axios-instance";
+import { useNavigate } from "react-router-dom";
+import { StudentContext } from '../../Context/Context';
 
 const ProfileEdit = () => {
-    const [profile, setProfile] = useState({
-        name: "Phạm Duy Hải",
-        age: "21",
-        gender: "male",
-        phone: "0918297371",
-        email: "phamduyhai2704@gmail.com",
-        avatar: null,
-        avatarPreview: null,
+
+    const [studentInfo, setstudentInfo] = useState({
+        name: "",
+        age: "",
+        gender: "",
+        phone: "",
+        email: "",
     });
+    const [avatarUrl, setAvatarUrl] = useState('');
+    const [avatar, setAvatar] = useState(null);
+    const navigate = useNavigate();
+    const { setNameStudent, setAvatarStudent } = useContext(StudentContext)
+
+
+    useEffect(() => {
+        const fetchStudentInfo = async () => {
+            try {
+                const response = await authAxios('/student/info');
+                setstudentInfo(response.data);
+                setAvatarUrl(response.data.link_image);
+            } catch (err) {
+                console.error("Failed to fetch student info:", err);
+            }
+        };
+        fetchStudentInfo();
+    }, []);
 
     // Reference for the hidden file input
     const fileInputRef = useRef(null);
@@ -19,15 +39,8 @@ const ProfileEdit = () => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setProfile({
-                    ...profile,
-                    avatar: file,
-                    avatarPreview: reader.result,
-                });
-            };
-            reader.readAsDataURL(file);
+            setAvatarUrl(URL.createObjectURL(file));
+            setAvatar(file);
         }
     };
 
@@ -37,12 +50,29 @@ const ProfileEdit = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProfile({ ...profile, [name]: value });
+        setstudentInfo({ ...studentInfo, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Updated Profile:", profile);
+
+        // Tạo FormData để gửi cả file và JSON
+        const formData = new FormData();
+        formData.append('studentInfo', JSON.stringify(studentInfo));
+        console.log(studentInfo)
+        if (avatar) {
+            formData.append('avatar', avatar);
+        }
+
+        await authAxios.put('http://localhost:5000/student/update', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        const userInfo = await authAxios.get('/student/info');
+            setNameStudent(userInfo.data.name);
+            setAvatarStudent(userInfo.data.link_image);
+        navigate("/");
     };
 
     return (
@@ -53,11 +83,7 @@ const ProfileEdit = () => {
                     <div className="avatar-preview-edit">
                         {/* Clicking the image triggers file input */}
                         <img
-                            src={
-                                profile.avatarPreview
-                                    ? profile.avatarPreview
-                                    : "https://via.placeholder.com/140"
-                            }
+                            src={avatarUrl ? avatarUrl : "https://via.placeholder.com/140"}
                             alt="Avatar"
                             onClick={handleImageClick}
                         />
@@ -80,7 +106,7 @@ const ProfileEdit = () => {
                                 type="text"
                                 id="name"
                                 name="name"
-                                value={profile.name}
+                                value={studentInfo.name}
                                 onChange={handleChange}
                                 placeholder="Enter your name"
                             />
@@ -91,7 +117,7 @@ const ProfileEdit = () => {
                                 type="number"
                                 id="age"
                                 name="age"
-                                value={profile.age}
+                                value={studentInfo.age}
                                 onChange={handleChange}
                                 placeholder="Enter your age"
                             />
@@ -101,7 +127,7 @@ const ProfileEdit = () => {
                             <select
                                 id="gender"
                                 name="gender"
-                                value={profile.gender}
+                                value={studentInfo.gender}
                                 onChange={handleChange}
                             >
                                 <option value="male">Male</option>
@@ -115,7 +141,7 @@ const ProfileEdit = () => {
                                 type="tel"
                                 id="phone"
                                 name="phone"
-                                value={profile.phone}
+                                value={studentInfo.phone}
                                 onChange={handleChange}
                                 placeholder="Enter your phone number"
                             />
@@ -126,7 +152,7 @@ const ProfileEdit = () => {
                                 type="email"
                                 id="email"
                                 name="email"
-                                value={profile.email}
+                                value={studentInfo.email}
                                 onChange={handleChange}
                                 placeholder="Enter your email"
                             />

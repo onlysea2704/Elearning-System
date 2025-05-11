@@ -263,9 +263,10 @@ const responses = [
 
 const StudentContextProvider = (props) => {
     const [nameStudent, setNameStudent] = useState(null);
+    const [avatarStudent, setAvatarStudent] = useState(null);
 
     const contextValue = {
-        nameStudent, setNameStudent, users, students, lecturers, courses, myCourses,
+        nameStudent, setNameStudent, avatarStudent, setAvatarStudent, users, students, lecturers, courses, myCourses,
         comments, progress, lessons, quizzes, questions, responses,
         results
     };

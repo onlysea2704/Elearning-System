@@ -3,7 +3,6 @@ import "./Card.css";
 import { Link } from "react-router-dom";
 
 const CourseCard = ({ course, type }) => {
-  console.log(course);
   return (
     <div className="course-card">
       <img
