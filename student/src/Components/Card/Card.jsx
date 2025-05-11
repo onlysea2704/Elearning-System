@@ -6,7 +6,7 @@ const CourseCard = ({ course, type }) => {
   return (
     <div className="course-card">
       <img
-        src={course.image || "https://via.placeholder.com/150?text=No+Image"}
+        src={course.link_image || "https://via.placeholder.com/150?text=No+Image"}
         alt={course.name}
         className="course-card-image"
       />
@@ -17,7 +17,7 @@ const CourseCard = ({ course, type }) => {
         <p className="course-card-price">{course.price}</p>
         <div className="course-card-info">
           <span className="course-card-lessons">
-            <i className="fas fa-book"></i> {course.number_session} bài học
+            <i className="fas fa-book"></i> {course.number_lesson} bài học
           </span>
           <span className="course-card-students">
             <i className="fas fa-user"></i> {course.number_student} học viên

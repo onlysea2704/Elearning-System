@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../../Components/Card/Card";
 import "./CategoryCourse.css";
 import Footer from "../../Components/Footer/Footer";
-import { StudentContext } from "../../Context/Context";
+import { authAxios } from "../../services/axios-instance";
 
 const filters = [
     "Listening",
@@ -16,16 +16,16 @@ const filters = [
 
 const CategoryCourse = ({ isPurchase }) => {
 
-    const { courses, myCourses } = useContext(StudentContext);
+    const [ allCourse, setAllCourse ] = useState([])
 
+    useEffect(() => {
+        const fetchAllCourses = async () => {
+            const response = await authAxios(isPurchase ? '/course/my-course' : '/course/all-course')
+            setAllCourse(response.data);
+        };
 
-    const availableCourses = isPurchase ? courses.filter(course =>
-        myCourses.some(my => my.id_course === course.id_course && my.id_student === 1)
-        // Lấy ra khóa học mà Student 1 chưa mua
-    ) : courses.filter(course =>
-        !myCourses.some(my => my.id_course === course.id_course && my.id_student === 1)
-        // Lấy ra khóa học mà Student 1 chưa mua
-    );
+        fetchAllCourses(); // Gọi API khi component được mount
+    }, [isPurchase]); // gọi khi isPurchase bị thay đổi giá trị
 
     const [selectedFilter, setSelectedFilter] = useState("All Skill");
     const [currentPage, setCurrentPage] = useState(1);
@@ -36,7 +36,7 @@ const CategoryCourse = ({ isPurchase }) => {
         setCurrentPage(1); // Reset về trang đầu
     };
 
-    const filteredCourses = availableCourses.filter((course) =>
+    const filteredCourses = allCourse.filter((course) =>
         (selectedFilter === "All Skill" && course.id_course !== 0) ? true : course.type_course === selectedFilter
     );
 
@@ -58,7 +58,7 @@ const CategoryCourse = ({ isPurchase }) => {
     return (
         <>
             <div className="courses-page">
-                <h1 className="page-title">{isPurchase ? "Khóa Học Của Tôi": "Khám Phá Các Khóa Học Mới !!!"}</h1>
+                <h1 className="page-title">{isPurchase ? "Khóa Học Của Tôi" : "Khám Phá Các Khóa Học Mới !!!"}</h1>
                 <div className="page-content">
                     <div className="filter-section">
                         {filters.map((filter) => (

@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../Components/Card/Card";
 import "./ExploreCourse.css";
 import Footer from "../../Components/Footer/Footer";
-import { StudentContext } from "../../Context/Context";
+import { authAxios } from "../../services/axios-instance";
 
 const filters = [
   "listening",
@@ -16,22 +16,36 @@ const filters = [
 
 const ExploreCourse = () => {
 
-  const {courses,myCourses} = useContext(StudentContext);
-  const availableCourses = courses.filter(course => 
-    !myCourses.some(my => my.id_course === course.id_course && my.id_student === 1)
-    // Lấy ra khóa học mà Student 1 chưa mua
-  );
+  const { allCourse, setAllCourse } = useState([])
+  // const {courses,myCourses} = useContext(StudentContext);
+  // const availableCourses = courses.filter(course => 
+  //   !myCourses.some(my => my.id_course === course.id_course && my.id_student === 1)
+  //   // Lấy ra khóa học mà Student 1 chưa mua
+  // );
+  // const availableCourses = authAxios('/course/all-course')
+  // console.log(availableCourses)
+
+  useEffect(() => {
+    const fetchAllCourses = async () => {
+      const response = await authAxios('/course/all-course')
+      setAllCourse(response.data);
+      console.log(response.data);
+    };
+
+    fetchAllCourses(); // Gọi API khi component được mount
+  }, []); // Chỉ gọi một lần khi load trang
 
   const [selectedFilter, setSelectedFilter] = useState("all skill");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
   const handleFilterClick = (filter) => {
+    console.log(12345)
     setSelectedFilter(filter);
     setCurrentPage(1); // Reset về trang đầu
   };
 
-  const filteredCourses = availableCourses.filter((course) =>
+  const filteredCourses = allCourse.filter((course) =>
     (selectedFilter === "all skill" && course.id_course !== 0) ? true : course.type_course === selectedFilter
   );
 
@@ -59,9 +73,8 @@ const ExploreCourse = () => {
             {filters.map((filter) => (
               <button
                 key={filter}
-                className={`filter-button ${
-                  selectedFilter === filter ? "active" : ""
-                }`}
+                className={`filter-button ${selectedFilter === filter ? "active" : ""
+                  }`}
                 onClick={() => handleFilterClick(filter)}
               >
                 {filter}

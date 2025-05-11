@@ -1,20 +1,47 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./CourseDetail.css";
 import Comments from "../../Components/Comments/Comments";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import { StudentContext } from "../../Context/Context";
+import { authAxios } from "../../services/axios-instance";
+import { use } from "react";
 
 const CourseDetail = () => {
-  const { courses, lessons, myCourses } = useContext(StudentContext);
-  const { id_course } = useParams();
-  const course = courses.find(course => course.id_course === Number(id_course));
-  const lesson_course = lessons.filter(lesson => lesson.id_course === Number(id_course));
-  const isMyCourse = myCourses.some(
-    (course) =>
-      course.id_course === Number(id_course) && course.id_student === Number(1)
-  );
+  // const { courses, lessons, myCourses } = useContext(StudentContext);
 
+  const { id_course } = useParams();
+
+  // const course = courses.find(course => course.id_course === Number(id_course));
+  // const lesson_course = lessons.filter(lesson => lesson.id_course === Number(id_course));
+  // const isMyCourse = myCourses.some(
+  //   (course) =>
+  //     course.id_course === Number(id_course) && course.id_student === Number(1)
+  // );
+  const [detailCourse, setdetailCourse] = useState({
+    name_course: "",
+    description: "",
+    price: 0,
+    link_image: "",
+    number_lesson: 0,
+    number_student: 0,
+    id_lecturer: 2,
+  })
+  const [listLesson, setListLesson] = useState([])
+  const [isMyCourse, setIsMyCourse] = useState()
+
+  useEffect(() => {
+    const fetchDetailCourses = async () => {
+      const detailCourse = await authAxios.post('course/detail-course', { idCourse: id_course });
+      setdetailCourse(detailCourse.data.detailCourse);
+      console.log(detailCourse.data.detailCourse);
+      setIsMyCourse(detailCourse.data.isMyCourse);
+      const response2 = await authAxios.post('/lesson/get-lessons-by-id-course', { idCourse: id_course });
+      setListLesson(response2.data)
+      console.log(response2.data)
+    };
+    fetchDetailCourses(); // Gọi API khi component được mount
+  }, []); // gọi khi isPurchase bị thay đổi giá trị
 
   return (
     <div>
@@ -24,24 +51,24 @@ const CourseDetail = () => {
           <div className="course-info">
             <div className="course-header">
               <img
-                src="https://via.placeholder.com/300x200"
+                src={detailCourse.link_image}
                 alt="Course Thumbnail"
                 className="course-thumbnail"
               />
               <div className="course-metadata">
-                <h2 className="course-title">{course.name_course}</h2>
+                <h2 className="course-title">{detailCourse.name_course}</h2>
                 <div className="course-details">
                   <p className="course-detail-item">
                     <i className="fa-solid fa-chalkboard-teacher course-icon"></i>
-                    Giảng viên: {course.id_lecturer}
+                    Giảng viên: {detailCourse.id_lecturer}
                   </p>
                   <p className="course-detail-item">
                     <i className="fa-solid fa-book course-icon"></i>
-                    Số lượng bài học: {course.number_session}
+                    Số lượng bài học: {detailCourse.number_lesson}
                   </p>
                   <p className="course-detail-item">
                     <i className="fa-solid fa-users course-icon"></i>
-                    Số lượng sinh viên: {course.number_student}
+                    Số lượng sinh viên: {detailCourse.number_student}
                   </p>
                 </div>
               </div>
@@ -49,7 +76,7 @@ const CourseDetail = () => {
 
             <p className="course-description">
               <h2>Mô tả khóa học</h2>
-              {course.description}
+              {detailCourse.description}
             </p>
             {isMyCourse ? (<Link to={`/progress/${id_course}`} className="buy-button">Xem tiến độ học tập</Link>)
               : (<Link to={`/checkout/${id_course}`} className="buy-button">Mua khóa học</Link>)}
@@ -59,9 +86,9 @@ const CourseDetail = () => {
           <div className="lesson-list">
             <h3 className="lesson-header">Danh sách bài học</h3>
             <ul className="lessons">
-              {lesson_course.map((lesson) => (
+              {listLesson.map((lesson) => (
                 <li key={lesson.id_lesson} className="lesson-item">
-                  <Link to={`/coursedetail/${course.id_course}/lesson/${lesson.id_lesson}`} className="lesson-link">
+                  <Link to={`/coursedetail/${detailCourse.id_course}/lesson/${lesson.id_lesson}`} className="lesson-link">
                     {lesson.name_lesson}
                     <i className="fa fa-angle-right lesson-icon"></i>
                   </Link>

@@ -9,8 +9,6 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const { nameStudent } = useContext(StudentContext);
   const { avatarStudent } = useContext(StudentContext);
-  console.log(nameStudent);
-  console.log(avatarStudent);
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setShowDropdown(false);
