@@ -1,23 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./CourseDetail.css";
 import Comments from "../../Components/Comments/Comments";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
-import { StudentContext } from "../../Context/Context";
 import { authAxios } from "../../services/axios-instance";
-import { use } from "react";
 
 const CourseDetail = () => {
-  // const { courses, lessons, myCourses } = useContext(StudentContext);
 
   const { id_course } = useParams();
-
-  // const course = courses.find(course => course.id_course === Number(id_course));
-  // const lesson_course = lessons.filter(lesson => lesson.id_course === Number(id_course));
-  // const isMyCourse = myCourses.some(
-  //   (course) =>
-  //     course.id_course === Number(id_course) && course.id_student === Number(1)
-  // );
   const [detailCourse, setdetailCourse] = useState({
     name_course: "",
     description: "",
@@ -32,7 +22,7 @@ const CourseDetail = () => {
 
   useEffect(() => {
     const fetchDetailCourses = async () => {
-      const detailCourse = await authAxios.post('course/detail-course', { idCourse: id_course });
+      const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
       setdetailCourse(detailCourse.data.detailCourse);
       console.log(detailCourse.data.detailCourse);
       setIsMyCourse(detailCourse.data.isMyCourse);
@@ -89,7 +79,7 @@ const CourseDetail = () => {
               {listLesson.map((lesson) => (
                 <li key={lesson.id_lesson} className="lesson-item">
                   <Link to={`/coursedetail/${detailCourse.id_course}/lesson/${lesson.id_lesson}`} className="lesson-link">
-                    {lesson.name_lesson}
+                  {lesson.order_lesson}. {lesson.lesson_name}
                     <i className="fa fa-angle-right lesson-icon"></i>
                   </Link>
                 </li>

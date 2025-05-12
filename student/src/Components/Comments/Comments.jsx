@@ -1,62 +1,61 @@
-import React, { useContext, useState } from "react";
+import { useState, useEffect } from "react";
 import "./Comments.css";
-import { StudentContext } from "../../Context/Context";
 import { useParams } from "react-router-dom";
+import { authAxios, publicAxios } from "../../services/axios-instance";
+import { auth } from "../../services/firebase-config";
 
 const Comments = () => {
-    const {id_course} = useParams();
-    // const {comments,students} = useContext(StudentContext);
+    const { id_course } = useParams();
+    const [comments, setComments] = useState([]);
 
-    const [comments, setComments] = useState([
-        { id: 2, author: "Nguyễn Hoàng Bảo", text: "Nội dung chi tiết và dễ hiểu." },
-        { id: 3, author: "Phạm Quỳnh Anh", text: "Giảng viên dạy rất dễ hiểu, tôi rất thích!" },
-        { id: 4, author: "Trần Gia Huy", text: "Khóa học cung cấp đầy đủ kiến thức cơ bản." },
-    ]);
+    useEffect(() => {
+        const fetchAllComments = async () => {
+            const allComments = await publicAxios.post('/comment/get-all-comment-by-id-course', { idCourse: id_course });
+            setComments(allComments.data);
+        };
+        fetchAllComments(); // Gọi API khi component được mount
+    }, []); // gọi khi isPurchase bị thay đổi giá trị
 
     const [newComment, setNewComment] = useState("");
 
     // Xử lý khi gửi bình luận
-    const handleAddComment = () => {
+    const handleAddComment = async () => {
         if (newComment.trim() === "") return;
 
-        const newCommentObject = {
-            id: comments.length + 1,
-            author: "Bạn", // Tạm thời để tên là "Bạn"
-            text: newComment,
-        };
-
-        setComments([...comments, newCommentObject]);
-        setNewComment(""); // Reset textarea
+        await authAxios.post('/comment/create', { idCourse: id_course, content: newComment })
+        const allComments = await publicAxios.post('/comment/get-all-comment-by-id-course', { idCourse: id_course });
+        setComments(allComments.data);
+        setNewComment("");
     };
 
     return (
-            <div className="comments">
-                <h3 className="comments-header">Bình luận của học viên</h3>
-                {comments.map((comment) => (
-                    <div key={comment.id} className="comment">
-                        <div className="comment-avatar">
-                            <i className="fa-solid fa-user"></i>
-                        </div>
-                        <div className="comment-content">
-                            <p className="comment-author">{comment.author}</p>
-                            <p className="comment-text">{comment.text}</p>
-                        </div>
+        <div className="comments">
+            <h3 className="comments-header">Bình luận của học viên</h3>
+            {comments.map((comment) => (
+                <div key={comment.id_comment} className="comment">
+                    <div className="comment-avatar">
+                        <i className="fa-solid fa-user"></i>
                     </div>
-                ))}
-
-                {/* Phần thêm bình luận */}
-                <div className="add-comment-section">
-                    <textarea
-                        className="add-comment-textarea"
-                        placeholder="Viết bình luận của bạn..."
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                    ></textarea>
-                    <button className="add-comment-button" onClick={handleAddComment}>
-                        Gửi bình luận
-                    </button>
+                    <div className="comment-content">
+                        <p className="comment-author">{comment.name}</p>
+                        <p className="comment-text">{comment.comment}</p>
+                    </div>
                 </div>
+            ))}
+
+            {/* Phần thêm bình luận */}
+            <div className="add-comment-section">
+                <textarea
+                    className="add-comment-textarea"
+                    placeholder="Viết bình luận của bạn..."
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                ></textarea>
+                <button className="add-comment-button" onClick={handleAddComment}>
+                    Gửi bình luận
+                </button>
             </div>
+        </div>
     );
 };
 
