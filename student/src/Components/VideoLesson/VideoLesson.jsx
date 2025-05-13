@@ -1,14 +1,19 @@
 import React from "react";
 import "./VideoLesson.css";
 
-const LessonDetail = ({ title, description, videoUrl, onMarkAsDone }) => {
+const LessonDetail = ({ lecture }) => {
+  const { name_lecture, description, link_material } = lecture;
+  const onMarkAsDone = async () => {
+    return;
+  }
+
   return (
     <div className="lesson-detail">
-      <h1 className="lesson-title">{title}</h1>
+      <h1 className="lesson-title">{name_lecture}</h1>
       <p className="lesson-description">{description}</p>
       <div className="video-container">
         <iframe
-          src={videoUrl}
+          src={link_material}
           title="Lesson Video"
           allowFullScreen
         ></iframe>

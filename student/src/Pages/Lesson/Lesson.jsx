@@ -1,43 +1,63 @@
-import React, { useContext } from "react";
+import { useEffect, useState } from "react";
 import "./Lesson.css";
 import Sidebar from "../../Components/SideBar/SideBar";
 import VideoLesson from "../../Components/VideoLesson/VideoLesson";
 import Quiz from "../../Components/Quiz/Quiz";
 import { useParams } from "react-router-dom";
-import { StudentContext } from "../../Context/Context";
 import Result from "../../Components/Result/Result";
+import { authAxios, publicAxios } from "../../services/axios-instance";
 
 const Lesson = () => {
   const { id_lesson } = useParams();
-  const { lessons, results, quizzes } = useContext(StudentContext);
+  const [typeLesson, setTypeLesson] = useState("");
+  const [lecture, setLecture] = useState("");
+  const [quiz, setQuiz] = useState("");
+  const [isComplete, setIsComplete] = useState("");
+  // const { lessons, results, quizzes } = useContext(StudentContext);
+  // const lesson = lessons.find(
+  //   (lesson) => lesson.id_lesson === Number(id_lesson)
+  // );
+  // const CheckComplete = () => {
+  //   const currentQuiz = quizzes.find(
+  //     (quiz) => quiz.id_lesson === Number(id_lesson)
+  //   );
+  //   const isComplete = results.some(
+  //     (result) => result.id_quiz === Number(currentQuiz.id_quiz) && result.id_student === 1
+  //   );
+  //   return isComplete;
+  // }
 
-  const lesson = lessons.find(
-    (lesson) => lesson.id_lesson === Number(id_lesson)
-  );
-  const CheckComplete = () => {
-    
-    const currentQuiz = quizzes.find(
-      (quiz) => quiz.id_lesson === Number(id_lesson)
-    );
-    const isComplete = results.some(
-      (result) => result.id_quiz === Number(currentQuiz.id_quiz) && result.id_student === 1
-    );
-    return isComplete;
-  }
+  useEffect(() => {
+    const fetchInfoLesson = async () => {
+      const infoLesson = await authAxios.post('/lesson/get-info-lesson', { idLesson: id_lesson });
+      setTypeLesson(infoLesson.data.type_lesson);
 
+      const isComplete = await authAxios.post('/lesson/check-complete-lesson', { idLesson: id_lesson });
+      setIsComplete(isComplete.data.status);
+      console.log(isComplete.data.status);
+      
+      if(infoLesson.data.type_lesson === "quiz") {
+        const quiz = await publicAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
+        console.log(quiz.data);
+        setQuiz(quiz.data);
+      }else {
+        const lecture = await publicAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
+        console.log(lecture.data);
+        setLecture(lecture.data);
+      }
+    };
+    fetchInfoLesson(); // Gọi API khi component được mount
+  }, [id_lesson]); // gọi khi id_lesson bị thay đổi giá trị
 
   // Xử lý render component dựa trên type_lesson
   return (
     <div className="lesson-container">
       <Sidebar className="sidebar" />
       <div className="lesson">
-        {lesson.type_lesson === "quiz" ? (CheckComplete() ? (<Result />) : (<Quiz />)
+        {typeLesson === "quiz" ? (isComplete ? (<Result />) : (<Quiz />)
         ) : (
           <VideoLesson
-            title={lesson.name_lesson}
-            description={lesson.description}
-            videoUrl={lesson.link_material}
-            onMarkAsDone={false} // Thay đổi nếu có logic cho "Mark as Done"
+            lecture={lecture}
           />
         )}
       </div>
