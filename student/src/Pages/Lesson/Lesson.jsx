@@ -31,9 +31,9 @@ const Lesson = () => {
       const infoLesson = await authAxios.post('/lesson/get-info-lesson', { idLesson: id_lesson });
       setTypeLesson(infoLesson.data.type_lesson);
 
-      const isComplete = await authAxios.post('/lesson/check-complete-lesson', { idLesson: id_lesson });
-      setIsComplete(isComplete.data.status);
-      console.log(isComplete.data.status);
+      // const isComplete = await authAxios.post('/lesson/check-complete-lesson', { idLesson: id_lesson });
+      // setIsComplete(isComplete.data.status);
+      // console.log(isComplete.data.status);
       
       if(infoLesson.data.type_lesson === "quiz") {
         const quiz = await publicAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
@@ -52,7 +52,7 @@ const Lesson = () => {
     <div className="lesson-container">
       <Sidebar className="sidebar" />
       <div className="lesson">
-        {typeLesson === "quiz" ? (isComplete ? (<Result />) : (<Quiz />)
+        {typeLesson === "quiz" ? (true ? (<Result />) : (<Quiz />)
         ) : (
           <VideoLesson
             lecture={lecture}

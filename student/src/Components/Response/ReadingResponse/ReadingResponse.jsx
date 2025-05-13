@@ -1,25 +1,23 @@
-import React, { useContext } from "react";
 import "./ReadingResponse.css";
-import { StudentContext } from "../../../Context/Context";
 
-const ReadingResponse = ({ questions }) => {
+const ReadingResponse = ({ responseQuestions }) => {
 
-  const { responses } = useContext(StudentContext);
-  // Ghép Responses vào Question 
-  const responseQuestions = questions.map((question) => {
-    const matchedResponse = responses.find(
-      (response) => response.id_question === question.id_question && response.id_student === 1
-    );
-    const nullResponse =  { id_response: null, 
-      id_student: null, id_question: null, 
-      link_mp3: null, link_image: null, 
-      response: "", score: null, 
-      comment: "" }
-    return {
-      ...question, // Giữ lại dữ liệu cũ trong question
-      response: matchedResponse ? matchedResponse : nullResponse // Thêm điểm từ response
-    };
-  });
+  // const { responses } = useContext(StudentContext);
+  // // Ghép Responses vào Question 
+  // const responseQuestions = questions.map((question) => {
+  //   const matchedResponse = responses.find(
+  //     (response) => response.id_question === question.id_question && response.id_student === 1
+  //   );
+  //   const nullResponse =  { id_response: null, 
+  //     id_student: null, id_question: null, 
+  //     link_mp3: null, link_image: null, 
+  //     response: "", score: null, 
+  //     comment: "" }
+  //   return {
+  //     ...question, // Giữ lại dữ liệu cũ trong question
+  //     response: matchedResponse ? matchedResponse : nullResponse // Thêm điểm từ response
+  //   };
+  // });
 
   return (
     <div className="reading-result">
@@ -37,7 +35,7 @@ const ReadingResponse = ({ questions }) => {
                     type="radio"
                     name={`question-${responseQuestion.id_question}`}
                     value={option}
-                    checked={option === responseQuestion.response.response} // Đáp án đã chọn
+                    checked={option === responseQuestion?.response?.response} // Đáp án đã chọn
                     disabled // Vô hiệu hóa các lựa chọn
                   />
                   {option}
@@ -48,7 +46,7 @@ const ReadingResponse = ({ questions }) => {
 
           {/* Hiển thị đáp án và giải thích */}
           <div className="explanation-container">
-            {responseQuestion.response.response === responseQuestion.answer ?
+            {responseQuestion?.response?.response === responseQuestion.answer ?
               (<p className="correct-answer">
                 <strong>Correct Response </strong>
               </p>) : (<p className="wrong-answer">
@@ -60,7 +58,7 @@ const ReadingResponse = ({ questions }) => {
               </p>
             <p className="answer-explanation">
               <strong>Explanation: </strong>
-              {responseQuestion.response.comment}
+              {responseQuestion.response?.comment}
             </p>
           </div>
         </div>
