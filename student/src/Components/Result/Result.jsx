@@ -1,25 +1,40 @@
-import React, { useContext } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReadingResponse from './../Response/ReadingResponse/ReadingResponse';
 import ListeningResponse from "./../Response/ListeningResponse/ListeningResponse";
 import WritingResponse from "./../Response/WritingResponse/WritingResponse";
 import SpeakingResponse from "./../Response/SpeakingResponse/SpeakingResponse";
 
-import { StudentContext } from "../../Context/Context";
 import "./Result.css";
+import { publicAxios } from "../../services/axios-instance";
 
 const Result = () => {
   const { id_course, id_lesson } = useParams();
-  const { quizzes, questions } = useContext(StudentContext);
+  const [result, setResult] = useState();
+  const [respones, setResponses] = useState([]);
+  // const { quizzes, questions } = useContext(StudentContext);
 
-  // Tìm quiz hiện tại và các câu hỏi liên quan
-  const currentQuiz = quizzes.find(
-    (quiz) => quiz.id_lesson === Number(id_lesson)
-  );
+  // // Tìm quiz hiện tại và các câu hỏi liên quan
+  // const currentQuiz = quizzes.find(
+  //   (quiz) => quiz.id_lesson === Number(id_lesson)
+  // );
 
-  const relatedQuestions = questions.filter(
-    (question) => question.id_quiz === currentQuiz?.id_quiz
-  );
+  // const relatedQuestions = questions.filter(
+  //   (question) => question.id_quiz === currentQuiz?.id_quiz
+  // );
+
+  useEffect(() => {
+    const fetchResponse = async () => {
+
+      const result = await publicAxios.post('/result/get-result-by-id-lesson', { idLesson: id_lesson });
+      setResult(result.data);
+      const response = await publicAxios.post('/respone/get-response-by-id-result', { idResult: result.data.id_result });
+      setResponses(response.data);
+      // setListLesson(response.data)
+      // console.log(response.data)
+    };
+    fetchResponse(); // Gọi API khi component được mount
+  }, [id_lesson]); // gọi khi isPurchase bị thay đổi giá trị
 
   return (
     <div className="result-page-container">

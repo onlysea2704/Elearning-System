@@ -11,7 +11,6 @@ const Lesson = () => {
   const { id_lesson } = useParams();
   const [typeLesson, setTypeLesson] = useState("");
   const [lecture, setLecture] = useState("");
-  const [quiz, setQuiz] = useState("");
   const [isComplete, setIsComplete] = useState("");
   // const { lessons, results, quizzes } = useContext(StudentContext);
   // const lesson = lessons.find(
@@ -39,7 +38,6 @@ const Lesson = () => {
       if(infoLesson.data.type_lesson === "quiz") {
         const quiz = await publicAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
         console.log(quiz.data);
-        setQuiz(quiz.data);
       }else {
         const lecture = await publicAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
         console.log(lecture.data);
