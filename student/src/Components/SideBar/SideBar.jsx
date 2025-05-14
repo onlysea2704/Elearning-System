@@ -14,7 +14,7 @@ const Sidebar = () => {
       console.log(response.data)
     };
     fetchDetailCourses(); // Gọi API khi component được mount
-  }, []); // gọi khi isPurchase bị thay đổi giá trị
+  }, [id_course]); // gọi khi isPurchase bị thay đổi giá trị
 
   return (
     <div className="sidebar">

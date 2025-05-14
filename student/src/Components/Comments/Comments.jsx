@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./Comments.css";
 import { useParams } from "react-router-dom";
 import { authAxios, publicAxios } from "../../services/axios-instance";
-import { auth } from "../../services/firebase-config";
 
 const Comments = () => {
     const { id_course } = useParams();
