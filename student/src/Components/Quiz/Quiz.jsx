@@ -26,7 +26,6 @@ const Quiz = () => {
       setInfoQuiz(infoQuiz.data);
 
       const result = await authAxios.post('/question/get-all-question-by-quiz-id', { idQuiz: infoQuiz.data.id_quiz });
-      console.log(result.data);
       const questions = result.data.map(q => ({
         ...q,
         options: [q.option_1, q.option_2, q.option_3, q.option_4]
@@ -46,13 +45,58 @@ const Quiz = () => {
     const updatedAnswers = [...answers];
     updatedAnswers[questionIndex] = answerValue;
     setAnswers(updatedAnswers);
-    console.log()
   };
 
-  const handleSubmit = () => {
-    console.log("Submitted Answers:", answers);
-    alert("Quiz submitted! Check console for answers.");
+  // const handleSubmit = () => {
+  //   console.log("Submitted Answers:", answers);
+  //   alert("Quiz submitted! Check console for answers.");
+  // };
+
+  const handleSubmit = async () => {
+    if (answers.includes(null)) {
+      alert("Please answer all questions before submitting.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("id_quiz", infoQuiz.id_quiz);
+
+    questions.forEach((question, index) => {
+      const answer = answers[index];
+      if (question.type_question === "speaking" && answer instanceof File) {
+        formData.append(`files`, answer); // gửi file mp3
+        formData.append(`answers[${index}][id_question]`, question.id_question);
+        formData.append(`answers[${index}][answer]`, answer.name); // hoặc mã định danh
+      } else {
+        formData.append(`answers[${index}][id_question]`, question.id_question);
+        formData.append(`answers[${index}][answer]`, answer);
+      }
+    });
+
+    // In FormData trước khi gửi
+    for (let [key, value] of formData.entries()) {
+      if (value instanceof File) {
+        console.log(`${key}: File name = ${value.name}, type = ${value.type}`);
+      } else {
+        console.log(`${key}: ${value}`);
+      }
+    }
+
+    try {
+      const response = await authAxios.post('/lesson/submit-answers', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log("Submission Response:", response.data);
+      alert("Quiz submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting quiz:", error.message);
+      alert("Failed to submit quiz. Please try again.");
+    }
   };
+
 
   // Render câu hỏi dựa trên loại quiz
   const renderQuestions = () => {

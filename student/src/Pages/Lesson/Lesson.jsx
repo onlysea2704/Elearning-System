@@ -52,7 +52,7 @@ const Lesson = () => {
     <div className="lesson-container">
       <Sidebar className="sidebar" />
       <div className="lesson">
-        {typeLesson === "quiz" ? (true ? (<Result />) : (<Quiz />)
+        {typeLesson === "quiz" ? (false ? (<Result />) : (<Quiz />)
         ) : (
           <VideoLesson
             lecture={lecture}
