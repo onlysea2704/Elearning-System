@@ -13,17 +13,7 @@ const Result = () => {
   const [result, setResult] = useState();
   // const [respones, setResponses] = useState([]);
   const [responesQuestions, setresponesQuestions] = useState([]);
-  const type_quiz = "reading";
-  // const { quizzes, questions } = useContext(StudentContext);
-
-  // // Tìm quiz hiện tại và các câu hỏi liên quan
-  // const currentQuiz = quizzes.find(
-  //   (quiz) => quiz.id_lesson === Number(id_lesson)
-  // );
-
-  // const relatedQuestions = questions.filter(
-  //   (question) => question.id_quiz === currentQuiz?.id_quiz
-  // );
+  const type_quiz = "writing";
 
   useEffect(() => {
     const fetchResponse = async () => {

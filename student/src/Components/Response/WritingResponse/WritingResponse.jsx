@@ -21,15 +21,15 @@ const writingData = [
   },
 ];
 
-const WritingResponse = () => {
+const WritingResponse = ({ responseQuestions }) => {
   return (
     <div className="writing-response-container">
-      {writingData.map((item, index) => (
-        <div key={item.id_question} className="writing-response-block">
+      {responseQuestions.map((responseQuestion, index) => (
+        <div key={responseQuestion.id_question} className="writing-response-block">
           {/* Nội dung câu hỏi */}
           <div className="writing-question-content">
             <h3>Câu hỏi {index + 1}:</h3>
-            <p>{item.content}</p>
+            <p>{responseQuestion.question}</p>
           </div>
 
           {/* Đoạn văn của học sinh */}
@@ -37,16 +37,16 @@ const WritingResponse = () => {
             <h4>Bài làm của học sinh:</h4>
             <textarea
               className="student-answer"
-              value={item.studentAnswer}
+              value={responseQuestion?.response?.response}
               readOnly
             />
           </div>
 
           {/* Feedback của giáo viên */}
           <div className="teacher-feedback">
-            <h4>Điểm: {item.score}</h4>
+            <h4>Điểm: {responseQuestion?.response?.score}</h4>
             <h4>Nhận xét của giáo viên:</h4>
-            <p>{item.feedback}</p>
+            <p>{responseQuestion.question.comment}</p>
           </div>
         </div>
       ))}

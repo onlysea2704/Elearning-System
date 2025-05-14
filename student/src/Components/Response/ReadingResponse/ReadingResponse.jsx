@@ -2,23 +2,6 @@ import "./ReadingResponse.css";
 
 const ReadingResponse = ({ responseQuestions }) => {
 
-  // const { responses } = useContext(StudentContext);
-  // // Ghép Responses vào Question 
-  // const responseQuestions = questions.map((question) => {
-  //   const matchedResponse = responses.find(
-  //     (response) => response.id_question === question.id_question && response.id_student === 1
-  //   );
-  //   const nullResponse =  { id_response: null, 
-  //     id_student: null, id_question: null, 
-  //     link_mp3: null, link_image: null, 
-  //     response: "", score: null, 
-  //     comment: "" }
-  //   return {
-  //     ...question, // Giữ lại dữ liệu cũ trong question
-  //     response: matchedResponse ? matchedResponse : nullResponse // Thêm điểm từ response
-  //   };
-  // });
-
   return (
     <div className="reading-result">
       {responseQuestions.map((responseQuestion) => (
