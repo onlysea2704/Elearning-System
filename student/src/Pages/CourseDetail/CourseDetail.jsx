@@ -20,6 +20,12 @@ const CourseDetail = () => {
   const [listLesson, setListLesson] = useState([])
   const [isMyCourse, setIsMyCourse] = useState()
 
+  const createBill = async() => {
+    const result = await authAxios.post('/payment/create-bill', {idCourse: id_course})
+    window.open( `${result.data.order_url}`, "_blank");
+    console.log(result.data)
+  }
+
   useEffect(() => {
     const fetchDetailCourses = async () => {
       const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
@@ -69,7 +75,7 @@ const CourseDetail = () => {
               {detailCourse.description}
             </p>
             {isMyCourse ? (<Link to={`/progress/${id_course}`} className="buy-button">Xem tiến độ học tập</Link>)
-              : (<Link to={`/checkout/${id_course}`} className="buy-button">Mua khóa học</Link>)}
+              : (<div to={`/checkout/${id_course}`} className="buy-button" onClick={createBill}>Mua khóa học</div>)}
           </div>
 
           {/* Phần bên phải */}

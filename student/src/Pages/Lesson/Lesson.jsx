@@ -12,19 +12,6 @@ const Lesson = () => {
   const [typeLesson, setTypeLesson] = useState("");
   const [lecture, setLecture] = useState("");
   const [isComplete, setIsComplete] = useState("");
-  // const { lessons, results, quizzes } = useContext(StudentContext);
-  // const lesson = lessons.find(
-  //   (lesson) => lesson.id_lesson === Number(id_lesson)
-  // );
-  // const CheckComplete = () => {
-  //   const currentQuiz = quizzes.find(
-  //     (quiz) => quiz.id_lesson === Number(id_lesson)
-  //   );
-  //   const isComplete = results.some(
-  //     (result) => result.id_quiz === Number(currentQuiz.id_quiz) && result.id_student === 1
-  //   );
-  //   return isComplete;
-  // }
 
   useEffect(() => {
     const fetchInfoLesson = async () => {
