@@ -10,19 +10,18 @@ import { authAxios, publicAxios } from "../../services/axios-instance";
 
 const Result = () => {
   const { id_course, id_lesson } = useParams();
-  const [responesQuestions, setresponesQuestions] = useState([]);
-  const type_quiz = "writing";
+  const [responseQuestions, setresponseQuestions] = useState([]);
 
   useEffect(() => {
     const fetchResponse = async () => {
 
       const result = await authAxios.post('/result/get-result-by-id-lesson', { idLesson: id_lesson });
-      console.log(1234, result.data);
       if (!result.data) {
+        setresponseQuestions([])
         return;
       }
       console.log(result.data);
-      setresponesQuestions(result.data);      
+      setresponseQuestions(result.data);
     };
     fetchResponse(); // Gọi API khi component được mount
   }, [id_lesson]); // gọi khi isPurchase bị thay đổi giá trị
@@ -30,12 +29,30 @@ const Result = () => {
   return (
     <div className="result-page-container">
       <div className="result-header">
-        <h1 className="result-title"> Results for: {responesQuestions?.name_quiz}</h1>
-        <div className="result-score">Score: {responesQuestions?.score ?? 0} / 100</div>
+        <h1 className="result-title"> Results for: {responseQuestions?.name_quiz}</h1>
+        <div className="result-score">Score: {responseQuestions?.score ?? 0} / 100</div>
       </div>
 
       <div className="result-content">
-        {type_quiz === "reading" && (
+        {
+          responseQuestions.map((responseQuestion, index) => (
+            <div>
+              {responseQuestion.type_question === "reading" && (
+                <ReadingResponse responseQuestion={responseQuestion} />
+              )}
+              {responseQuestion.type_question === "listening" && (
+                <ListeningResponse responseQuestion={responseQuestion} />
+              )}
+              {responseQuestion.type_question === "writing" && (
+                <WritingResponse responseQuestion={responseQuestion} />
+              )}
+              {responseQuestion.type_question === "speaking" && (
+                <SpeakingResponse responseQuestion={responseQuestion} />
+              )}
+            </div>
+          ))
+        }
+        {/* {type_quiz === "reading" && (
           <ReadingResponse responseQuestions={responesQuestions} />
         )}
         {type_quiz === "listening" && (
@@ -46,7 +63,9 @@ const Result = () => {
         )}
         {type_quiz === "speaking" && (
           <SpeakingResponse responseQuestions={responesQuestions} />
-        )}
+        )} */}
+
+
       </div>
 
       <Link to={`/coursedetail/${id_course}/lesson/${Number(id_lesson) + 1}`} className="result-back-button">

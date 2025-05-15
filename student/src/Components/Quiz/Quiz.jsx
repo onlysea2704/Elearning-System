@@ -59,7 +59,7 @@ const Quiz = () => {
     }
 
     const formData = new FormData();
-    formData.append("id_quiz", infoQuiz.id_quiz);
+    formData.append("idLesson", id_lesson);
 
     questions.forEach((question, index) => {
       const answer = answers[index];
