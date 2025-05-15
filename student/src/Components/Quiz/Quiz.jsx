@@ -69,7 +69,12 @@ const Quiz = () => {
         formData.append(`answers[${index}][answer]`, answer.name); // hoặc mã định danh
       } else {
         formData.append(`answers[${index}][id_question]`, question.id_question);
-        formData.append(`answers[${index}][answer]`, answer);
+
+        let answerValue = answer;
+        if ((question.type_question === "reading" || question.type_question === "listening") && typeof answer === "number") {
+          answerValue = question.options[answer]; // chuyển từ số thứ tự thành nội dung
+        }
+        formData.append(`answers[${index}][answer]`, answerValue);
       }
     });
 
