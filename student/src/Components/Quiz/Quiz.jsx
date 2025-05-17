@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./Quiz.css";
 import ReadingQuestion from "../Question/ReadingQuestion/ReadingQuestion";
 import ListeningQuestion from "../Question/ListeningQuestion/ListeningQuestion";
@@ -6,12 +6,13 @@ import WritingQuestion from "../Question/WritingQuestion/WritingQuestion";
 import SpeakingQuestion from "../Question/SpeakingQuestion/SpeakingQuestion";
 import { useParams } from "react-router-dom";
 import { authAxios, publicAxios } from "../../services/axios-instance";
+import { StudentContext } from "../../Context/Context";
 
 const Quiz = () => {
   const { id_lesson } = useParams();
   const [infoQuiz, setInfoQuiz] = useState("");
   const [questions, setQuestions] = useState([]);
-
+  const { statusLesson, setStatusLesson } = useContext(StudentContext);
   useEffect(() => {
     const fetchQuiz = async () => {
       const infoQuiz = await publicAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
@@ -33,8 +34,10 @@ const Quiz = () => {
       setQuestions(questions);
 
     };
-    fetchQuiz(); // Gọi API khi component được mount
-  }, [id_lesson]); // gọi khi id_lesson bị thay đổi giá trị
+    if (statusLesson === 'quiz') {
+      fetchQuiz();
+    }
+  }, [statusLesson]); // gọi khi id_lesson bị thay đổi giá trị
 
   // State quản lý câu trả lời
   const [answers, setAnswers] = useState(
@@ -96,6 +99,7 @@ const Quiz = () => {
 
       console.log("Submission Response:", response.data);
       alert("Quiz submitted successfully!");
+      setStatusLesson('result');
     } catch (error) {
       console.error("Error submitting quiz:", error.message);
       alert("Failed to submit quiz. Please try again.");

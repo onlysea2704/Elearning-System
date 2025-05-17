@@ -41,7 +41,7 @@ const Navbar = () => {
             <Link to="/explore-course">Khám Phá</Link>
           </li>
           <li>
-            <Link to="/coursedetail/0/lesson/15">Kiểm tra đầu vào</Link>
+            <Link to="/coursedetail/21">Kiểm tra đầu vào</Link>
           </li>
           <li>
             <Link to="/login">Đăng nhập</Link>

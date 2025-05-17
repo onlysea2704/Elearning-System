@@ -124,7 +124,7 @@
 .lessons {
   list-style: none;
   padding: 0;
-  max-height: 300px; /* Giới hạn chiều cao */
+  max-height: 380px; /* Giới hạn chiều cao */
   overflow-y: auto; /* Thêm thanh cuộn nếu quá nhiều bài học */
 }
 

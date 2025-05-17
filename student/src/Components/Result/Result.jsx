@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReadingResponse from './../Response/ReadingResponse/ReadingResponse';
 import ListeningResponse from "./../Response/ListeningResponse/ListeningResponse";
@@ -6,12 +6,13 @@ import WritingResponse from "./../Response/WritingResponse/WritingResponse";
 import SpeakingResponse from "./../Response/SpeakingResponse/SpeakingResponse";
 
 import "./Result.css";
-import { authAxios, publicAxios } from "../../services/axios-instance";
+import { authAxios } from "../../services/axios-instance";
+import { StudentContext } from "../../Context/Context";
 
 const Result = () => {
   const { id_course, id_lesson } = useParams();
   const [responseQuestions, setresponseQuestions] = useState([]);
-
+  const { statusLesson } = useContext(StudentContext)
   useEffect(() => {
     const fetchResponse = async () => {
 
@@ -23,8 +24,10 @@ const Result = () => {
       console.log(result.data);
       setresponseQuestions(result.data);
     };
-    fetchResponse(); // Gọi API khi component được mount
-  }, [id_lesson]); // gọi khi isPurchase bị thay đổi giá trị
+    if (statusLesson === 'result') {
+      fetchResponse();
+    }
+  }, [statusLesson]); // gọi khi isPurchase bị thay đổi giá trị
 
   return (
     <div className="result-page-container">

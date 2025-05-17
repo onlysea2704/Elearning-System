@@ -28,6 +28,9 @@ const LoginForm = () => {
     const userInfo = await authAxios.get('/student/info');
     setNameStudent(userInfo.data.name);
     setAvatarStudent(userInfo.data.link_image);
+    // cần lưu vào localStorage vì khi reload lại trang thì các context state sẽ bị xóa sạch
+    localStorage.setItem('username', userInfo.data.name);
+    localStorage.setItem('link_avatar', userInfo.data.link_image);
     console.log(userInfo.data);
     console.log(userInfo.data.link_image);
     alert("đăng nhập thành công");

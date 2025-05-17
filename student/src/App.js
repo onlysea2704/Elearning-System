@@ -11,14 +11,12 @@ import ChangePassword from "./Pages/ChangePassword/ChangePassword";
 import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
 import Checkout from "./Pages/Checkout/Checkout";
 import Progress from "./Pages/Progress/Progress";
-// import AdminLogin from "./Pages/AdminLogin/AdminLogin";
 
 function App() {
   return (
     <Router>
       <Navbar />
       <Routes>
-        {/* <Route path="/admin-login" element={<AdminLogin/>}/> */}
         <Route path="/" element={<Home />} />
         <Route path="/lesson" element={<Lesson />} />
         <Route path="/my-course" element={<CategoryCourse isPurchase={true}/>} />

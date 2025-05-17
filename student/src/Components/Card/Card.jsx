@@ -1,4 +1,3 @@
-import React from "react";
 import "./Card.css";
 import { Link } from "react-router-dom";
 
@@ -14,7 +13,7 @@ const CourseCard = ({ course, type }) => {
         <h3 className="course-card-title">
           {course.name_course}
         </h3>
-        <p className="course-card-price">{course.price}</p>
+        <p className="course-card-price"> {Number(course.price).toLocaleString('vi-VN', { maximumFractionDigits: 0 })} ₫</p>
         <div className="course-card-info">
           <span className="course-card-lessons">
             <i className="fas fa-book"></i> {course.number_lesson} bài học

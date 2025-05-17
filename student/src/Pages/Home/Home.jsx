@@ -1,20 +1,24 @@
 // File: LandingPage.jsx
-import React, { useContext } from "react";
+import { useEffect, useState } from "react";
 import "./Home.css";
 import Hero from "../../Components/Hero/Hero";
 import Features from "../../Components/Features/Features";
 import Card from "../../Components/Card/Card"
 import Footer from "../../Components/Footer/Footer";
-import { StudentContext } from "../../Context/Context";
+import { publicAxios } from "../../services/axios-instance";
 
 const Home = () => {
-  const { courses } = useContext(StudentContext);
 
-  // Sắp xếp mảng theo giá trị x giảm dần
-  courses.sort((a, b) => b.number_student - a.number_student);
+  const [popularCourses, setPopularCourses] = useState([])
+  useEffect(() => {
+    const loadPopularCourses = async () => {
+      const courses = await publicAxios('/course/get-popular-courses')
+      setPopularCourses(courses.data);
+      console.log(courses.data)
+    }
+    loadPopularCourses();
+  }, []);
 
-  // Lấy 4 phần tử có giá trị x lớn nhất
-  let popularCourses = courses.slice(0, 4);
   return (
     <>
       <div className="landing-container">
