@@ -64,8 +64,6 @@ const Result = () => {
         {type_quiz === "speaking" && (
           <SpeakingResponse responseQuestions={responesQuestions} />
         )} */}
-
-
       </div>
 
       <Link to={`/coursedetail/${id_course}/lesson/${Number(id_lesson) + 1}`} className="result-back-button">

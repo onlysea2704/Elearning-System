@@ -21,9 +21,9 @@ const WritingResponse = ({ responseQuestion }) => {
 
           {/* Feedback của giáo viên */}
           <div className="teacher-feedback">
-            <h4>Điểm: {responseQuestion.response.score}</h4>
+            <h4>Điểm: {responseQuestion?.response?.score}</h4>
             <h4>Nhận xét của giáo viên:</h4>
-            <p>{responseQuestion.response.comment}</p>
+            <p>{responseQuestion?.response?.comment}</p>
           </div>
         </div>
     </div>

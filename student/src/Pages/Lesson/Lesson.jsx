@@ -22,14 +22,14 @@ const Lesson = () => {
       setIsComplete(isComplete.data.status);
       console.log(isComplete.data.status);
       
-      if(infoLesson.data.type_lesson === "quiz") {
-        const quiz = await publicAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
-        console.log(quiz.data);
-      }else {
-        const lecture = await publicAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
-        console.log(lecture.data);
-        setLecture(lecture.data);
-      }
+      // if(infoLesson.data.type_lesson === "quiz") {
+      //   const quiz = await publicAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
+      //   console.log(quiz.data);
+      // }else {
+      //   const lecture = await publicAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
+      //   console.log(lecture.data);
+      //   setLecture(lecture.data);
+      // }
     };
     fetchInfoLesson(); // Gọi API khi component được mount
   }, [id_lesson]); // gọi khi id_lesson bị thay đổi giá trị
