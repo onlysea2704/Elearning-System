@@ -46,8 +46,7 @@ const ListeningResponse = ({ responseQuestion }) => {
             <p>Correct Answer: {responseQuestion?.answer}</p>
           </p>
           <p className="answer-explanation">
-            <p>Explanation: </p>
-            {responseQuestion?.response?.comment}
+            Explanation: {responseQuestion?.interpret}
           </p>
         </div>
       </div>

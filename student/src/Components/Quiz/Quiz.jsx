@@ -7,15 +7,18 @@ import SpeakingQuestion from "../Question/SpeakingQuestion/SpeakingQuestion";
 import { useParams } from "react-router-dom";
 import { authAxios, publicAxios } from "../../services/axios-instance";
 import { StudentContext } from "../../Context/Context";
+import Popup from "../Popup/Popup";
 
 const Quiz = () => {
   const { id_lesson } = useParams();
   const [infoQuiz, setInfoQuiz] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const { statusLesson, setStatusLesson } = useContext(StudentContext);
   useEffect(() => {
     const fetchQuiz = async () => {
-      const infoQuiz = await publicAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
+      const infoQuiz = await authAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
 
       // Vì sẽ chạy lại mỗi lần id_lesson thay đổi nên có thể idLesson là của lecture không phải của quiz 
       // => nếu không phải của quiz thì ko có dữ liệu => nếu chạy thì sẽ bị lỗi undefined id_quiz 
@@ -50,13 +53,9 @@ const Quiz = () => {
     setAnswers(updatedAnswers);
   };
 
-  // const handleSubmit = () => {
-  //   console.log("Submitted Answers:", answers);
-  //   alert("Quiz submitted! Check console for answers.");
-  // };
-
   const handleSubmit = async () => {
-    if (answers.includes(null)) {
+    console.log(answers)
+    if (answers.includes(undefined) || answers.length !== questions.length) {
       alert("Please answer all questions before submitting.");
       return;
     }
@@ -91,21 +90,33 @@ const Quiz = () => {
     }
 
     try {
+      setLoading(true)
       const response = await authAxios.post('/lesson/submit-answers', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
+      // Cố tình làm chậm thời gian chấm bài listening và reading
+      // Vì thời gian chấm rất nhanh gần như lập tức
+      // Nhưng mình muốn nó hiện cái Loading cho mọi người thấy đẹp :)))))
+      if (Number(id_lesson) % 4 === 0) {
+        setTimeout(() => {
+          setLoading(false);
+          window.location.reload();
+        }, 3000);
+      } else {
+        setLoading(false);
+        window.location.reload();
+      }
       console.log("Submission Response:", response.data);
-      alert("Quiz submitted successfully!");
-      setStatusLesson('result');
+      // setStatusLesson('lecture');
+      // không hiểu sao setStatusLesson thì nó lại không trigger api lấy kết quả về 
+      // => giải pháp tạm thời là reload lại trang 
     } catch (error) {
       console.error("Error submitting quiz:", error.message);
       alert("Failed to submit quiz. Please try again.");
     }
   };
-
 
   // Render câu hỏi dựa trên loại quiz
   const renderQuestions = () => {
@@ -143,15 +154,19 @@ const Quiz = () => {
   };
 
   return (
-    <div className="quiz-page-container">
-      <div className="quiz-header">
-        <h1 className="quiz-title">{infoQuiz?.name_quiz}</h1>
+    <>
+
+      <div className="quiz-page-container">
+        <div className="quiz-header">
+          <h1 className="quiz-title">{infoQuiz?.name_quiz}</h1>
+        </div>
+        <div className="quiz-content">{renderQuestions()}</div>
+        <button className="quiz-submit-button" onClick={handleSubmit}>
+          Submit Quiz
+        </button>
       </div>
-      <div className="quiz-content">{renderQuestions()}</div>
-      <button className="quiz-submit-button" onClick={handleSubmit}>
-        Submit Quiz
-      </button>
-    </div>
+      {loading && <Popup type='send-answer' />}
+    </>
   );
 };
 

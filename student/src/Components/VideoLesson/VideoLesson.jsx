@@ -16,7 +16,7 @@ const LessonDetail = () => {
       const isComplete = await authAxios.post('/lesson/check-complete-lesson', { idLesson: id_lesson });
       console.log(isComplete.data.status);
 
-      const lecture = await publicAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
+      const lecture = await authAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
       if (!lecture.data) {
         return;
       }

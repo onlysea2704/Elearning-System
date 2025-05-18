@@ -4,6 +4,7 @@ import Footer from "../../Components/Footer/Footer";
 import { authAxios } from "../../services/axios-instance";
 import { useNavigate } from "react-router-dom";
 import { StudentContext } from '../../Context/Context';
+import Popup from "../../Components/Popup/Popup";
 
 const ProfileEdit = () => {
 
@@ -16,6 +17,7 @@ const ProfileEdit = () => {
     });
     const [avatarUrl, setAvatarUrl] = useState('');
     const [avatar, setAvatar] = useState(null);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { setNameStudent, setAvatarStudent } = useContext(StudentContext)
 
@@ -55,6 +57,7 @@ const ProfileEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
 
         // Tạo FormData để gửi cả file và JSON
         const formData = new FormData();
@@ -64,14 +67,15 @@ const ProfileEdit = () => {
             formData.append('avatar', avatar);
         }
 
-        await authAxios.put('http://localhost:5000/student/update', formData, {
+        await authAxios.put('/student/update', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
         });
         const userInfo = await authAxios.get('/student/info');
-            setNameStudent(userInfo.data.name);
-            setAvatarStudent(userInfo.data.link_image);
+        setNameStudent(userInfo.data.name);
+        setAvatarStudent(userInfo.data.link_image);
+        setLoading(false)
         navigate("/");
     };
 
@@ -164,6 +168,7 @@ const ProfileEdit = () => {
                 </div>
             </div>
             <Footer />
+            {loading && <Popup type='edit-inform' />}
         </>
     );
 };

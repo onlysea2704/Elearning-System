@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth } from '../../services/firebase-config';
 import Footer from "../../Components/Footer/Footer"
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { publicAxios } from '../../services/axios-instance';
 import axios from 'axios';
+import Popup from '../../Components/Popup/Popup';
 
 const RegisterForm = () => {
   const [avatar, setAvatar] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     name: '',
     age: '',
@@ -24,6 +25,7 @@ const RegisterForm = () => {
   const register = async (user) => {
     try {
       const { email, password } = user;
+      setLoading(true)
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const uid = userCredential.user.uid;
       const studentInfo = { ...user, firebase_user_id: uid }
@@ -40,8 +42,8 @@ const RegisterForm = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      alert("Đăng ký thành công!");
+      setLoading(false)
+      // alert("Đăng ký thành công!");
       navigate("/login");
     } catch (error) {
       alert("Lỗi đăng ký: " + error.message);
@@ -126,6 +128,7 @@ const RegisterForm = () => {
         </div>
       </div>
       <Footer />
+      {loading && <Popup type='signup' />}
     </>
   );
 };

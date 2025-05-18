@@ -9,7 +9,6 @@ import Home from "./Pages/Home/Home";
 import Lesson from "./Pages/Lesson/Lesson";
 import ChangePassword from "./Pages/ChangePassword/ChangePassword";
 import ProfileEdit from "./Pages/ProfileEdit/ProfileEdit";
-import Checkout from "./Pages/Checkout/Checkout";
 import Progress from "./Pages/Progress/Progress";
 
 function App() {
@@ -29,7 +28,6 @@ function App() {
         </Route>
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/profile-edit" element={<ProfileEdit />} />
-        <Route path="/checkout/:id_course" element={<Checkout />} />
         <Route path="/progress/:id_course" element={<Progress />} />
       </Routes>
     </Router>

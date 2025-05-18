@@ -32,7 +32,7 @@ const CourseDetail = () => {
       setdetailCourse(detailCourse.data.detailCourse);
       console.log(detailCourse.data.detailCourse);
       setIsMyCourse(detailCourse.data.isMyCourse);
-      const response2 = await authAxios.post('/lesson/get-lessons-by-id-course', { idCourse: id_course });
+      const response2 = await authAxios.post('/lesson/get-list-lessons-by-id-course', { idCourse: id_course });
       setListLesson(response2.data)
       console.log(response2.data)
     };

@@ -27,8 +27,8 @@ const Result = () => {
     if (statusLesson === 'result') {
       fetchResponse();
     }
-  }, [statusLesson]); // gọi khi isPurchase bị thay đổi giá trị
-
+  }, [statusLesson]);
+  
   return (
     <div className="result-page-container">
       <div className="result-header">

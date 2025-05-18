@@ -9,7 +9,7 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchDetailCourses = async () => {
 
-      const response = await publicAxios.post('/lesson/get-lessons-by-id-course', { idCourse: id_course });
+      const response = await publicAxios.post('/lesson/get-list-lessons-by-id-course', { idCourse: id_course });
       setListLesson(response.data)
       console.log(response.data)
     };

@@ -21,7 +21,10 @@ const Comments = () => {
     const handleAddComment = async () => {
         if (newComment.trim() === "") return;
 
-        await authAxios.post('/comment/create', { idCourse: id_course, content: newComment })
+        const result = await authAxios.post('/comment/create', { idCourse: id_course, content: newComment });
+        if(!result.data.status){
+            alert(result.data.message)
+        }
         const allComments = await publicAxios.post('/comment/get-all-comment-by-id-course', { idCourse: id_course });
         setComments(allComments.data);
         setNewComment("");
