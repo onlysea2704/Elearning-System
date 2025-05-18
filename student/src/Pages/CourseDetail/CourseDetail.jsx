@@ -30,11 +30,10 @@ const CourseDetail = () => {
     const fetchDetailCourses = async () => {
       const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
       setdetailCourse(detailCourse.data.detailCourse);
-      console.log(detailCourse.data.detailCourse);
       setIsMyCourse(detailCourse.data.isMyCourse);
+      console.log(detailCourse.data.isMyCourse);
       const response2 = await authAxios.post('/lesson/get-list-lessons-by-id-course', { idCourse: id_course });
-      setListLesson(response2.data)
-      console.log(response2.data)
+      setListLesson(response2.data);
     };
     fetchDetailCourses(); // Gọi API khi component được mount
   }, []); // gọi khi isPurchase bị thay đổi giá trị

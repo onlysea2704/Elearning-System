@@ -1,25 +1,26 @@
-import React, { useContext, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer, Tooltip } from "recharts";
 import './Progress.css';
 import { Link, useParams } from 'react-router-dom';
-import { StudentContext } from '../../Context/Context';
 import Footer from '../../Components/Footer/Footer';
+import { authAxios, publicAxios } from '../../services/axios-instance';
 
 const Progress = () => {
-    const { courses, lessons, progress } = useContext(StudentContext);
     const { id_course } = useParams();
-    const course = courses.find(course => course.id_course === Number(id_course));
-    const lessons_course = lessons.filter(lesson => lesson.id_course === Number(id_course));
-
-    const lessons_status = lessons_course.map((lesson) => {
-        const lessonProgress = progress.find(
-            (p) => p.id_lesson === lesson.id_lesson && p.id_student === Number(1)
-        );
-        return {
-            ...lesson,
-            status: lessonProgress ? lessonProgress.status : "not-started", // Default status
+    const [listCourse, setListCourse] = useState([]);
+    const [nameCourse, setNameCourse] = useState();
+    useEffect(() => {
+        const fetchProgressCourse = async () => {
+            const result = await authAxios.post('/course/check-progress', { idCourse: id_course });
+            console.log(result.data)
+            setListCourse(result.data)
+            console.log(result.data);
+            const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
+            setNameCourse(detailCourse.data.detailCourse.name_course);
+            // console.log(detailCourse.data)
         };
-    });
+        fetchProgressCourse();
+    }, [id_course]);
 
     const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
     const handleMouseMove = (e) => {
@@ -28,17 +29,20 @@ const Progress = () => {
             setTooltipPos({ x: e.clientX, y: e.clientY });
         }
     };
+
     // Progress data
+    const completeNumber = listCourse.filter(item => item.isComplete).length;
+    const notCompleteNumber = listCourse.length - completeNumber
     const progressData = [
-        { name: 'Đã Học', value: 70, color: '#2067b2' },
-        { name: 'Chưa Học', value: 30, color: 'gray' }
+        { name: 'Đã Học', value: completeNumber, color: '#2067b2' },
+        { name: 'Chưa Học', value: notCompleteNumber, color: 'gray' }
     ];
 
     return (
         <>
             <div className="learning-progress-dashboard" onMouseMove={handleMouseMove}>
                 <div className="left-panel">
-                    <h2 className="course-name">{course.name_course}</h2>
+                    <h2 className="course-name">{nameCourse || ''}</h2>
 
                     {/* Biểu đồ tròn tiến độ */}
                     <div className="progress-pie-chart">
@@ -64,7 +68,7 @@ const Progress = () => {
                                     align="center" // Căn giữa
                                     iconType="circle"
                                     payload={progressData.map((item) => ({
-                                        value: `${item.name}: ${item.value}%`,
+                                        value: `${item.name}: ${item.value} lesson`,
                                         type: 'circle',
                                         color: item.color
                                     }))}
@@ -106,10 +110,10 @@ const Progress = () => {
                     <h2 className="lessons-title">Danh Sách Bài Học</h2>
                     <div className="lessons-list-container">
                         <ul className="lessons-list-progress">
-                            {lessons_status.map(lesson => (
-                                <li key={lesson.id} className={`lesson-item-progress ${lesson.status === 'completed' ? 'completed' : ''}`} >
-                                    <Link to={`/lessons/${lesson.id}`} className="lesson-link">
-                                        {lesson.name_lesson}
+                            {listCourse?.map((lesson, index) => (
+                                <li key={lesson.id} className={`lesson-item-progress ${lesson.isComplete ? 'completed' : ''}`} >
+                                    <Link to={`/coursedetail/${id_course}/lesson/${lesson.id_lesson}`} className="lesson-link">
+                                        {index + 1}. {lesson.lesson_name}
                                     </Link>
                                 </li>
                             ))}
