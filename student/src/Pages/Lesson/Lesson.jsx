@@ -3,20 +3,35 @@ import "./Lesson.css";
 import Sidebar from "../../Components/SideBar/SideBar";
 import VideoLesson from "../../Components/VideoLesson/VideoLesson";
 import Quiz from "../../Components/Quiz/Quiz";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Result from "../../Components/Result/Result";
 import { authAxios } from "../../services/axios-instance";
 import { StudentContext } from "../../Context/Context";
+import Popup from "../../Components/Popup/Popup";
 
 const Lesson = () => {
-  const { id_lesson } = useParams();
+  const { id_lesson, id_course } = useParams();
   const { setStatusLesson } = useContext(StudentContext)
   const [typeLesson, setTypeLesson] = useState("");
   const [isComplete, setIsComplete] = useState("");
+  const [displayPurchase, setDisplayPurchase] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchInfoLesson = async () => {
       const infoLesson = await authAxios.post('/lesson/get-info-lesson', { idLesson: id_lesson });
+      console.log(infoLesson)
+      console.log(infoLesson.status)
+      if (!infoLesson.data.status) {
+        // alert('Hãy mua khóa học để tiếp tục nhé')
+        setDisplayPurchase(true)
+        setTimeout(() => {
+        navigate(`/coursedetail/${id_course}`)
+        setDisplayPurchase(false)
+        }, 2000);
+
+        return
+      }
       setTypeLesson(infoLesson.data.type_lesson);
 
       const isComplete = await authAxios.post('/lesson/check-complete-lesson', { idLesson: id_lesson });
@@ -49,6 +64,7 @@ const Lesson = () => {
           <VideoLesson />
         )}
       </div>
+      {displayPurchase && <Popup type='purchase' />}
     </div>
   );
 };

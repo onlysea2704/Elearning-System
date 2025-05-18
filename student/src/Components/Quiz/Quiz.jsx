@@ -5,7 +5,7 @@ import ListeningQuestion from "../Question/ListeningQuestion/ListeningQuestion";
 import WritingQuestion from "../Question/WritingQuestion/WritingQuestion";
 import SpeakingQuestion from "../Question/SpeakingQuestion/SpeakingQuestion";
 import { useParams } from "react-router-dom";
-import { authAxios, publicAxios } from "../../services/axios-instance";
+import { authAxios } from "../../services/axios-instance";
 import { StudentContext } from "../../Context/Context";
 import Popup from "../Popup/Popup";
 
@@ -103,7 +103,7 @@ const Quiz = () => {
         setTimeout(() => {
           setLoading(false);
           window.location.reload();
-        }, 3000);
+        }, 2000);
       } else {
         setLoading(false);
         window.location.reload();
@@ -155,7 +155,6 @@ const Quiz = () => {
 
   return (
     <>
-
       <div className="quiz-page-container">
         <div className="quiz-header">
           <h1 className="quiz-title">{infoQuiz?.name_quiz}</h1>

@@ -28,12 +28,15 @@ const Result = () => {
       fetchResponse();
     }
   }, [statusLesson]);
-  
+
+  const sumScale = responseQuestions.length * 10
+  const totalScore = responseQuestions.reduce((sum, responseQuestion) => sum + responseQuestion?.response?.score, 0);
+
   return (
     <div className="result-page-container">
       <div className="result-header">
         <h1 className="result-title"> Results for: {responseQuestions?.name_quiz}</h1>
-        <div className="result-score">Score: {responseQuestions?.score ?? 0} / 100</div>
+        <div className="result-score">Score: {totalScore} / {sumScale}</div>
       </div>
 
       <div className="result-content">
@@ -55,18 +58,6 @@ const Result = () => {
             </div>
           ))
         }
-        {/* {type_quiz === "reading" && (
-          <ReadingResponse responseQuestions={responesQuestions} />
-        )}
-        {type_quiz === "listening" && (
-          <ListeningResponse responseQuestions={responesQuestions} />
-        )}
-        {type_quiz === "writing" && (
-          <WritingResponse responseQuestions={responesQuestions} />
-        )}
-        {type_quiz === "speaking" && (
-          <SpeakingResponse responseQuestions={responesQuestions} />
-        )} */}
       </div>
 
       <Link to={`/coursedetail/${id_course}/lesson/${Number(id_lesson) + 1}`} className="result-back-button">

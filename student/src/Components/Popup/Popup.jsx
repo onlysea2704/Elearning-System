@@ -4,6 +4,7 @@ import loginAnimation from '../../Assets/login-animation.json';
 import sendAnswerAnimation from '../../Assets/send-answer.json';
 import signUpAnimation from '../../Assets/sign-up.json';
 import editInformAnimation from '../../Assets/edit-inform.json';
+import purchaseAnimation from '../../Assets/purchase.json';
 import './Popup.css';
 
 const Popup = ({type}) => {
@@ -20,6 +21,9 @@ const Popup = ({type}) => {
     } else if( type === 'edit-inform'){
         message = 'Thông tin của bạn đang được cập nhật'
         animation = editInformAnimation
+    }else if( type === 'purchase'){
+        message = 'Hãy mua khóa học để bắt đầu nhé'
+        animation = purchaseAnimation
     }
     return (
         <div className={`app-container blurred`}>
