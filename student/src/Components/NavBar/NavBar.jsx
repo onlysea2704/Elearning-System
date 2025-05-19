@@ -6,9 +6,11 @@ import { StudentContext } from "../../Context/Context";
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const dropdownRef = useRef(null);
   const { nameStudent } = useContext(StudentContext);
   const { avatarStudent } = useContext(StudentContext);
+
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setShowDropdown(false);
@@ -16,10 +18,15 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    const token = sessionStorage.getItem('authToken');
+    if (token) {
+      setIsLogin(true)
+    }
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+
   }, []);
 
   const handleAvatarClick = () => {
@@ -40,8 +47,14 @@ const Navbar = () => {
           <li>
             <Link to="/explore-course">Khám Phá</Link>
           </li>
-          <li>
-            <Link to="/coursedetail/21">Kiểm tra đầu vào</Link>
+          <li onClick={() => {
+            if (isLogin) {
+              window.location.href = "/coursedetail/21";
+            } else {
+              alert("Vui lòng đăng nhập để thực hiện bài kiểm tra đầu vào!");
+            }
+          }}>
+            Kiểm tra đầu vào
           </li>
           <li>
             <Link to="/login">Đăng nhập</Link>

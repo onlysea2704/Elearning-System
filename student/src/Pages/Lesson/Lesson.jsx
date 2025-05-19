@@ -19,17 +19,25 @@ const Lesson = () => {
 
   useEffect(() => {
     const fetchInfoLesson = async () => {
+      const token = sessionStorage.getItem('authToken');
+      if (!token) {
+        // alert("Vui lòng đăng nhập để mua khóa học!");
+        setDisplayPurchase(true)
+        setTimeout(() => {
+          navigate(`/login`);
+          setDisplayPurchase(false)
+        }, 2000);
+      }
+
       const infoLesson = await authAxios.post('/lesson/get-info-lesson', { idLesson: id_lesson });
       console.log(infoLesson)
       console.log(infoLesson.status)
       if (!infoLesson.data.status) {
-        // alert('Hãy mua khóa học để tiếp tục nhé')
         setDisplayPurchase(true)
         setTimeout(() => {
-        navigate(`/coursedetail/${id_course}`)
-        setDisplayPurchase(false)
+          navigate(`/coursedetail/${id_course}`)
+          setDisplayPurchase(false)
         }, 2000);
-
         return
       }
       setTypeLesson(infoLesson.data.type_lesson);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "../../Components/Card/Card";
 import "./CategoryCourse.css";
 import Footer from "../../Components/Footer/Footer";
-import { authAxios } from "../../services/axios-instance";
+import { authAxios, publicAxios } from "../../services/axios-instance";
 
 const filters = [
     "Listening",
@@ -16,12 +16,21 @@ const filters = [
 
 const CategoryCourse = ({ isPurchase }) => {
 
-    const [ allCourse, setAllCourse ] = useState([])
+    const [allCourse, setAllCourse] = useState([])
 
     useEffect(() => {
         const fetchAllCourses = async () => {
-            const response = await authAxios(isPurchase ? '/course/my-course' : '/course/all-course')
-            setAllCourse(response.data);
+            const token = sessionStorage.getItem('authToken');
+            let response = []
+            if (token) {
+                response = await authAxios(isPurchase ? '/course/my-course' : '/course/all-course')
+                setAllCourse(response.data);
+            } else if (!isPurchase) {
+                response = await publicAxios('/course/public-api-get-all-course')
+                setAllCourse(response.data);
+            } else {
+                setAllCourse([]);
+            }
         };
 
         fetchAllCourses(); // Gọi API khi component được mount

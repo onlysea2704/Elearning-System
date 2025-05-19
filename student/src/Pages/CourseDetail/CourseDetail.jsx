@@ -19,6 +19,7 @@ const CourseDetail = () => {
   })
   const [listLesson, setListLesson] = useState([]);
   const [isMyCourse, setIsMyCourse] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const [infoLecturer, setInfoLecturer] = useState('');
   const createBill = async () => {
     const result = await authAxios.post('/payment/create-bill', { idCourse: id_course })
@@ -28,16 +29,29 @@ const CourseDetail = () => {
 
   useEffect(() => {
     const fetchDetailCourses = async () => {
-      const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
-      setdetailCourse(detailCourse.data.detailCourse);
-      setIsMyCourse(detailCourse.data.isMyCourse);
-      const response2 = await authAxios.post('/lesson/get-list-lessons-by-id-course', { idCourse: id_course });
+
+      const token = sessionStorage.getItem('authToken');
+      let detailCourse
+      if (token) {
+        setIsLogin(true);
+        detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
+        setdetailCourse(detailCourse.data.detailCourse);
+        console.log(detailCourse.data.detailCourse);
+        setIsMyCourse(detailCourse.data.isMyCourse);
+      } else {
+        detailCourse = await publicAxios.post('/course/public-api-get-detail-course', { idCourse: id_course });
+        setdetailCourse(detailCourse.data.detailCourse);
+        console.log(detailCourse.data.detailCourse);
+        setIsMyCourse(false);
+      }
+
+      const response2 = await publicAxios.post('/lesson/get-list-lessons-by-id-course', { idCourse: id_course });
       setListLesson(response2.data);
       const response3 = await publicAxios.post('/lesson/get-info-lecturer', { idLecturer: detailCourse.data.detailCourse.id_lecturer });
       setInfoLecturer(response3.data);
     };
     fetchDetailCourses(); // Gọi API khi component được mount
-  }, []); // gọi khi isPurchase bị thay đổi giá trị
+  }, [id_course]); // gọi khi isPurchase bị thay đổi giá trị
 
   return (
     <div>
@@ -85,7 +99,19 @@ const CourseDetail = () => {
               {detailCourse.description}
             </p>
             {isMyCourse ? (<Link to={`/progress/${id_course}`} className="buy-button">Xem tiến độ học tập</Link>)
-              : (<div to={`/checkout/${id_course}`} className="buy-button" onClick={createBill}>Mua khóa học</div>)}
+              : (<div
+                className="buy-button"
+                onClick={() => {
+                  if (isLogin) {
+                    createBill();
+                  } else {
+                    alert("Vui lòng đăng nhập để mua khóa học!");
+                  }
+                }}
+              >
+                Mua khóa học
+              </div>
+              )}
           </div>
 
           {/* Phần bên phải */}
