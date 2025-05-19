@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, Legend, ResponsiveContainer, Tooltip } from "recha
 import './Progress.css';
 import { Link, useParams } from 'react-router-dom';
 import Footer from '../../Components/Footer/Footer';
-import { authAxios, publicAxios } from '../../services/axios-instance';
+import { authAxios } from '../../services/axios-instance';
 
 const Progress = () => {
     const { id_course } = useParams();
@@ -92,7 +92,7 @@ const Progress = () => {
                                                         pointerEvents: 'none', // Đảm bảo không cản trở tương tác chuột
                                                     }}
                                                 >
-                                                    <p>{`${payload[0].name}: ${(payload[0].value)}%`}</p>
+                                                    <p>{`${payload[0].name}: ${(payload[0].value)} lesson`}</p>
                                                 </div>
                                             );
                                         }

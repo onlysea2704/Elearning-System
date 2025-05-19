@@ -1,21 +1,32 @@
 import "./VideoLesson.css";
 import { useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { publicAxios, authAxios } from "../../services/axios-instance";
+import { authAxios } from "../../services/axios-instance";
 import { StudentContext } from "../../Context/Context";
 
 const LessonDetail = () => {
-  const onMarkAsDone = async () => {
-    return;
-  }
+
   const { id_lesson } = useParams();
   const [lecture, setLecture] = useState("");
-  const { statusLesson } = useContext(StudentContext)
+  const [isDone, setIsDone] = useState(false);
+  const { statusLesson } = useContext(StudentContext);
+
+  const onMarkAsDone = async () => {
+    try {
+      const res = await authAxios.post('/lesson/mark-as-done', { idLesson: id_lesson });
+      if (res.data.success) {
+        setIsDone(true);
+      }
+    } catch (error) {
+      console.error("Error marking as done:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchLecture = async () => {
       const isComplete = await authAxios.post('/lesson/check-complete-lesson', { idLesson: id_lesson });
       console.log(isComplete.data.status);
-
+      setIsDone(isComplete.data.status);
       const lecture = await authAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
       if (!lecture.data) {
         return;
@@ -25,7 +36,7 @@ const LessonDetail = () => {
     if (statusLesson === 'video') {
       fetchLecture();
     }
-  }, [statusLesson]); // gọi khi id_lesson bị thay đổi giá trị
+  }, [statusLesson]);
 
   return (
     <div className="lesson-detail">
@@ -38,8 +49,12 @@ const LessonDetail = () => {
           allowFullScreen
         ></iframe>
       </div>
-      <button className="mark-done-button" onClick={onMarkAsDone}>
-        Mark as Done
+      <button
+        className={`mark-done-button ${isDone ? "done" : ""}`}
+        onClick={onMarkAsDone}
+        disabled={false}
+      >
+        {isDone ? "Completed" : "Mark as Done"}
       </button>
     </div>
   );

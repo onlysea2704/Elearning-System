@@ -40,7 +40,7 @@ const Hero = () => {
                         với phương pháp học tập tiên tiến
                     </p>
                     <div className="hero-cta-group">
-                        <Link to="/coursedetail/0/lesson/15" className="cta-btn primary-btn">
+                        <Link to="/coursedetail/21" className="cta-btn primary-btn">
                             <i className="fas fa-play btn-icon"></i>
                             Kiểm tra đầu vào
                         </Link>

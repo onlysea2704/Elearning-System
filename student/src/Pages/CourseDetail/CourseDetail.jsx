@@ -3,7 +3,7 @@ import "./CourseDetail.css";
 import Comments from "../../Components/Comments/Comments";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
-import { authAxios } from "../../services/axios-instance";
+import { authAxios, publicAxios } from "../../services/axios-instance";
 
 const CourseDetail = () => {
 
@@ -17,12 +17,12 @@ const CourseDetail = () => {
     number_student: 0,
     id_lecturer: 2,
   })
-  const [listLesson, setListLesson] = useState([])
-  const [isMyCourse, setIsMyCourse] = useState()
-
-  const createBill = async() => {
-    const result = await authAxios.post('/payment/create-bill', {idCourse: id_course})
-    window.open( `${result.data.order_url}`, "_blank");
+  const [listLesson, setListLesson] = useState([]);
+  const [isMyCourse, setIsMyCourse] = useState(false);
+  const [infoLecturer, setInfoLecturer] = useState('');
+  const createBill = async () => {
+    const result = await authAxios.post('/payment/create-bill', { idCourse: id_course })
+    window.open(`${result.data.order_url}`, "_blank");
     console.log(result.data)
   }
 
@@ -31,9 +31,10 @@ const CourseDetail = () => {
       const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
       setdetailCourse(detailCourse.data.detailCourse);
       setIsMyCourse(detailCourse.data.isMyCourse);
-      console.log(detailCourse.data.isMyCourse);
       const response2 = await authAxios.post('/lesson/get-list-lessons-by-id-course', { idCourse: id_course });
       setListLesson(response2.data);
+      const response3 = await publicAxios.post('/lesson/get-info-lecturer', { idLecturer: detailCourse.data.detailCourse.id_lecturer });
+      setInfoLecturer(response3.data);
     };
     fetchDetailCourses(); // Gọi API khi component được mount
   }, []); // gọi khi isPurchase bị thay đổi giá trị
@@ -54,12 +55,22 @@ const CourseDetail = () => {
                 <h2 className="course-title">{detailCourse.name_course}</h2>
                 <div className="course-details">
                   <p className="course-detail-item">
-                    <i className="fa-solid fa-chalkboard-teacher course-icon"></i>
-                    Giảng viên: {detailCourse.id_lecturer}
+                    <i className="fas fa-solid fa-chalkboard-teacher course-icon"></i>
+                    <span className="tooltip-container">
+                      Giảng viên: {infoLecturer.name}
+                      <span className="tooltip-text">
+                        <img src={infoLecturer.link_image} alt="Lecturer" className="tooltip-avatar" />
+                        <div className="tooltip-info">
+                          <div className="tooltip-name">{infoLecturer.name}</div>
+                          <div className="tooltip-email">{infoLecturer.email}</div>
+                          <div className="tooltip-specialty">{infoLecturer.experience}</div>
+                        </div>
+                      </span>
+                    </span>
                   </p>
                   <p className="course-detail-item">
                     <i className="fa-solid fa-book course-icon"></i>
-                    Số lượng bài học: {detailCourse.number_lesson}
+                    &nbsp; Số lượng bài học: {detailCourse.number_lesson}
                   </p>
                   <p className="course-detail-item">
                     <i className="fa-solid fa-users course-icon"></i>
@@ -84,7 +95,7 @@ const CourseDetail = () => {
               {listLesson.map((lesson) => (
                 <li key={lesson.id_lesson} className="lesson-item">
                   <Link to={`/coursedetail/${detailCourse.id_course}/lesson/${lesson.id_lesson}`} className="lesson-link">
-                  {lesson.order_lesson}. {lesson.lesson_name}
+                    {lesson.order_lesson}. {lesson.lesson_name}
                     <i className="fa fa-angle-right lesson-icon"></i>
                   </Link>
                 </li>
