@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./ManageCourse.css";
 import SideBar from "../../Components/SideBar/SideBar";
 import ListLesson from "../../Components/ListLesson/ListLesson";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import HeaderBackButton from "../../Components/HeaderBackButton/HeaderBackButton";
 import { authAxios, publicAxios } from "../../services/axios-instance";
 
@@ -10,7 +10,6 @@ const ManageCourse = () => {
     const { id_course } = useParams();
 
     const [courseImage, setCourseImage] = useState("");
-    const navigate = useNavigate();
     const [detailCourse, setdetailCourse] = useState({
         name_course: "",
         description: "",
@@ -20,7 +19,6 @@ const ManageCourse = () => {
         number_student: 0,
         id_lecturer: 2,
     })
-    const [listLesson, setListLesson] = useState([]);
     const [infoLecturer, setInfoLecturer] = useState('');
 
     const handleChange = (e) => {
@@ -29,17 +27,14 @@ const ManageCourse = () => {
     };
 
     useEffect(() => {
-        console.log('123456789')
         const fetchDetailCourses = async () => {
-
+            console.log(id_course)
             const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
             setdetailCourse(detailCourse.data.detailCourse);
-            console.log(detailCourse.data.detailCourse);
+            console.log(detailCourse.data.detailCourse)
 
-            const response2 = await publicAxios.post('/lesson/get-list-lessons-by-id-course', { idCourse: id_course });
-            setListLesson(response2.data);
-            const response3 = await publicAxios.post('/lesson/get-info-lecturer', { idLecturer: detailCourse.data.detailCourse.id_lecturer });
-            setInfoLecturer(response3.data);
+            const allLecturers = await publicAxios.post('/course/public-api-get-all-lecturers');
+            setInfoLecturer(allLecturers.data);
         };
         fetchDetailCourses(); // Gọi API khi component được mount
     }, [id_course]); // gọi khi isPurchase bị thay đổi giá trị
@@ -53,24 +48,6 @@ const ManageCourse = () => {
             };
             reader.readAsDataURL(file); // Đọc tệp ảnh dưới dạng URL
         }
-    };
-
-    const handleEditLesson = (lessonId) => {
-        console.log(`Chỉnh sửa bài học ${lessonId}`);
-    };
-
-    const handleDeleteLesson = (lessonId) => {
-        console.log(`Xóa bài học ${lessonId}`);
-    };
-
-    const handleCreateLesson = () => {
-        window.alert("Bạn có muốn tạo Lesson?");
-        navigate('/dashboard/manage-video-lesson'); // Thay bằng đường dẫn cần chuyển hướng
-    };
-
-    const handleCreateQuiz = () => {
-        window.alert("Bạn có muốn tạo Quiz?");
-        navigate('/dashboard/manage-quiz/0'); // Thay bằng đường dẫn cần chuyển hướng
     };
 
     return (
@@ -105,7 +82,6 @@ const ManageCourse = () => {
                                     onChange={handleImageChange}
                                 />
                             </div>
-
                             <div className="course-info">
                                 <div className="form-group-course">
                                     <label>ID</label>
@@ -147,12 +123,7 @@ const ManageCourse = () => {
                     </div>
 
                     {/* Right Section */}
-                    <ListLesson
-                        handleEditLesson={handleEditLesson}
-                        handleDeleteLesson={handleDeleteLesson}
-                        handleCreateLesson={handleCreateLesson}
-                        handleCreateQuiz={handleCreateQuiz}
-                    />
+                    <ListLesson/>
                 </div>
             </div>
         </div>
