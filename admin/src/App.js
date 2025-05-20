@@ -18,7 +18,7 @@ function App() {
         <Route path='/dashboard/list-teacher' element={<ListLecturer />} />
         <Route path='/dashboard/manage-teacher' element={<ProfileEdit />} />
         <Route path='/dashboard/list-course' element={<ListCourse />} />
-        <Route path='/dashboard/manage-course' element={<ManageCourse />} />
+        <Route path='/dashboard/manage-course/:id_course' element={<ManageCourse />} />
         <Route path='/dashboard/manage-video-lesson' element={<ManagementVideoLesson />} />
         <Route path='/dashboard/manage-quiz/:id_quiz' element={<ManageQuiz />} />
         <Route path='/dashboard/report' element={<StatisticsDashboard />} />

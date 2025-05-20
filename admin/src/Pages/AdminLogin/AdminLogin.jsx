@@ -1,21 +1,28 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./AdminLogin.css";
-import { Link, useNavigate } from "react-router-dom";
-// import SideBar from "../../Components/SideBar/SideBar";
+import { useNavigate } from "react-router-dom";
+import {
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from '../../services/firebase-config';
 
 const AdminLogin = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate(); // Dùng để chuyển hướng trang
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Kiểm tra thông tin đăng nhập
-    if (username === "admin" && password === "admin") {
-      alert("Login successful! Redirecting to homepage...");
-      navigate("/dashboard/account-manage"); // Chuyển sang trang chủ
-    } else {
-      setErrorMessage("Tên đăng nhập hoặc mật khẩu không chính xác.");
+  const login = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const token = await userCredential.user.getIdToken();
+      // Lưu vào sessionStorage
+      sessionStorage.setItem('authToken', token);
+      alert("Đăng nhập thành công với vai trò admin");
+      navigate('/dashboard/account-manage');
+    } catch (error) {
+      console.log(error.message);
+      alert("Lỗi đăng nhập:", error.message);
     }
   };
 
@@ -25,13 +32,13 @@ const AdminLogin = () => {
         <h2>Hust-English</h2>
         <div className="login-form">
           <h2>Đăng nhập cho Admin</h2>
-          <label className="input-label">Tên Đăng Nhập</label>
+          <label className="input-label">Email Đăng Nhập</label>
           <input
             type="text"
-            placeholder="Nhập tên đăng nhập"
+            placeholder="Nhập Email đăng nhập"
             className="login-input"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)} // Cập nhật giá trị username
+            value={email}
+            onChange={(e) => setEmail(e.target.value)} // Cập nhật giá trị username
           />
           <label className="input-label">Mật khẩu</label>
           <input
@@ -42,7 +49,7 @@ const AdminLogin = () => {
             onChange={(e) => setPassword(e.target.value)} // Cập nhật giá trị password
           />
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <button className="submit-button" onClick={handleLogin}>
+          <button className="submit-button" onClick={login}>
             Đăng nhập
           </button>
         </div>
