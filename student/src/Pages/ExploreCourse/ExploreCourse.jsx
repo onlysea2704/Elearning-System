@@ -32,8 +32,8 @@ const ExploreCourse = () => {
       console.log(response.data);
     };
 
-    fetchAllCourses(); // Gọi API khi component được mount
-  }, []); // Chỉ gọi một lần khi load trang
+    fetchAllCourses(); 
+  }, []); // 
 
   const [selectedFilter, setSelectedFilter] = useState("all skill");
   const [currentPage, setCurrentPage] = useState(1);
