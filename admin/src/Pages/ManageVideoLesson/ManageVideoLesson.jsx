@@ -6,8 +6,10 @@ import HeaderBackButton from '../../Components/HeaderBackButton/HeaderBackButton
 import { authAxios } from '../../services/axios-instance';
 
 const ManageVideoLesson = () => {
-    const [video, setVideo] = useState(null);
+
     const { id_lesson } = useParams();
+    const [video, setVideo] = useState(null);
+    const [videoUrl, setVideoUrl] = useState(null);
     const [lecture, setLecture] = useState("");
     const [course, setCourse] = useState(""); 
     // đặc biệt lưu ý phần giá trị khởi tạo của useState
@@ -15,11 +17,17 @@ const ManageVideoLesson = () => {
     // Ví dụ nếu đặt course là null => ko thể viết là course.id 
     // có thể sửa bằng cách tạo 1 type ban đầu cho nó hoặc là dùng ? course?.id
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setLecture({ ...lecture, [name]: value });
+    };
+
     useEffect(() => {
         const fetchDetailCourses = async () => {
             const lecture = await authAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
             setLecture(lecture.data);
-            console.log(lecture.data);
+            setVideoUrl(lecture.data.link_material);
+            console.log(lecture.data.link_material);
 
             const course = await authAxios.post('/lesson/get-detail-course-by-id-lesson', { idLesson: id_lesson });
             setCourse(course.data);
@@ -31,27 +39,37 @@ const ManageVideoLesson = () => {
     const handleVideoUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setVideo(URL.createObjectURL(file));
+            setVideoUrl(URL.createObjectURL(file));
+            setVideo(file);
         }
     };
 
-    const handleSave = () => {
-        alert('Lưu thông tin bài học thành công!');
-    };
+    const handleSubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData();
+            console.log(lecture)
+            formData.append('lecture', JSON.stringify(lecture));
+            if (video) {
+                formData.append('video', video);
+            }
+            console.log()
+            await authAxios.post('/course/update-lecture', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            alert('Cập nhật thành công')
+        };
 
     return (
         <div className='page-manage-video-lesson'>
-
             <SideBar />
-
             <div className="manage-video-lesson">
-
                 <HeaderBackButton
                     button='Quay lại khóa học'
                     title='Quản lý bài học'
                     dest={`/dashboard/manage-course/${course.detailCourse?.id_course}`}
                 />
-
                 <div className="content-video-lesson">
                     <div className="left-panel-video-lesson">
                         <form>
@@ -61,7 +79,11 @@ const ManageVideoLesson = () => {
                             </div>
                             <div className="form-group">
                                 <label>Tên Bài Học</label>
-                                <input type="text" value={lecture.name_lecture} placeholder="Nhập tên bài học" />
+                                <input type="text" 
+                                onChange={handleChange} 
+                                name="name_lecture"
+                                value={lecture.name_lecture} 
+                                placeholder="Nhập tên bài học" />
                             </div>
                             <div className="form-group">
                                 <label>Loại Bài Học</label>
@@ -82,8 +104,13 @@ const ManageVideoLesson = () => {
                             <div className="form-group">
                                 <label>Mô Tả Chi Tiết</label>
                             </div>
-                            <textarea value={lecture.description} className='description-course' placeholder="Nhập mô tả chi tiết bài học"></textarea>
-
+                            <textarea 
+                            value={lecture.description} 
+                            className='description-course'
+                            name='description' 
+                            onChange={handleChange}
+                            placeholder="Nhập mô tả chi tiết bài học">
+                            </textarea>
                         </form>
                     </div>
 
@@ -102,15 +129,15 @@ const ManageVideoLesson = () => {
                             />
                         </div>
                         <div className="video-preview">
-                            {lecture.link_material ? (
-                                <video controls src={lecture.link_material}></video>
+                            {videoUrl ? (
+                                <video controls src={videoUrl}></video>
                             ) : (
                                 <div className="placeholder">
                                     <p>Chưa có video tải lên</p>
                                 </div>
                             )}
                         </div>
-                        <button className="save-button" onClick={handleSave}>
+                        <button className="save-button" onClick={handleSubmit}>
                             Cập Nhật
                         </button>
                     </div>
