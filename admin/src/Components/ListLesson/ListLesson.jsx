@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import './ListLesson.css'
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { publicAxios } from "../../services/axios-instance";
 
 const ListLesson = () => {
-
-    const navigate = useNavigate();
 
     const [listLesson, setListLesson] = useState([]);
     const { id_course } = useParams();

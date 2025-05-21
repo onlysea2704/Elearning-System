@@ -3,9 +3,9 @@ import "./ManageQuiz.css";
 import ListQuestion from "../../Components/ListQuestion/ListQuestion";
 import SideBar from "../../Components/SideBar/SideBar";
 // import CreateQuestion from "../../Components/CreateQuestion/CreateQuestion";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import HeaderBackButton from "../../Components/HeaderBackButton/HeaderBackButton";
-import CreateQuestion1 from "../../Components/CreateQuestion1/CreateQuestion1";
+import CreateQuestion from "../../Components/CreateQuestion/CreateQuestion";
 import { authAxios } from "../../services/axios-instance";
 
 const ManageQuiz = () => {
@@ -13,7 +13,7 @@ const ManageQuiz = () => {
     const { id_lesson } = useParams();
     const [quizName, setQuizName] = useState(""); // Quản lý tên của quiz
     const [quiz, setQuiz] = useState("");
-    const [idCurrentQuestion, setIdCurrentQuestion] = useState("")
+    const [currentQuestion, setCurrentQuestion] = useState("")
 
     const [quizCategory, setQuizCategory] = useState("reading"); // Quản lý thể loại của quiz
 
@@ -24,15 +24,13 @@ const ManageQuiz = () => {
             const quiz = await authAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
             setQuiz(quiz.data);
             console.log(quiz.data);
-
-            const question = await authAxios.post('/question/get-all-question-by-quiz-id', { idQuiz: quiz.data.id_quiz });
-            console.log(question.data);
         };
         fetchDetailCourses();
     }, [id_lesson]);
 
-    const handleEdit = (id) => {
-        console.log(`Chỉnh sửa câu hỏi ${id}`);
+    const handleEdit = (question) => {
+        setCurrentQuestion(question)
+        console.log(question)
     };
 
     const handleDelete = (id) => {
@@ -115,6 +113,8 @@ const ManageQuiz = () => {
 
                     {/* Danh sách câu hỏi */}
                     <ListQuestion
+                        setCurrentQuestion={setCurrentQuestion}
+                        idQuiz={quiz?.id_quiz}
                         handleEdit={handleEdit}
                         handleDelete={handleDelete}
                         handleCreateQuestion={handleCreateQuestion}
@@ -123,7 +123,8 @@ const ManageQuiz = () => {
 
                 {/* Right Panel */}
                 <div className="right-panel-manage-quiz">
-                    <CreateQuestion1
+                    <CreateQuestion
+                        currentQuestion={currentQuestion}
                         audioKey={audioKey}
                         handleImageUpload={handleImageUpload}
                         uploadedImage={uploadedImage}

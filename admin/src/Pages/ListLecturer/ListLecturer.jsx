@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './ListLecturer.css';
 import SideBar from '../../Components/SideBar/SideBar'
 import ItemCardLecturer from '../../Components/ItemCardLecturer/ItemCardLecturer';
@@ -7,6 +7,7 @@ import av1 from '../../Assets/Image/BG1.png'
 import av2 from '../../Assets/Image/BG2.png'
 import av3 from '../../Assets/Image/BG3.png'
 import Pagination from '../../Components/Pagination/Pagination';
+import { authAxios, publicAxios } from '../../services/axios-instance';
 
 const lecturers = [
   { id: '10001', name: 'Nguyễn Văn Hải Đăng', email: 'haidung@gmail.com', avatar: av },
@@ -27,6 +28,16 @@ const lecturers = [
 const ListLecturer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
+  const [lecturers, setLecturers] = useState([]);
+
+  useEffect(() => {
+        const fetchAllLecturers = async () => {
+            const lecturers = await publicAxios.get('/lesson/get-all-lecturer');
+            setLecturers(lecturers.data);
+            console.log(lecturers.data);
+        };
+        fetchAllLecturers();
+    }, []);
 
   const handlePageChange = (direction) => {
     setCurrentPage((prevPage) =>
