@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./ProfileEdit.css";
 import SideBar from "../../Components/SideBar/SideBar";
 import { useParams } from "react-router-dom";
@@ -73,7 +73,7 @@ const ProfileEdit = () => {
                         <div className="avatar-section">
                             <div className="avatar-preview-edit">
                                 {/* Clicking the image triggers file input */}
-                                <img src={lecturer.avatarPreview ? lecturer.avatarPreview : "https://via.placeholder.com/140"}
+                                <img src={lecturer.link_image ? lecturer.link_image : "https://via.placeholder.com/140"}
                                     alt="Avatar" onClick={handleImageClick} />
                                 <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} />
                             </div>
@@ -92,7 +92,7 @@ const ProfileEdit = () => {
                                 </div>
                                 <div className="form-group-edit">
                                     <label htmlFor="phone">Phone:</label>
-                                    <input type="tel" id="phone" name="phone" value={lecturer.phone} onChange={handleChange} placeholder="Enter your phone number" />
+                                    <input type="tel" id="phone" name="phone" value={lecturer.phone_number} onChange={handleChange} placeholder="Enter your phone number" />
                                 </div>
                                 <div className="form-group-edit">
                                     <label htmlFor="email">Email:</label>

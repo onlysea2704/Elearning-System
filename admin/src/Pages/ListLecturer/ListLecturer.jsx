@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ListLecturer.css';
 import SideBar from '../../Components/SideBar/SideBar'
 import ItemCardLecturer from '../../Components/ItemCardLecturer/ItemCardLecturer';
@@ -31,13 +31,13 @@ const ListLecturer = () => {
   const [lecturers, setLecturers] = useState([]);
 
   useEffect(() => {
-        const fetchAllLecturers = async () => {
-            const lecturers = await publicAxios.get('/lesson/get-all-lecturer');
-            setLecturers(lecturers.data);
-            console.log(lecturers.data);
-        };
-        fetchAllLecturers();
-    }, []);
+    const fetchAllLecturers = async () => {
+      const lecturers = await publicAxios.get('/lesson/get-all-lecturer');
+      setLecturers(lecturers.data);
+      console.log(lecturers.data);
+    };
+    fetchAllLecturers();
+  }, []);
 
   const handlePageChange = (direction) => {
     setCurrentPage((prevPage) =>
@@ -53,18 +53,18 @@ const ListLecturer = () => {
 
   return (
     <div className='student-progress-list-container'>
-      <SideBar/>
+      <SideBar />
       <div className="student-list">
         <h2 className="title">Danh Sách Giảng Viên</h2>
         <div className="student-items">
           {paginatedlecturers.map((lecturer) => (
-            <ItemCardLecturer lecturer={lecturer}/>
+            <ItemCardLecturer lecturer={lecturer} />
           ))}
         </div>
 
         <Pagination currentPage={currentPage}
-        totalPages={totalPages}
-        handlePageChange={handlePageChange}
+          totalPages={totalPages}
+          handlePageChange={handlePageChange}
         />
 
       </div>

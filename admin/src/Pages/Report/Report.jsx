@@ -1,36 +1,39 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar, ResponsiveContainer } from 'recharts';
 import { Activity, Users, BookOpen, Book, FileText } from 'lucide-react';
 import './Report.css';
 import SideBar from '../../Components/SideBar/SideBar';
+import { authAxios } from '../../services/axios-instance';
 
 const StatisticsDashboard = () => {
-    const revenueData = [
-        { date: '01/12', revenue: 1200 },
-        { date: '02/12', revenue: 1900 },
-        { date: '03/12', revenue: 1500 },
-        { date: '04/12', revenue: 2100 },
-        { date: '05/12', revenue: 2400 },
-        { date: '06/12', revenue: 1200 },
-        { date: '07/12', revenue: 1900 },
-        { date: '08/12', revenue: 1500 },
-    ];
 
-    const courseRevenueData = [
-        { course: 'Lập trình Web', revenue: 15000 },
-        { course: 'JavaScript', revenue: 12000 },
-        { course: 'React Native', revenue: 9000 },
-        { course: 'Python', revenue: 7500 },
-        { course: 'NodeJS', revenue: 6500 },
-    ];
+    const [cards, setCards] = useState([]);
+    const [revenueByDay, setRevenueByDay] = useState([]);
+    const [revenueByCourse, setRevenueByCourse] = useState([]);
 
-    const stats = [
-        { title: 'Doanh thu', value: '45.5M', icon: Activity, color: '#3b82f6' },
-        { title: 'Giao dịch', value: '156', icon: FileText, color: '#22c55e' },
-        { title: 'Học viên', value: '1.2K', icon: Users, color: '#a855f7' },
-        { title: 'Khóa học', value: '24', icon: Book, color: '#f97316' },
-        { title: 'Bài học', value: '386', icon: BookOpen, color: '#ef4444' }
-    ];
+    useEffect(() => {
+        const fetchAllLecturers = async () => {
+            const data = await authAxios.get('/report/get-report');
+            const cards = data.data.cards;
+            const stats = [
+                { title: 'Doanh thu', value: `${cards.revenue / 1000000}tr`, icon: Activity, color: '#3b82f6' },
+                { title: 'Giao dịch', value: cards.transactions, icon: FileText, color: '#22c55e' },
+                { title: 'Học viên', value: cards.students, icon: Users, color: '#a855f7' },
+                { title: 'Khóa học', value: cards.courses, icon: Book, color: '#f97316' },
+                { title: 'Bài học', value: cards.lessons, icon: BookOpen, color: '#ef4444' }
+            ];
+            setCards(stats);
+            setRevenueByDay(data.data.revenueByDay);
+            const revenueByCourse = data.data.revenueByCourse.map(item => ({
+                id: item.id_course,
+                name: item.name_course,
+                revenue: Number(item.total_revenue)
+            }));
+            setRevenueByCourse(revenueByCourse);
+            console.log(revenueByCourse);
+        };
+        fetchAllLecturers();
+    }, []);
 
     return (
         <div className='page-report'>
@@ -39,7 +42,7 @@ const StatisticsDashboard = () => {
                 <h1 className="dashboard-title">Báo Cáo Thống Kê</h1>
 
                 <div className="stats-container">
-                    {stats.map((stat, index) => (
+                    {cards.map((stat, index) => (
                         <div key={index} className="stat-card">
                             <div className="stat-content">
                                 <stat.icon className="stat-icon" style={{ color: stat.color }} />
@@ -54,11 +57,17 @@ const StatisticsDashboard = () => {
                     <div className="chart-card">
                         <h3 className="chart-title">Doanh Thu Theo Ngày</h3>
                         <ResponsiveContainer width="100%" height={355}>
-                            <LineChart data={revenueData}>
+                            <LineChart data={revenueByDay}>
                                 <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="date" />
-                                <YAxis />
-                                <Tooltip />
+                                <XAxis dataKey="date"
+                                    tickFormatter={(dateStr) => {
+                                        const parts = dateStr.split('-'); // ["2025","05","21"]
+                                        return `${parts[2]}/${parts[1]}`; // "21/05"
+                                    }} />
+                                <YAxis tickFormatter={(value) => `${(value / 1_000_000).toFixed(1)}tr`} />
+                                <Tooltip 
+                                    formatter={(value) => [`${Number(value).toLocaleString()} VND`, 'Doanh thu']}
+                                />
                                 <Line
                                     type="monotone"
                                     dataKey="revenue"
@@ -74,14 +83,20 @@ const StatisticsDashboard = () => {
                     <div className="chart-card">
                         <h3 className="chart-title">Doanh Thu Theo Khóa Học</h3>
                         <ResponsiveContainer width="100%" height={355}>
-                            <BarChart
-                                data={courseRevenueData}
-                                layout="vertical"
-                            >
+                            <BarChart data={revenueByCourse} layout="vertical">
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis type="number" />
-                                <YAxis dataKey="course" type="category" width={100} />
-                                <Tooltip />
+                                <YAxis dataKey="id" 
+                                type="category" 
+                                width={80} 
+                                tickFormatter={(value) => `ID Course${value}`}/>
+                                <Tooltip
+                                    formatter={(value) => [`${Number(value).toLocaleString()} VND`, 'Doanh thu']}
+                                    labelFormatter={(label) => {
+                                        const course = revenueByCourse.find(item => item.id === Number(label));
+                                        return course ? `${course.name}` : '';
+                                    }}
+                                />
                                 <Bar
                                     dataKey="revenue"
                                     fill="#3b82f6"
