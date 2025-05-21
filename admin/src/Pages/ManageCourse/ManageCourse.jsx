@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./ManageCourse.css";
 import SideBar from "../../Components/SideBar/SideBar";
 import ListLesson from "../../Components/ListLesson/ListLesson";
@@ -9,7 +9,8 @@ import { authAxios, publicAxios } from "../../services/axios-instance";
 const ManageCourse = () => {
     const { id_course } = useParams();
 
-    const [courseImage, setCourseImage] = useState("");
+    const [courseImage, setCourseImage] = useState(null);
+    const [courseImageUrl, setcourseImageUrl] = useState('');
     const [detailCourse, setdetailCourse] = useState({
         name_course: "",
         description: "",
@@ -19,11 +20,41 @@ const ManageCourse = () => {
         number_student: 0,
         id_lecturer: 2,
     })
-    const [infoLecturer, setInfoLecturer] = useState('');
+    const [allLecturers, setAllLecturers] = useState([]);
+
+    // Reference for the hidden file input
+    const fileInputRef = useRef(null);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setcourseImageUrl(URL.createObjectURL(file));
+            setCourseImage(file);
+        }
+    };
+
+    const handleImageClick = () => {
+        fileInputRef.current.click(); // Trigger file input click when image is clicked
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setdetailCourse({ ...detailCourse, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('detailCourse', JSON.stringify(detailCourse));
+        if (courseImage) {
+            formData.append('courseImage', courseImage);
+        }
+        console.log(detailCourse)
+        await authAxios.post('/course/update-course', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
     };
 
     useEffect(() => {
@@ -31,24 +62,14 @@ const ManageCourse = () => {
             console.log(id_course)
             const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
             setdetailCourse(detailCourse.data.detailCourse);
+            setcourseImageUrl(detailCourse.data.detailCourse.link_image)
             console.log(detailCourse.data.detailCourse)
 
             const allLecturers = await publicAxios.post('/course/public-api-get-all-lecturers');
-            setInfoLecturer(allLecturers.data);
+            setAllLecturers(allLecturers.data);
         };
-        fetchDetailCourses(); // Gọi API khi component được mount
-    }, [id_course]); // gọi khi isPurchase bị thay đổi giá trị
-
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setCourseImage(reader.result); // Hiển thị ảnh mới
-            };
-            reader.readAsDataURL(file); // Đọc tệp ảnh dưới dạng URL
-        }
-    };
+        fetchDetailCourses();
+    }, [id_course]);
 
     return (
         <div className="page-course-manage">
@@ -69,17 +90,21 @@ const ManageCourse = () => {
                             <div className="course-image-container">
                                 <label htmlFor="upload-image">
                                     <img
-                                        src={detailCourse.link_image}
+                                        src={courseImageUrl}
                                         alt="Ảnh Khóa Học"
                                         className="course-image"
+                                        // onClick={handleImageClick}
+                                        // có thể bỏ handleImageClick đi vì htmlFor đã thực hiện trigger mở fileInput rồi
+                                        // có thể bỏ trigger bằng hàm handleImageClick đi 
                                     />
                                 </label>
                                 <input
                                     id="upload-image"
                                     type="file"
                                     accept="image/*"
+                                    ref={fileInputRef}
                                     style={{ display: "none" }}
-                                    onChange={handleImageChange}
+                                    onChange={handleFileChange}
                                 />
                             </div>
                             <div className="course-info">
@@ -97,11 +122,33 @@ const ManageCourse = () => {
                                 </div>
                                 <div className="form-group-course">
                                     <label>Tên Giảng Viên</label>
-                                    <input name="id_lecturer" type="text" value={detailCourse.id_lecturer} onChange={handleChange} placeholder="Nhập tên giảng viên" />
+                                    {/* <input name="id_lecturer" type="text" value={detailCourse.id_lecturer} onChange={handleChange} placeholder="Nhập tên giảng viên" /> */}
+                                    <select
+                                        name="id_lecturer"
+                                        value={detailCourse.id_lecturer}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">-- Chọn giảng viên --</option>
+                                        {allLecturers.map((lecturer) => (
+                                            <option key={lecturer.id_lecturer} value={lecturer.id_lecturer}>
+                                                {lecturer.id_lecturer}. {lecturer.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="form-group-course">
                                     <label>Loại Bài Học</label>
-                                    <input name="type_course" type="text" value={detailCourse.type_course} onChange={handleChange} placeholder="Nhập loại bài học" />
+                                    {/* <input name="type_course" type="text" value={detailCourse.type_course} onChange={handleChange} placeholder="Nhập loại bài học" /> */}
+                                    <select
+                                        name="type_course"
+                                        value={detailCourse.type_course}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="Reading">Reading</option>
+                                        <option value="Listening">Listening</option>
+                                        <option value="Writing">Writing</option>
+                                        <option value="Speaking">Speaking</option>
+                                    </select>
                                 </div>
                                 <div className="info-group-course">
                                     <span>
@@ -119,11 +166,11 @@ const ManageCourse = () => {
                         <textarea name="description"
                             value={detailCourse.description}
                             onChange={handleChange} className="course-textarea" rows="5" placeholder="Nhập mô tả chi tiết"></textarea>
-                        <button className="btn-save">Lưu</button>
+                        <button className="btn-save" onClick={handleSubmit}>Lưu</button>
                     </div>
 
                     {/* Right Section */}
-                    <ListLesson/>
+                    <ListLesson />
                 </div>
             </div>
         </div>

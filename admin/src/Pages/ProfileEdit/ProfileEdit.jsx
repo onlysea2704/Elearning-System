@@ -6,21 +6,24 @@ import HeaderBackButton from "../../Components/HeaderBackButton/HeaderBackButton
 import { authAxios } from "../../services/axios-instance";
 
 const ProfileEdit = () => {
-    const [lecturer, setLecturer] = useState({
-        name: "Phạm Duy Hải",
-        age: "21",
-        phone: "0918297371",
-        email: "phamduyhai2704@gmail.com",
-        avatar: null,
-        avatarPreview: null,
-        password: "123456789"
-    });
+
     const { id_lecturer } = useParams();
+    const [lecturer, setLecturer] = useState({
+        name: "",
+        age: "",
+        phone: "",
+        email: "",
+        avatar: null,
+        experience: ""
+    });
+    const [avatarUrl, setAvatarUrl] = useState('');
+    const [avatar, setAvatar] = useState(null);
 
     useEffect(() => {
         const fetchDetailCourses = async () => {
             const lecturer = await authAxios.post('/lesson/get-info-lecturer', { idLecturer: id_lecturer });
             setLecturer(lecturer.data);
+            setAvatarUrl(lecturer.data.link_image);
             console.log(lecturer.data);
         };
         fetchDetailCourses();
@@ -32,15 +35,8 @@ const ProfileEdit = () => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setLecturer({
-                    ...lecturer,
-                    avatar: file,
-                    avatarPreview: reader.result,
-                });
-            };
-            reader.readAsDataURL(file);
+            setAvatarUrl(URL.createObjectURL(file));
+            setAvatar(file);
         }
     };
 
@@ -50,13 +46,26 @@ const ProfileEdit = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(name);
         setLecturer({ ...lecturer, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Updated Profile:", lecturer);
+        // Tạo FormData để gửi cả file và JSON
+        const formData = new FormData();
+        formData.append('lecturer', JSON.stringify(lecturer));
+        if (avatar) {
+            formData.append('avatar', avatar);
+        }
+        console.log(lecturer)
+        await authAxios.post('/lecturer/update', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
     };
+
     return (
         <>
             <div className="page-edit-profile">
@@ -73,7 +82,7 @@ const ProfileEdit = () => {
                         <div className="avatar-section">
                             <div className="avatar-preview-edit">
                                 {/* Clicking the image triggers file input */}
-                                <img src={lecturer.link_image ? lecturer.link_image : "https://via.placeholder.com/140"}
+                                <img src={avatarUrl ? avatarUrl : "https://via.placeholder.com/140"}
                                     alt="Avatar" onClick={handleImageClick} />
                                 <input type="file" accept="image/*" ref={fileInputRef} onChange={handleFileChange} />
                             </div>
@@ -92,7 +101,7 @@ const ProfileEdit = () => {
                                 </div>
                                 <div className="form-group-edit">
                                     <label htmlFor="phone">Phone:</label>
-                                    <input type="tel" id="phone" name="phone" value={lecturer.phone_number} onChange={handleChange} placeholder="Enter your phone number" />
+                                    <input type="tel" id="phone" name="phone_number" value={lecturer.phone_number} onChange={handleChange} placeholder="Enter your phone number" />
                                 </div>
                                 <div className="form-group-edit">
                                     <label htmlFor="email">Email:</label>
