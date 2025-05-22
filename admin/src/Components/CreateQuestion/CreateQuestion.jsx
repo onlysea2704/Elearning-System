@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './CreateQuestion.css';
-import { authAxios } from '../../services/axios-instance';
 
 const CreateQuestion = ({
     currentQuestion,
@@ -11,8 +10,8 @@ const CreateQuestion = ({
     audioUrlQuestion,
     handleAudioUpload,
     handleSubmitUpdateQuestion,
+    createAIQuestion,
 }) => {
-
     return (
         <>
             {/* Upload Section */}
@@ -22,7 +21,7 @@ const CreateQuestion = ({
             </div>
             <div className="form-group">
                 <label>Type</label>
-                <select onChange={handleChangeQuestion} value={currentQuestion?.type_question}>
+                <select name="type_question" onChange={handleChangeQuestion} value={currentQuestion?.type_question}>
                     <option value="reading">Reading</option>
                     <option value="speaking">Speaking</option>
                     <option value="writing">Writing</option>
@@ -65,38 +64,39 @@ const CreateQuestion = ({
             {/* <div className="divider"></div> */}
 
             {/* Details Section */}
+            <button className="save-question" onClick={createAIQuestion}>Tạo câu hỏi với AI</button>
             <div className="form-group">
                 <label>Question</label>
-                <textarea onChange={handleChangeQuestion} value={currentQuestion?.question} placeholder="Nhập nội dung câu hỏi"></textarea>
+                <textarea key={audioKey} name='question' onChange={handleChangeQuestion} value={currentQuestion?.question} placeholder="Nhập nội dung câu hỏi"></textarea>
             </div>
             <div className="form-group">
                 <label>Option A</label>
-                <input onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_1 || ''} placeholder="Nhập Option A" />
+                <input name="option_1" onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_1 || ''} placeholder="Nhập Option A" />
             </div>
             <div className="form-group">
                 <label>Option B</label>
-                <input onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_2 || ''} placeholder="Nhập Option B" />
+                <input name='option_2' onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_2 || ''} placeholder="Nhập Option B" />
             </div>
             <div className="form-group">
                 <label>Option C</label>
-                <input onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_3 || ''} placeholder="Nhập Option C" />
+                <input name='option_3' onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_3 || ''} placeholder="Nhập Option C" />
             </div>
             <div className="form-group">
                 <label>Option D</label>
-                <input onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_4 || ''} placeholder="Nhập Option D" />
+                <input name="option_4" onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_4 || ''} placeholder="Nhập Option D" />
             </div>
             <div className="form-group">
                 <label>Answer</label>
-                <select onChange={handleChangeQuestion}>
-                    <option value="A">{currentQuestion?.option_1}</option>
-                    <option value="B">{currentQuestion?.option_2}</option>
-                    <option value="C">{currentQuestion?.option_3}</option>
-                    <option value="D">{currentQuestion?.option_4}</option>
+                <select name='answer' onChange={handleChangeQuestion} value={currentQuestion?.answer}>
+                    <option value={currentQuestion?.option_1}>{currentQuestion?.option_1}</option>
+                    <option value={currentQuestion?.option_2}>{currentQuestion?.option_2}</option>
+                    <option value={currentQuestion?.option_3}>{currentQuestion?.option_3}</option>
+                    <option value={currentQuestion?.option_4}>{currentQuestion?.option_4}</option>
                 </select>
             </div>
             <div className="form-group">
                 <label>Interpret</label>
-                <textarea onChange={handleChangeQuestion} value={currentQuestion?.interpret} placeholder="Nhập giải thích"></textarea>
+                <textarea key={audioKey} name="interpret" onChange={handleChangeQuestion} value={currentQuestion?.interpret} placeholder="Nhập giải thích"></textarea>
             </div>
             <button className="save-question" onClick={handleSubmitUpdateQuestion}>Lưu Câu Hỏi</button>
         </>

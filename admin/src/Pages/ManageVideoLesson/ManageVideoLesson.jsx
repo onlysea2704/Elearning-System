@@ -26,6 +26,9 @@ const ManageVideoLesson = () => {
         const fetchDetailCourses = async () => {
             const lecture = await authAxios.post('/lesson/get-lecture-by-id-lesson', { idLesson: id_lesson });
             setLecture(lecture.data);
+            if(!lecture.data){
+                return
+            }
             setVideoUrl(lecture.data.link_material);
             console.log(lecture.data.link_material);
 
@@ -68,21 +71,20 @@ const ManageVideoLesson = () => {
                 <HeaderBackButton
                     button='Quay lại khóa học'
                     title='Quản lý bài học'
-                    dest={`/dashboard/manage-course/${course.detailCourse?.id_course}`}
                 />
                 <div className="content-video-lesson">
                     <div className="left-panel-video-lesson">
                         <form>
                             <div className="form-group">
                                 <label>ID Bài Học</label>
-                                <input type="text" value={1} readOnly />
+                                <input type="text" value={id_lesson} readOnly />
                             </div>
                             <div className="form-group">
                                 <label>Tên Bài Học</label>
                                 <input type="text" 
                                 onChange={handleChange} 
                                 name="name_lecture"
-                                value={lecture.name_lecture} 
+                                value={lecture?.name_lecture} 
                                 placeholder="Nhập tên bài học" />
                             </div>
                             <div className="form-group">
@@ -105,7 +107,7 @@ const ManageVideoLesson = () => {
                                 <label>Mô Tả Chi Tiết</label>
                             </div>
                             <textarea 
-                            value={lecture.description} 
+                            value={lecture?.description} 
                             className='description-course'
                             name='description' 
                             onChange={handleChange}

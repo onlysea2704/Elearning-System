@@ -33,9 +33,9 @@ const ManageCourse = () => {
         }
     };
 
-    const handleImageClick = () => {
-        fileInputRef.current.click(); // Trigger file input click when image is clicked
-    };
+    // const handleImageClick = () => {
+    //     fileInputRef.current.click(); // Trigger file input click when image is clicked
+    // };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -55,6 +55,7 @@ const ManageCourse = () => {
                 'Content-Type': 'multipart/form-data',
             },
         });
+        alert('Cập nhật thông tin khóa học thành công')
     };
 
     useEffect(() => {
@@ -80,7 +81,6 @@ const ManageCourse = () => {
                 <HeaderBackButton
                     button='Quay lại danh sách'
                     title='Quản Lý Khóa Học'
-                    dest='/dashboard/list-course'
                 />
 
                 <div className="manage-course-content">

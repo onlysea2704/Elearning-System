@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import './ListQuestion.css';
-import { useParams } from "react-router-dom";
 import { authAxios } from "../../services/axios-instance";
 
 const ListQuestion = ({
@@ -8,13 +7,13 @@ const ListQuestion = ({
     setCurrentQuestion,
     handleEdit,
     handleDelete,
-    handleCreateQuestion,
     setImageUrlQuestion,
-    setAudioUrlQuestion
+    setAudioUrlQuestion,
+    questions,
+    setQuestions,
 }) => {
-    const [questions, setQuestions] = useState([])
     useEffect(() => {
-        const fetchDetailCourses = async () => {
+        const fetchListQuestion = async () => {
             // vì component này được load cùng với ManageQuiz, mà ManageQuiz có thể sẽ chưa lấy được quizid
             // => idQuiz truyền vào có thể bị lỗi => cần phải check trước
             if (idQuiz) {
@@ -22,11 +21,11 @@ const ListQuestion = ({
                 setQuestions(questions.data);
                 console.log(questions.data);
                 setCurrentQuestion(questions.data[0]);
-                setImageUrlQuestion(questions.data[0]);
-                setAudioUrlQuestion(questions.data[0]);
+                setImageUrlQuestion(questions.data[0]?.link_image);
+                setAudioUrlQuestion(questions.data[0]?.link_mp3);
             }
         };
-        fetchDetailCourses();
+        fetchListQuestion();
     }, [idQuiz]);
 
     return (

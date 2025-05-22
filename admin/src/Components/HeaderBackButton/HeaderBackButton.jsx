@@ -1,12 +1,16 @@
 import React from "react";
 import './HeaderBackButton.css'
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HeaderBackButton = ({ button, title, dest }) => {
+    const navigate = useNavigate();
+    const handleBack = () => {
+        navigate(-1); // quay lại trang trước đó
+    };
     return (
         <>
             <div className="header-back-button">
-                <Link className="btn-back" to={dest}>{button}</Link>
+                <button className="btn-back" onClick={handleBack}>{button}</button>
                 <div className="divider"></div>
                 <h1 className="header-title">{title}</h1>
             </div>

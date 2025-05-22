@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
 import './ListLesson.css'
-import { Link, useParams } from "react-router-dom";
-import { publicAxios } from "../../services/axios-instance";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { authAxios, publicAxios } from "../../services/axios-instance";
 
 const ListLesson = () => {
 
     const [listLesson, setListLesson] = useState([]);
     const { id_course } = useParams();
-
+    const navigate = useNavigate()
     const handleDeleteLesson = (lessonId) => {
-        // console.log(`Xóa bài học ${lessonId}`);
     };
 
-    const handleCreateLecture = () => {
+    const handleCreateLecture = async () => {
         window.alert("Bạn có muốn tạo Lecture?");
-        // navigate('/dashboard/manage-video-lesson');
+        const idLesson = await authAxios.post('/lesson/create-lecture', {idCourse: id_course});
+        console.log(idLesson.data);
+        navigate(`/dashboard/manage-video-lesson/${idLesson.data.lessonId}`)
     };
 
-    const handleCreateQuiz = () => {
+    const handleCreateQuiz = async() => {
         window.alert("Bạn có muốn tạo Quiz?");
-        // navigate('/dashboard/manage-quiz/0');
+        const idLesson = await authAxios.post('/lesson/create-quiz', {idCourse: id_course});
+        console.log(idLesson.data);
+        navigate(`/dashboard/manage-quiz/${idLesson.data.lessonId}`)
     };
 
     useEffect(() => {
@@ -49,7 +52,7 @@ const ListLesson = () => {
                             <div className="lesson-icons">
                                 <Link to={lesson.type_lesson === 'quiz' ?
                                     `/dashboard/manage-quiz/${lesson.id_lesson}`
-                                    : `/dashboard/manage-video-lesson/${lesson.id_lecture_quiz}`}>
+                                    : `/dashboard/manage-video-lesson/${lesson.id_lesson}`}>
                                     <i className="fas fa-edit edit-icon"></i>
                                 </Link>
                                 <i className="fas fa-trash delete-icon"
