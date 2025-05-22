@@ -3,7 +3,15 @@ import './ListQuestion.css';
 import { useParams } from "react-router-dom";
 import { authAxios } from "../../services/axios-instance";
 
-const ListQuestion = ({ idQuiz, setCurrentQuestion, handleEdit, handleDelete, handleCreateQuestion }) => {
+const ListQuestion = ({
+    idQuiz,
+    setCurrentQuestion,
+    handleEdit,
+    handleDelete,
+    handleCreateQuestion,
+    setImageUrlQuestion,
+    setAudioUrlQuestion
+}) => {
     const [questions, setQuestions] = useState([])
     useEffect(() => {
         const fetchDetailCourses = async () => {
@@ -13,7 +21,9 @@ const ListQuestion = ({ idQuiz, setCurrentQuestion, handleEdit, handleDelete, ha
                 const questions = await authAxios.post('/question/get-all-question-by-quiz-id', { idQuiz: idQuiz });
                 setQuestions(questions.data);
                 console.log(questions.data);
-                setCurrentQuestion(questions.data[0])
+                setCurrentQuestion(questions.data[0]);
+                setImageUrlQuestion(questions.data[0]);
+                setAudioUrlQuestion(questions.data[0]);
             }
         };
         fetchDetailCourses();
@@ -33,7 +43,7 @@ const ListQuestion = ({ idQuiz, setCurrentQuestion, handleEdit, handleDelete, ha
                     </div>
                 ))}
             </div>
-            <button className="create-button" onClick={handleCreateQuestion}>Tạo câu hỏi</button>
+            {/* <button className="create-button" onClick={handleCreateQuestion}>Tạo câu hỏi</button> */}
         </>
     );
 }

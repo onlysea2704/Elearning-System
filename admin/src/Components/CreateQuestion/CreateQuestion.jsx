@@ -1,7 +1,17 @@
-import React from "react";
+import { useState } from 'react';
 import './CreateQuestion.css';
+import { authAxios } from '../../services/axios-instance';
 
-const CreateQuestion = ({currentQuestion, audioKey, handleImageUpload, uploadedImage, handleAudioUpload, uploadedAudio }) => {
+const CreateQuestion = ({
+    currentQuestion,
+    handleChangeQuestion,
+    audioKey,
+    handleImageUpload,
+    imageUrlQuestion,
+    audioUrlQuestion,
+    handleAudioUpload,
+    handleSubmitUpdateQuestion,
+}) => {
 
     return (
         <>
@@ -12,7 +22,7 @@ const CreateQuestion = ({currentQuestion, audioKey, handleImageUpload, uploadedI
             </div>
             <div className="form-group">
                 <label>Type</label>
-                <select value={currentQuestion?.type_question}>
+                <select onChange={handleChangeQuestion} value={currentQuestion?.type_question}>
                     <option value="reading">Reading</option>
                     <option value="speaking">Speaking</option>
                     <option value="writing">Writing</option>
@@ -28,8 +38,8 @@ const CreateQuestion = ({currentQuestion, audioKey, handleImageUpload, uploadedI
                 <input type="file" accept="image/*" onChange={handleImageUpload} />
             </div>
             <div className="preview-image">
-                {currentQuestion?.link_image ? (
-                    <img src={currentQuestion?.link_image} alt="Uploaded" />
+                {imageUrlQuestion ? (
+                    <img src={imageUrlQuestion} alt="Uploaded" />
                 ) : (
                     <p style={{ color: "#999" }}>No image uploaded</p>
                 )}
@@ -39,9 +49,9 @@ const CreateQuestion = ({currentQuestion, audioKey, handleImageUpload, uploadedI
                 <input type="file" accept="audio/mp3" onChange={handleAudioUpload} />
             </div>
             <div className="preview-mp3">
-                {currentQuestion?.link_mp3 ? (
+                {audioUrlQuestion ? (
                     <audio key={audioKey} controls>
-                        <source src={currentQuestion?.link_mp3} type="audio/mpeg" />
+                        <source src={audioUrlQuestion} type="audio/mpeg" />
                         Trình duyệt của bạn không hỗ trợ phát âm thanh.
                     </audio>
                 ) : (
@@ -57,27 +67,27 @@ const CreateQuestion = ({currentQuestion, audioKey, handleImageUpload, uploadedI
             {/* Details Section */}
             <div className="form-group">
                 <label>Question</label>
-                <textarea value={currentQuestion?.question} placeholder="Nhập nội dung câu hỏi"></textarea>
+                <textarea onChange={handleChangeQuestion} value={currentQuestion?.question} placeholder="Nhập nội dung câu hỏi"></textarea>
             </div>
             <div className="form-group">
                 <label>Option A</label>
-                <input type="text" value={currentQuestion?.option_1 || ''} placeholder="Nhập Option A" />
+                <input onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_1 || ''} placeholder="Nhập Option A" />
             </div>
             <div className="form-group">
                 <label>Option B</label>
-                <input type="text" value={currentQuestion?.option_2 || ''} placeholder="Nhập Option B" />
+                <input onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_2 || ''} placeholder="Nhập Option B" />
             </div>
             <div className="form-group">
                 <label>Option C</label>
-                <input type="text" value={currentQuestion?.option_3 || ''} placeholder="Nhập Option C" />
+                <input onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_3 || ''} placeholder="Nhập Option C" />
             </div>
             <div className="form-group">
                 <label>Option D</label>
-                <input type="text" value={currentQuestion?.option_4 || ''} placeholder="Nhập Option D" />
+                <input onChange={handleChangeQuestion} type="text" value={currentQuestion?.option_4 || ''} placeholder="Nhập Option D" />
             </div>
             <div className="form-group">
                 <label>Answer</label>
-                <select>
+                <select onChange={handleChangeQuestion}>
                     <option value="A">{currentQuestion?.option_1}</option>
                     <option value="B">{currentQuestion?.option_2}</option>
                     <option value="C">{currentQuestion?.option_3}</option>
@@ -86,9 +96,9 @@ const CreateQuestion = ({currentQuestion, audioKey, handleImageUpload, uploadedI
             </div>
             <div className="form-group">
                 <label>Interpret</label>
-                <textarea value={currentQuestion?.interpret} placeholder="Nhập giải thích"></textarea>
+                <textarea onChange={handleChangeQuestion} value={currentQuestion?.interpret} placeholder="Nhập giải thích"></textarea>
             </div>
-            <button className="save-question" onClick={() => alert("Lưu thành công")}>Lưu Bài Kiểm Tra</button>
+            <button className="save-question" onClick={handleSubmitUpdateQuestion}>Lưu Câu Hỏi</button>
         </>
     );
 }

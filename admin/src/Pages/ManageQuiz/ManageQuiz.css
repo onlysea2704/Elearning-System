@@ -70,7 +70,7 @@
 
       flex-direction: column;
       padding: 20px;
-      
+
       height: 900px;
       height: 1225px;
       flex: 2;
@@ -113,4 +113,31 @@
   .input-group select:focus {
       border-color: #1e3a8a;
       box-shadow: 0 0 4px rgba(30, 58, 138, 0.5);
+  }
+
+  .button-group {
+      display: flex;
+      /* gap: 10px; */
+      justify-content: space-between;
+      margin-top: 0px;
+      width: 100%;
+  }
+
+  .create-button {
+      display: block;
+      margin: 10px auto 0;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s, box-shadow 0.2s;
+      font-size: 16px;
+  }
+
+  .create-button:hover {
+      background-color: #162c65;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
