@@ -3,30 +3,25 @@ import './ListQuestion.css';
 import { authAxios } from "../../services/axios-instance";
 
 const ListQuestion = ({
-    idQuiz,
-    setCurrentQuestion,
     handleEdit,
     handleDelete,
-    setImageUrlQuestion,
-    setAudioUrlQuestion,
     questions,
-    setQuestions,
 }) => {
-    useEffect(() => {
-        const fetchListQuestion = async () => {
-            // vì component này được load cùng với ManageQuiz, mà ManageQuiz có thể sẽ chưa lấy được quizid
-            // => idQuiz truyền vào có thể bị lỗi => cần phải check trước
-            if (idQuiz) {
-                const questions = await authAxios.post('/question/get-all-question-by-quiz-id', { idQuiz: idQuiz });
-                setQuestions(questions.data);
-                console.log(questions.data);
-                setCurrentQuestion(questions.data[0]);
-                setImageUrlQuestion(questions.data[0]?.link_image);
-                setAudioUrlQuestion(questions.data[0]?.link_mp3);
-            }
-        };
-        fetchListQuestion();
-    }, [idQuiz]);
+    // useEffect(() => {
+    //     const fetchListQuestion = async () => {
+    //         // vì component này được load cùng với ManageQuiz, mà ManageQuiz có thể sẽ chưa lấy được quizid
+    //         // => idQuiz truyền vào có thể bị lỗi => cần phải check trước
+    //         if (idQuiz) {
+    //             const questions = await authAxios.post('/question/get-all-question-by-quiz-id', { idQuiz: idQuiz });
+    //             setQuestions(questions.data);
+    //             console.log(questions.data);
+    //             setCurrentQuestion(questions.data[0]);
+    //             setImageUrlQuestion(questions.data[0]?.link_image);
+    //             setAudioUrlQuestion(questions.data[0]?.link_mp3);
+    //         }
+    //     };
+    //     fetchListQuestion();
+    // }, [idQuiz]);
 
     return (
         <>

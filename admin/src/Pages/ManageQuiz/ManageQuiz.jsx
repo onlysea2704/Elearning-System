@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./ManageQuiz.css";
 import ListQuestion from "../../Components/ListQuestion/ListQuestion";
 import SideBar from "../../Components/SideBar/SideBar";
-// import CreateQuestion from "../../Components/CreateQuestion/CreateQuestion";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import HeaderBackButton from "../../Components/HeaderBackButton/HeaderBackButton";
 import CreateQuestion from "../../Components/CreateQuestion/CreateQuestion";
 import { authAxios } from "../../services/axios-instance";
@@ -20,9 +19,7 @@ const ManageQuiz = () => {
     const [audioUrlQuestion, setAudioUrlQuestion] = useState(null);
     const [audioKey, setAudioKey] = useState(0); // Tạo key mới để ép React render lại thẻ <audio>
     const [loading, setLoading] = useState(false)
-    const [questions, setQuestions] = useState([])
-    
-    const navigate = useNavigate()
+    const [listQuestions, setListQuestions] = useState([])
 
     const handleChangeQuiz = (e) => {
         const { name, value } = e.target;
@@ -53,8 +50,12 @@ const ManageQuiz = () => {
         if (audioQuestion) {
             formData.append('audio', audioQuestion);
         }
+        const updatedQuestions = listQuestions.map(q =>
+            q.id_question === currentQuestion.id_question ? { ...currentQuestion } : q
+        );
+        setListQuestions(updatedQuestions);
 
-        const result = await authAxios.post('/question/update-question', formData, {
+        await authAxios.post('/question/update-question', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -72,15 +73,40 @@ const ManageQuiz = () => {
         setAudioKey((prevKey) => prevKey + 1); // Tăng giá trị key để ép cập nhật lại
     };
 
-    const createAIQuestion = async () =>{
-        // if(currentQuestion.type_question === '')
+    const createAIQuestion = async () => {
+        if (currentQuestion.type_question === 'listening') {
+            const formData = new FormData();
+            formData.append('typeQuestion', JSON.stringify(currentQuestion.type_question));
+            if (audioQuestion) {
+                formData.append('audio', audioQuestion);
+            }
+            const question = await authAxios.post('/question/create-question-by-ai', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log(question.data)
+            setCurrentQuestion(prev => ({ ...prev, ...question.data }))
+        } else {
+            console.log(currentQuestion.type_question)
+            const question = await authAxios.post('/question/create-question-by-ai', { typeQuestion: currentQuestion.type_question })
+            console.log(question.data)
+            setCurrentQuestion(prev => ({ ...prev, ...question.data }))
+        }
     }
 
     useEffect(() => {
         const fetchDetailCourses = async () => {
             const quiz = await authAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
             setQuiz(quiz.data);
-            console.log(quiz.data);
+            if (quiz.data.id_quiz) {
+                const questions = await authAxios.post('/question/get-all-question-by-quiz-id', { idQuiz: quiz.data.id_quiz });
+                setListQuestions(questions.data);
+                console.log(questions.data);
+                setCurrentQuestion(questions.data[0]);
+                setImageUrlQuestion(questions.data[0]?.link_image);
+                setAudioUrlQuestion(questions.data[0]?.link_mp3);
+            }
         };
         fetchDetailCourses();
     }, [id_lesson]);
@@ -98,9 +124,9 @@ const ManageQuiz = () => {
     };
 
     const handleCreateQuestion = async () => {
-        const newQuestion = await authAxios.post('/question/create-question', {idQuiz: quiz.id_quiz});
+        const newQuestion = await authAxios.post('/question/create-question', { idQuiz: quiz.id_quiz });
         setCurrentQuestion(newQuestion.data);
-        setQuestions([...questions,newQuestion.data]);
+        setListQuestions([...listQuestions, newQuestion.data]);
         console.log(newQuestion.data);
         setImageUrlQuestion('');
         setAudioUrlQuestion('');
@@ -161,16 +187,10 @@ const ManageQuiz = () => {
 
                         {/* Danh sách câu hỏi */}
                         <ListQuestion
-                            setCurrentQuestion={setCurrentQuestion}
-                            idQuiz={quiz?.id_quiz}
-                            questions={questions}
-                            setQuestions={setQuestions}
-                            setImageUrlQuestion={setImageUrlQuestion}
-                            setAudioUrlQuestion={setAudioUrlQuestion}
+                            questions={listQuestions}
                             handleEdit={handleEdit}
                             handleDelete={handleDelete}
                         />
-                        {/* <button className="create-button" onClick={handleCreateQuestion}>Tạo câu hỏi</button> */}
                         <div className="button-group">
                             <button className="create-button" onClick={handleSubmitUpdateQuiz}>Lưu Quiz</button>
                             <button className="create-button" onClick={handleCreateQuestion}>Tạo câu hỏi</button>
@@ -183,7 +203,6 @@ const ManageQuiz = () => {
                             currentQuestion={currentQuestion}
                             setCurrentQuestion={setCurrentQuestion}
                             audioKey={audioKey}
-                            // setAudioKey={setAudioKey}
                             handleChangeQuestion={handleChangeQuestion}
                             handleImageUpload={handleImageUpload}
                             imageUrlQuestion={imageUrlQuestion}
@@ -195,7 +214,7 @@ const ManageQuiz = () => {
                     </div>
                 </div>
             </div>
-            {loading ? <Popup type='update-question'/> : <></>}
+            {loading ? <Popup type='update-question' /> : <></>}
         </div>
     );
 };

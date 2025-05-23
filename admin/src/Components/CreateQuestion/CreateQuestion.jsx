@@ -65,6 +65,7 @@ const CreateQuestion = ({
 
             {/* Details Section */}
             <button className="save-question" onClick={createAIQuestion}>Tạo câu hỏi với AI</button>
+            <div style={{ marginBottom: '10px' }}></div>
             <div className="form-group">
                 <label>Question</label>
                 <textarea key={audioKey} name='question' onChange={handleChangeQuestion} value={currentQuestion?.question} placeholder="Nhập nội dung câu hỏi"></textarea>
