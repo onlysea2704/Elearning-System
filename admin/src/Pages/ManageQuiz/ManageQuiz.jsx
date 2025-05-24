@@ -78,6 +78,7 @@ const ManageQuiz = () => {
     };
 
     const createAIQuestion = async () => {
+        setLoading(true)
         if (currentQuestion.type_question === 'listening') {
             const formData = new FormData();
             formData.append('typeQuestion', JSON.stringify(currentQuestion.type_question));
@@ -97,6 +98,7 @@ const ManageQuiz = () => {
             console.log(question.data)
             setCurrentQuestion(prev => ({ ...prev, ...question.data }))
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -134,7 +136,6 @@ const ManageQuiz = () => {
         console.log(newQuestion.data);
         setImageUrlQuestion('');
         setAudioUrlQuestion('');
-        console.log("Tạo câu hỏi mới");
     };
 
     const handleSubmitUpdateQuiz = async (e) => {
@@ -218,7 +219,7 @@ const ManageQuiz = () => {
                     </div>
                 </div>
             </div>
-            {loading ? <Popup type='update-question' /> : <></>}
+            {loading ? <Popup type='send-answer' /> : <></>}
         </div>
     );
 };

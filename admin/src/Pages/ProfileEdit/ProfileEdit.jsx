@@ -4,6 +4,7 @@ import SideBar from "../../Components/SideBar/SideBar";
 import { useParams } from "react-router-dom";
 import HeaderBackButton from "../../Components/HeaderBackButton/HeaderBackButton";
 import { authAxios } from "../../services/axios-instance";
+import Popup from "../../Components/Popup/Popup";
 
 const ProfileEdit = () => {
 
@@ -18,6 +19,7 @@ const ProfileEdit = () => {
     });
     const [avatarUrl, setAvatarUrl] = useState('');
     const [avatar, setAvatar] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchDetailCourses = async () => {
@@ -52,6 +54,7 @@ const ProfileEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         // Tạo FormData để gửi cả file và JSON
         const formData = new FormData();
         formData.append('lecturer', JSON.stringify(lecturer));
@@ -64,6 +67,7 @@ const ProfileEdit = () => {
                 'Content-Type': 'multipart/form-data',
             },
         });
+        setLoading(false)
     };
 
     return (
@@ -117,6 +121,7 @@ const ProfileEdit = () => {
                     </div>
                 </div>
             </div>
+            {loading ? <Popup type='update-question' /> : <></>}
         </>
     );
 };

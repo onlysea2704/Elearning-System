@@ -7,20 +7,20 @@ const ListLesson = () => {
 
     const [listLesson, setListLesson] = useState([]);
     const { id_course } = useParams();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const handleDeleteLesson = (lessonId) => {
     };
 
     const handleCreateLecture = async () => {
         window.alert("Bạn có muốn tạo Lecture?");
-        const idLesson = await authAxios.post('/lesson/create-lecture', {idCourse: id_course});
+        const idLesson = await authAxios.post('/lecture/create-lecture', {idCourse: id_course});
         console.log(idLesson.data);
         navigate(`/dashboard/manage-video-lesson/${idLesson.data.lessonId}`)
     };
 
     const handleCreateQuiz = async() => {
         window.alert("Bạn có muốn tạo Quiz?");
-        const idLesson = await authAxios.post('/lesson/create-quiz', {idCourse: id_course});
+        const idLesson = await authAxios.post('/quiz/create-quiz', {idCourse: id_course});
         console.log(idLesson.data);
         navigate(`/dashboard/manage-quiz/${idLesson.data.lessonId}`)
     };
