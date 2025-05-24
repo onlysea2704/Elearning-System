@@ -41,6 +41,10 @@ const ManageQuiz = () => {
 
     const handleSubmitUpdateQuestion = async (e) => {
         e.preventDefault();
+        if(!currentQuestion.question){
+            alert('Hãy điền đủ câu hỏi')
+            return
+        }
         setLoading(true)
         const formData = new FormData();
         formData.append('question', JSON.stringify(currentQuestion));
@@ -97,7 +101,7 @@ const ManageQuiz = () => {
 
     useEffect(() => {
         const fetchDetailCourses = async () => {
-            const quiz = await authAxios.post('/lesson/get-quiz-by-id-lesson', { idLesson: id_lesson });
+            const quiz = await authAxios.post('/quiz/get-quiz-by-id-lesson', { idLesson: id_lesson });
             setQuiz(quiz.data);
             if (quiz.data.id_quiz) {
                 const questions = await authAxios.post('/question/get-all-question-by-quiz-id', { idQuiz: quiz.data.id_quiz });
@@ -125,7 +129,7 @@ const ManageQuiz = () => {
 
     const handleCreateQuestion = async () => {
         const newQuestion = await authAxios.post('/question/create-question', { idQuiz: quiz.id_quiz });
-        setCurrentQuestion(newQuestion.data);
+        setCurrentQuestion({...newQuestion.data, type_question: 'reading'});
         setListQuestions([...listQuestions, newQuestion.data]);
         console.log(newQuestion.data);
         setImageUrlQuestion('');
@@ -135,7 +139,7 @@ const ManageQuiz = () => {
 
     const handleSubmitUpdateQuiz = async (e) => {
         e.preventDefault();
-        await authAxios.post('/course/update-quiz', { quiz: quiz });
+        await authAxios.post('/quiz/update-quiz', { quiz: quiz });
         alert('Cập nhật thông tin quiz thành công');
     };
 

@@ -12,7 +12,7 @@ const ListLecturer = () => {
 
   useEffect(() => {
     const fetchAllLecturers = async () => {
-      const lecturers = await publicAxios.get('/lesson/get-all-lecturer');
+      const lecturers = await publicAxios.post('/lecturer/public-api-get-all-lecturers');
       setLecturers(lecturers.data);
       console.log(lecturers.data);
     };

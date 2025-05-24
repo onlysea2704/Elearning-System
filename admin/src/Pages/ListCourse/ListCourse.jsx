@@ -22,7 +22,7 @@ const ListCourse = () => {
 
   useEffect(() => {
     const fetchAllCourses = async () => {
-      const response = await authAxios('/course/all-course')
+      const response = await authAxios('/course/public-api-get-all-course');
       console.log(response.data);
       setAllCourses(response.data);
     };

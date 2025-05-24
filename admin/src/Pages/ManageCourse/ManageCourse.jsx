@@ -62,11 +62,12 @@ const ManageCourse = () => {
         const fetchDetailCourses = async () => {
             console.log(id_course)
             const detailCourse = await authAxios.post('/course/detail-course', { idCourse: id_course });
+            console.log(detailCourse.data)
             setdetailCourse(detailCourse.data.detailCourse);
-            setcourseImageUrl(detailCourse.data.detailCourse.link_image)
+            setcourseImageUrl(detailCourse.data.detailCourse?.link_image)
             console.log(detailCourse.data.detailCourse)
 
-            const allLecturers = await publicAxios.post('/course/public-api-get-all-lecturers');
+            const allLecturers = await publicAxios.post('/lecturer/public-api-get-all-lecturers');
             setAllLecturers(allLecturers.data);
         };
         fetchDetailCourses();
@@ -110,22 +111,22 @@ const ManageCourse = () => {
                             <div className="course-info">
                                 <div className="form-group-course">
                                     <label>ID</label>
-                                    <input name="idCourse" type="text" value={detailCourse.id_course} disabled />
+                                    <input name="idCourse" type="text" value={detailCourse?.id_course} disabled />
                                 </div>
                                 <div className="form-group-course">
                                     <label>Tên Khóa Học</label>
-                                    <input name="name_course" type="text" value={detailCourse.name_course} onChange={handleChange} placeholder="Nhập tên khóa học" />
+                                    <input name="name_course" type="text" value={detailCourse?.name_course} onChange={handleChange} placeholder="Nhập tên khóa học" />
                                 </div>
                                 <div className="form-group-course">
                                     <label>Giá</label>
-                                    <input name="price" type="number" value={detailCourse.price} onChange={handleChange} placeholder="Nhập giá khóa học" />
+                                    <input name="price" type="number" value={detailCourse?.price} onChange={handleChange} placeholder="Nhập giá khóa học" />
                                 </div>
                                 <div className="form-group-course">
                                     <label>Tên Giảng Viên</label>
                                     {/* <input name="id_lecturer" type="text" value={detailCourse.id_lecturer} onChange={handleChange} placeholder="Nhập tên giảng viên" /> */}
                                     <select
                                         name="id_lecturer"
-                                        value={detailCourse.id_lecturer}
+                                        value={detailCourse?.id_lecturer}
                                         onChange={handleChange}
                                     >
                                         <option value="">-- Chọn giảng viên --</option>
@@ -141,21 +142,23 @@ const ManageCourse = () => {
                                     {/* <input name="type_course" type="text" value={detailCourse.type_course} onChange={handleChange} placeholder="Nhập loại bài học" /> */}
                                     <select
                                         name="type_course"
-                                        value={detailCourse.type_course}
+                                        value={detailCourse?.type_course}
                                         onChange={handleChange}
                                     >
                                         <option value="Reading">Reading</option>
                                         <option value="Listening">Listening</option>
                                         <option value="Writing">Writing</option>
                                         <option value="Speaking">Speaking</option>
+                                        <option value="Speaking">Listening + Reading</option>
+                                        <option value="Speaking">Speaking + Writing</option>
                                     </select>
                                 </div>
                                 <div className="info-group-course">
                                     <span>
-                                        <i className="fas fa-user-graduate icon"></i> Sinh Viên: {detailCourse.number_student}
+                                        <i className="fas fa-user-graduate icon"></i> Sinh Viên: {detailCourse?.number_student}
                                     </span>
                                     <span>
-                                        <i className="fas fa-book icon"></i> Bài Học: {detailCourse.number_lesson}
+                                        <i className="fas fa-book icon"></i> Bài Học: {detailCourse?.number_lesson}
                                     </span>
                                 </div>
                             </div>
@@ -164,7 +167,7 @@ const ManageCourse = () => {
                             <label>Mô Tả Chi Tiết:</label>
                         </div>
                         <textarea name="description"
-                            value={detailCourse.description}
+                            value={detailCourse?.description}
                             onChange={handleChange} className="course-textarea" rows="5" placeholder="Nhập mô tả chi tiết"></textarea>
                         <button className="btn-save" onClick={handleSubmit}>Lưu</button>
                     </div>

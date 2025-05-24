@@ -21,7 +21,7 @@ const ProfileEdit = () => {
 
     useEffect(() => {
         const fetchDetailCourses = async () => {
-            const lecturer = await authAxios.post('/lesson/get-info-lecturer', { idLecturer: id_lecturer });
+            const lecturer = await authAxios.post('/lecturer/get-info-lecturer', { idLecturer: id_lecturer });
             setLecturer(lecturer.data);
             setAvatarUrl(lecturer.data.link_image);
             console.log(lecturer.data);

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './CreateQuestion.css';
 
 const CreateQuestion = ({
@@ -68,7 +67,7 @@ const CreateQuestion = ({
             <div style={{ marginBottom: '10px' }}></div>
             <div className="form-group">
                 <label>Question</label>
-                <textarea key={audioKey} name='question' onChange={handleChangeQuestion} value={currentQuestion?.question} placeholder="Nhập nội dung câu hỏi"></textarea>
+                <textarea key={audioKey} name='question' onChange={handleChangeQuestion} value={currentQuestion?.question || ''} placeholder="Nhập nội dung câu hỏi"></textarea>
             </div>
             <div className="form-group">
                 <label>Option A</label>
@@ -97,7 +96,7 @@ const CreateQuestion = ({
             </div>
             <div className="form-group">
                 <label>Interpret</label>
-                <textarea key={audioKey} name="interpret" onChange={handleChangeQuestion} value={currentQuestion?.interpret} placeholder="Nhập giải thích"></textarea>
+                <textarea key={audioKey} name="interpret" onChange={handleChangeQuestion} value={currentQuestion?.interpret || ''} placeholder="Nhập giải thích"></textarea>
             </div>
             <button className="save-question" onClick={handleSubmitUpdateQuestion}>Lưu Câu Hỏi</button>
         </>
