@@ -8,17 +8,20 @@ import './Popup.css';
 
 const Popup = ({type}) => {
     let message, animation
-    if(type === 'update-question'){
-        message = 'Hệ thống đang liên kết với dữ liệu của bạn'
+    if(type === 'update-lecturer'){
+        message = 'Hệ thống đang cập nhật thông tin giảng viên'
         animation = loginAnimation
-    } else if(type === 'send-answer'){
-        message = 'Bài làm của bạn đang được hệ thống chấm xử lý Hãy đợi chút nhé ❤️❤️❤️'
+    } else if(type === 'create-question-by-ai'){
+        message = 'AI đang tạo câu hỏi'
         animation = sendAnswerAnimation
-    } else if( type === 'signup'){
-        message = 'Hệ thống đang tạo tài khoản cho bạn'
+    } else if( type === 'update-question'){
+        message = 'Đang cập nhật nội dung câu hỏi'
         animation = signUpAnimation
-    } else if( type === 'edit-inform'){
-        message = 'Thông tin của bạn đang được cập nhật'
+    } else if( type === 'update-course'){
+        message = 'Đang cập nhật thông tin khóa học'
+        animation = editInformAnimation
+    } else if( type === 'update-lecture'){
+        message = 'Đang cập nhật nội dung bài học'
         animation = editInformAnimation
     }
 

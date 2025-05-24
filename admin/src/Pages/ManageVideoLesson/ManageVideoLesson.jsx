@@ -151,7 +151,7 @@ const ManageVideoLesson = () => {
                     </div>
                 </div>
             </div>
-            {loading && <Popup type='send-answer' />}
+            {loading && <Popup type='update-lecture' />}
         </>
 
 

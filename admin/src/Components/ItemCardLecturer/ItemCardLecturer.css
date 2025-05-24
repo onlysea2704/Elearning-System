@@ -1,6 +1,7 @@
     .student-item {
       display: flex;
-      width: 320px;
+      width: 330px;
+      /* width: 95%; */
       flex-direction: row;
       align-items: center;
       padding: 15px;

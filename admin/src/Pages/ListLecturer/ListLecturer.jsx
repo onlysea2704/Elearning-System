@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import './ListLecturer.css';
 import SideBar from '../../Components/SideBar/SideBar'
+import { useNavigate } from "react-router-dom";
 import ItemCardLecturer from '../../Components/ItemCardLecturer/ItemCardLecturer';
 import Pagination from '../../Components/Pagination/Pagination';
-import { publicAxios } from '../../services/axios-instance';
+import { authAxios, publicAxios } from '../../services/axios-instance';
 
 const ListLecturer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
   const [lecturers, setLecturers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAllLecturers = async () => {
@@ -18,6 +20,11 @@ const ListLecturer = () => {
     };
     fetchAllLecturers();
   }, []);
+
+  const addLecturer = async () => {
+    const response = await authAxios.post('lecturer/create-lecturer');
+    navigate(`/dashboard/manage-teacher/${response.data.id_lecturer}`);
+  }
 
   const handlePageChange = (direction) => {
     setCurrentPage((prevPage) =>
@@ -35,7 +42,12 @@ const ListLecturer = () => {
     <div className='student-progress-list-container'>
       <SideBar />
       <div className="student-list">
-        <h2 className="title">Danh Sách Giảng Viên</h2>
+        <div class="container-btn">
+          <h2 className="title">Danh Sách Giảng Viên</h2>
+          <button onClick={addLecturer} className='btn-add-lecturer'>
+            Thêm giảng viên
+          </button>
+        </div>
         <div className="student-items">
           {paginatedlecturers.map((lecturer) => (
             <ItemCardLecturer lecturer={lecturer} />

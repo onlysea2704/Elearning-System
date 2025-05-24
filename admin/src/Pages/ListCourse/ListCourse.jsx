@@ -27,9 +27,19 @@ const ListCourse = () => {
     navigate(`/dashboard/manage-course/${response.data.id_course}`);
   }
 
+  const deleteCourse = async (idCourse) => {
+    const response = await authAxios.post('course/delete-course', {idCourse: idCourse});
+    if(response.data.status){
+      setAllCourses(allCourses.filter((course) => course.id_course !== idCourse))
+      alert('Đã xóa khóa học thành công');
+    } else {
+      alert('Xóa không thành công');
+    }
+  }
+
   const itemsPerPage = 6;
   const filteredCourses = allCourses.filter(course =>
-    course.name_course.toLowerCase().includes(searchQuery.toLowerCase())
+    course?.name_course?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const totalPages = Math.ceil(filteredCourses.length / itemsPerPage);
@@ -67,10 +77,9 @@ const ListCourse = () => {
         {/* Danh sách khóa học */}
         <div className="items-grid">
           {currentCourses.map((course, index) => (
-            <ItemCardCourse course={course} key={index} />
+            <ItemCardCourse course={course} deleteCourse={deleteCourse} key={index} />
           ))}
         </div>
-
         {/* Nút chuyển trang */}
         <Pagination currentPage={currentPage}
           totalPages={totalPages}

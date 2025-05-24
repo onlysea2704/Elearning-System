@@ -8,8 +8,6 @@ const ListLesson = () => {
     const [listLesson, setListLesson] = useState([]);
     const { id_course } = useParams();
     const navigate = useNavigate();
-    const handleDeleteLesson = (lessonId) => {
-    };
 
     const handleCreateLecture = async () => {
         window.alert("Bạn có muốn tạo Lecture?");
@@ -25,6 +23,16 @@ const ListLesson = () => {
         navigate(`/dashboard/manage-quiz/${idLesson.data.lessonId}`)
     };
 
+    const deleteLesson = async (idLesson) => {
+    const response = await authAxios.post('/lesson/delete-lesson', {idLesson: idLesson});
+    if(response.data.status){
+      setListLesson(listLesson.filter((lesson) => lesson.id_lesson !== idLesson))
+      alert('Đã xóa bài học thành công');
+    } else {
+      alert('Xóa không thành công');
+    }
+  }
+
     useEffect(() => {
         const fetchDetailCourses = async () => {
             const response2 = await publicAxios.post('/lesson/get-list-lessons-by-id-course', { idCourse: id_course });
@@ -39,7 +47,7 @@ const ListLesson = () => {
             <div className="lesson-list">
                 <h3>Danh Sách Lesson</h3>
                 <div className="lessons">
-                    {listLesson.map((lesson) => (
+                    {listLesson.map((lesson, index) => (
                         <div key={lesson.id_lesson} className="lesson-item">
                             <span className="icon-name-lesson">
                                 {lesson.type_lesson === "video" ? (
@@ -47,7 +55,7 @@ const ListLesson = () => {
                                 ) : (
                                     <i className="fas fa-pen"></i> // Icon test
                                 )}
-                                &nbsp;&nbsp;{lesson.order_lesson}. {lesson.lesson_name}
+                                &nbsp;&nbsp;{index + 1}. {lesson.lesson_name}
                             </span>
                             <div className="lesson-icons">
                                 <Link to={lesson.type_lesson === 'quiz' ?
@@ -56,7 +64,7 @@ const ListLesson = () => {
                                     <i className="fas fa-edit edit-icon"></i>
                                 </Link>
                                 <i className="fas fa-trash delete-icon"
-                                    onClick={() => handleDeleteLesson(0 + 1)}
+                                    onClick={() => deleteLesson(lesson.id_lesson)}
                                 ></i>
                             </div>
                         </div>

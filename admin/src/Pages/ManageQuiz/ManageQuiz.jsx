@@ -19,6 +19,7 @@ const ManageQuiz = () => {
     const [audioUrlQuestion, setAudioUrlQuestion] = useState(null);
     const [audioKey, setAudioKey] = useState(0); // Tạo key mới để ép React render lại thẻ <audio>
     const [loading, setLoading] = useState(false)
+    const [statusPopup, setStatusPopup] = useState("")
     const [listQuestions, setListQuestions] = useState([])
 
     const handleChangeQuiz = (e) => {
@@ -41,10 +42,11 @@ const ManageQuiz = () => {
 
     const handleSubmitUpdateQuestion = async (e) => {
         e.preventDefault();
-        if(!currentQuestion.question){
+        if (!currentQuestion.question) {
             alert('Hãy điền đủ câu hỏi')
             return
         }
+        setStatusPopup('update-question');
         setLoading(true)
         const formData = new FormData();
         formData.append('question', JSON.stringify(currentQuestion));
@@ -78,6 +80,7 @@ const ManageQuiz = () => {
     };
 
     const createAIQuestion = async () => {
+        setStatusPopup('create-question-by-ai')
         setLoading(true)
         if (currentQuestion.type_question === 'listening') {
             const formData = new FormData();
@@ -131,7 +134,7 @@ const ManageQuiz = () => {
 
     const handleCreateQuestion = async () => {
         const newQuestion = await authAxios.post('/question/create-question', { idQuiz: quiz.id_quiz });
-        setCurrentQuestion({...newQuestion.data, type_question: 'reading'});
+        setCurrentQuestion({ ...newQuestion.data, type_question: 'reading' });
         setListQuestions([...listQuestions, newQuestion.data]);
         console.log(newQuestion.data);
         setImageUrlQuestion('');
@@ -143,6 +146,16 @@ const ManageQuiz = () => {
         await authAxios.post('/quiz/update-quiz', { quiz: quiz });
         alert('Cập nhật thông tin quiz thành công');
     };
+
+    const deleteQuestion = async (idQuestion) => {
+        const response = await authAxios.post('/question/delete-question', { idQuestion: idQuestion });
+        if (response.data.status) {
+            setListQuestions(listQuestions.filter((question) => question.id_question !== idQuestion))
+            alert('Đã xóa câu thành công');
+        } else {
+            alert('Xóa không thành công');
+        }
+    }
 
     return (
         <div>
@@ -194,7 +207,7 @@ const ManageQuiz = () => {
                         <ListQuestion
                             questions={listQuestions}
                             handleEdit={handleEdit}
-                            handleDelete={handleDelete}
+                            deleteQuestion={deleteQuestion}
                         />
                         <div className="button-group">
                             <button className="create-button" onClick={handleSubmitUpdateQuiz}>Lưu Quiz</button>
@@ -219,7 +232,7 @@ const ManageQuiz = () => {
                     </div>
                 </div>
             </div>
-            {loading ? <Popup type='send-answer' /> : <></>}
+            {loading ? <Popup type={statusPopup} /> : <></>}
         </div>
     );
 };

@@ -121,7 +121,7 @@ const ProfileEdit = () => {
                     </div>
                 </div>
             </div>
-            {loading ? <Popup type='update-question' /> : <></>}
+            {loading ? <Popup type='update-lecturer' /> : <></>}
         </>
     );
 };
