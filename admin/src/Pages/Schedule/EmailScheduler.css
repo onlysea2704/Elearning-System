@@ -1,0 +1,142 @@
+:root {
+  --blue-dark: #0059b3;
+  --blue-light: #e6f0ff;
+  --border: #cce0ff;
+  --hover: #b3d1ff;
+  --selected: #0073e6;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f2f7ff;
+}
+
+.container-emai-scheduler {
+  display: flex;
+}
+
+.email-scheduler {
+  width: 80%;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh);
+  box-sizing: border-box;
+}
+
+.left-panel,
+.right-panel {
+  background-color: white;
+  border-radius: 12px;
+  padding: 0 24px ;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+.left-panel {
+  width: 30%;
+}
+
+.right-panel {
+  flex: 1;
+}
+
+.left-panel h2,
+.right-panel h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: var(--blue-dark);
+}
+
+.event-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.event-list li {
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: var(--blue-light);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.event-list li:hover {
+  background-color: var(--hover);
+}
+
+.event-list li.selected {
+  background-color: var(--selected);
+  color: white;
+  font-weight: bold;
+}
+
+.new-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  background-color: var(--blue-dark);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.new-button:hover {
+  background-color: #004080;
+}
+
+.form label {
+  display: block;
+  margin-top: 18px;
+  font-weight: 500;
+}
+
+.form input,
+.form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+  border-color: var(--blue-dark);
+  box-shadow: 0 0 5px rgba(0, 0, 101, 0.704);
+}
+
+.save-button {
+  margin-top: 24px;
+  padding: 12px 24px;
+  background-color: var(--blue-dark);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.save-button:hover {
+  background-color: #004080;
+}
+
+.placeholder {
+  font-style: italic;
+  color: #666;
+  margin-top: 20px;
+}

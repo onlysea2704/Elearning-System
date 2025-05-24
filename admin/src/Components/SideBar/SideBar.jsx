@@ -45,6 +45,12 @@ const SideBar = () => {
           </Link>
         </li>
         <li className={activeSection === 'report' ? 'active' : ''}>
+          <Link to='/dashboard/schedule'>
+            <i className="fas fa-chart-bar icon"></i>
+            Lập lịch gửi email
+          </Link>
+        </li>
+        <li className={activeSection === 'report' ? 'active' : ''}>
           <Link to='/dashboard/report'>
             <i className="fas fa-chart-bar icon"></i>
             Báo cáo thống kê
