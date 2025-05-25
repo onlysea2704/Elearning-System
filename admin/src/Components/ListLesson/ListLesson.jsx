@@ -11,27 +11,27 @@ const ListLesson = () => {
 
     const handleCreateLecture = async () => {
         window.alert("Bạn có muốn tạo Lecture?");
-        const idLesson = await authAxios.post('/lecture/create-lecture', {idCourse: id_course});
+        const idLesson = await authAxios.post('/lecture/create-lecture', { idCourse: id_course });
         console.log(idLesson.data);
         navigate(`/dashboard/manage-video-lesson/${idLesson.data.lessonId}`)
     };
 
-    const handleCreateQuiz = async() => {
+    const handleCreateQuiz = async () => {
         window.alert("Bạn có muốn tạo Quiz?");
-        const idLesson = await authAxios.post('/quiz/create-quiz', {idCourse: id_course});
+        const idLesson = await authAxios.post('/quiz/create-quiz', { idCourse: id_course });
         console.log(idLesson.data);
         navigate(`/dashboard/manage-quiz/${idLesson.data.lessonId}`)
     };
 
     const deleteLesson = async (idLesson) => {
-    const response = await authAxios.post('/lesson/delete-lesson', {idLesson: idLesson});
-    if(response.data.status){
-      setListLesson(listLesson.filter((lesson) => lesson.id_lesson !== idLesson))
-      alert('Đã xóa bài học thành công');
-    } else {
-      alert('Xóa không thành công');
+        const response = await authAxios.post('/lesson/delete-lesson', { idLesson: idLesson });
+        if (response.data.status) {
+            setListLesson(listLesson.filter((lesson) => lesson.id_lesson !== idLesson))
+            alert('Đã xóa bài học thành công');
+        } else {
+            alert('Xóa không thành công');
+        }
     }
-  }
 
     useEffect(() => {
         const fetchDetailCourses = async () => {

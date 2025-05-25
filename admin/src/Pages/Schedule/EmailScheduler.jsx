@@ -49,6 +49,26 @@ const EmailScheduler = () => {
     }
   };
 
+  const handleDelete = async () => {
+    const result = await authAxios.post('/schedule/delete-schedule', { schedule: selectedSchedule })
+    if(result.data.status){
+      alert('Xóa lịch thành công')
+      setScheduleList(scheduleList.filter((schedule) => schedule.id_schedule !== selectedSchedule.id_schedule))
+      setSelectedSchedule(null)
+    } else {
+      alert('Xóa lịch không thành công')
+    }
+  }
+
+  const formatDatetimeLocal = (datetimeStr) => {
+    if (!datetimeStr) return '';
+    const date = new Date(datetimeStr);
+    const offset = date.getTimezoneOffset();
+    const localDate = new Date(date.getTime() - offset * 60000);
+    return localDate.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
+  }
+
+
   return (
     <div className='container-emai-scheduler'>
       <SideBar />
@@ -58,9 +78,9 @@ const EmailScheduler = () => {
           <ul className="event-list">
             {scheduleList.map(event => (
               <li
-                key={event.id}
+                key={event.id_schedule}
                 onClick={() => handleSelectEvent(event)}
-                className={selectedSchedule?.id === event.id ? 'selected-item' : ''}
+                className={selectedSchedule?.id_schedule === event.id_schedule ? 'selected-item' : ''}
               >
                 {event.title}
               </li>
@@ -77,7 +97,7 @@ const EmailScheduler = () => {
               <input
                 type="datetime-local"
                 name="time_sent"
-                value={selectedSchedule.time_sent}
+                value={formatDatetimeLocal(selectedSchedule.time_sent)}
                 onChange={handleChange}
               />
 
@@ -98,7 +118,11 @@ const EmailScheduler = () => {
                 onChange={handleChange}
                 spellCheck="false"
               ></textarea>
-              <button className="save-button" onClick={handleUpdate}>💾 Cập nhật sự kiện</button>
+              <div className='group-two-button'>
+                <button className="delete-button" onClick={handleDelete}>Xóa sự kiện</button>
+                <button className="save-button" onClick={handleUpdate}>Cập nhật sự kiện</button>
+              </div>
+
             </div>
           ) : (
             <p className="placeholder">Chọn một sự kiện hoặc nhấn "Tạo mới" để bắt đầu.</p>

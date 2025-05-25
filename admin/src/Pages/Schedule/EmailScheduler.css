@@ -118,7 +118,13 @@
   box-shadow: 0 0 5px rgba(0, 0, 101, 0.704);
 }
 
-.save-button {
+.group-two-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.save-button,
+.delete-button {
   margin-top: 15px;
   padding: 12px 24px;
   background-color: var(--blue-dark);
@@ -128,6 +134,14 @@
   font-size: 15px;
   cursor: pointer;
   transition: background-color 0.2s;
+}
+
+.delete-button {
+  background-color: rgb(234, 87, 87);
+}
+
+.delete-button:hover {
+  background-color: rgb(216, 23, 23);
 }
 
 .save-button:hover {
