@@ -36,7 +36,7 @@ input[type="file"] {
     padding: 5px;
 }
 
-textarea {
+.form-group textarea {
     height: 72px;
     resize: none;
 }

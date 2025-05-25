@@ -1,50 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './EmailScheduler.css';
 import SideBar from '../../Components/SideBar/SideBar';
+import { authAxios } from '../../services/axios-instance';
 
 const EmailScheduler = () => {
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [scheduleList, setScheduleList] = useState([
-    {
-      id: 1,
-      title: 'Chúc mừng sinh nhật',
-      time: '2025-06-01T08:00',
-      content: 'Chúc bạn một ngày sinh nhật vui vẻ!',
-    },
-    {
-      id: 2,
-      title: 'Nhắc nhở gia hạn',
-      time: '2025-06-15T10:00',
-      content: 'Vui lòng gia hạn gói học của bạn.',
-    },
-  ]);
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const [scheduleList, setScheduleList] = useState([]);
 
-  const handleSelectEvent = (event) => setSelectedEvent(event);
+  useEffect(() => {
+    const fetchAllLecturers = async () => {
+      const schedules = await authAxios.get('/schedule/get-all-schedule');
+      setScheduleList(schedules.data);
+      console.log(schedules.data);
+    };
+    fetchAllLecturers();
+  }, []);
 
-  const handleNewEvent = () => {
-    setSelectedEvent({ title: '', content: '', time: '' });
+  const handleSelectEvent = (event) => setSelectedSchedule(event);
+
+  const handleNewEvent = async () => {
+    const newSchedulde = await authAxios.post('schedule/create-schedule');
+    setSelectedSchedule(newSchedulde.data);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setSelectedEvent({ ...selectedEvent, [name]: value });
+    setSelectedSchedule({ ...selectedSchedule, [name]: value });
   };
 
-  const handleSave = () => {
-    // if (!selectedEvent.title || !selectedEvent.time || !selectedEvent.content) return;
-
-    if (selectedEvent.id) {
-      setScheduleList(scheduleList.map(item => item.id === selectedEvent.id ? selectedEvent : item));
-    } else {
-      const newId = Date.now();
-      setScheduleList([...scheduleList, { ...selectedEvent, id: newId }]);
+  const handleUpdate = async () => {
+    if (!selectedSchedule.time_sent || !selectedSchedule.title || !selectedSchedule.body) {
+      alert("Vui lòng điền đủ thông tin")
+      return
     }
-    setSelectedEvent(null);
+    const result = await authAxios.post('/schedule/update-schedule', { schedule: selectedSchedule })
+    if (result.data) {
+      alert('Cập nhật thành công');
+      setScheduleList(prevList => {
+        const updatedList = [
+          ...prevList.filter(item => item.id_schedule !== result.data.id_schedule),
+          result.data
+        ];
+        return updatedList.sort((a, b) => a.id_schedule - b.id_schedule);
+      });
+      setSelectedSchedule(null);
+    } else {
+      alert('Cập nhật thất bại');
+    }
   };
 
   return (
     <div className='container-emai-scheduler'>
-      <SideBar/>
+      <SideBar />
       <div className="email-scheduler">
         <div className="left-panel">
           <h2>Lịch gửi Email</h2>
@@ -53,7 +60,7 @@ const EmailScheduler = () => {
               <li
                 key={event.id}
                 onClick={() => handleSelectEvent(event)}
-                className={selectedEvent?.id === event.id ? 'selected' : ''}
+                className={selectedSchedule?.id === event.id ? 'selected-item' : ''}
               >
                 {event.title}
               </li>
@@ -64,13 +71,13 @@ const EmailScheduler = () => {
 
         <div className="right-panel">
           <h2>Chi tiết sự kiện</h2>
-          {selectedEvent ? (
-            <div className="form">
+          {selectedSchedule ? (
+            <div className="form-email">
               <label>Thời gian gửi:</label>
               <input
                 type="datetime-local"
-                name="time"
-                value={selectedEvent.time}
+                name="time_sent"
+                value={selectedSchedule.time_sent}
                 onChange={handleChange}
               />
 
@@ -78,28 +85,27 @@ const EmailScheduler = () => {
               <input
                 type="text"
                 name="title"
-                value={selectedEvent.title}
+                value={selectedSchedule.title || ''}
                 onChange={handleChange}
               />
 
               <label>Nội dung Email:</label>
               <textarea
-                name="content"
-                rows="6"
-                value={selectedEvent.content}
+                className='textarea-email-content'
+                name="body"
+                rows="14"
+                value={selectedSchedule.body || ''}
                 onChange={handleChange}
+                spellCheck="false"
               ></textarea>
-
-              <button className="save-button" onClick={handleSave}>💾 Lưu</button>
+              <button className="save-button" onClick={handleUpdate}>💾 Cập nhật sự kiện</button>
             </div>
           ) : (
             <p className="placeholder">Chọn một sự kiện hoặc nhấn "Tạo mới" để bắt đầu.</p>
           )}
         </div>
       </div>
-
     </div>
-
   );
 };
 
